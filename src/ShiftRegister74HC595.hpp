@@ -57,7 +57,7 @@ void ShiftRegister74HC595<Size>::setAll_P(const uint8_t * digitalValuesProgmem)
 // Retrieve all states of the shift registers' output pins.
 // The returned array's length is equal to the number of shift registers.
 template<uint8_t Size>
-uint8_t * ShiftRegister74HC595<Size>::getAll()
+uint8_t* ShiftRegister74HC595<Size>::getAll()
 {
     return _digitalValues; 
 }
