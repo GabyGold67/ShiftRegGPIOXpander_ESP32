@@ -47,13 +47,26 @@ public:
     */
    ShiftRegister74HC595(const uint8_t serialDataPin, const uint8_t clockPin, const uint8_t latchPin);
    /**
-   * @brief Returns the state of the requested pin.
-   * 
-   * @param pin Pin whose current value is required
-   * @return uint8_t The state value of the requested pin, either HIGH (1) or LOW (0)
-   */
+    * @brief Returns the state of the requested pin.
+    * 
+    * @param pin Pin whose current value is required
+    * @return uint8_t The state value of the requested pin, either HIGH (1) or LOW (0)
+    */
    uint8_t get(const uint8_t pin);
-    uint8_t* getAll(); 
+   /**
+    * @brief Retrieve all states of the shift registers' output pins.
+    * 
+    * @return Pointer to the array of uint8_t holding the registers values
+    *
+    * @note The returned array's length is equal to the number of shift registers.
+    */
+   uint8_t* getAll();
+   /**
+   * @brief Set a specific pin to either HIGH (1) or LOW (0).
+   * 
+   * @param pin a positive, zero-based integer, indicating which pin to set.
+   * @param value Value for the indicated Pin
+   */
     void set(const uint8_t pin, const uint8_t value);
     /**
      * @brief Set all pins of the shift registers at once.
@@ -61,10 +74,26 @@ public:
      * @param digitalValues uint8_t array where the length is equal to the number of shift registers.
      */
     void setAll(const uint8_t * digitalValues);
+    /**
+     * @brief Sets all pins of all shift registers to HIGH (1).
+     */
     void setAllHigh(); 
     void setAllLow();
-    void setNoUpdate(const uint8_t pin, uint8_t value);
-    void updateRegisters();
+   /**
+    * @brief Equivalent to set(int pin, uint8_t value), except the physical shift register is not updated.
+    * 
+    * @param pin 
+    * @param value 
+    *
+    * @attention Should be used in combination with updateRegisters().
+   */
+   void setNoUpdate(const uint8_t pin, uint8_t value);
+   /**
+    * @brief Updates the shift register pins to the stored output values.
+    *
+    * @note This is the function that actually writes data into the shift registers of the 74HC595.
+   */
+  void updateRegisters();
 };
 
 #include "ShiftRegister74HC595.hpp"
