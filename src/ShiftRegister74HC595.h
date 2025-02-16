@@ -78,6 +78,10 @@ public:
      * @brief Sets all pins of all shift registers to HIGH (1).
      */
     void setAllHigh(); 
+    /**
+     * @brief Sets all pins of all shift registers to LOW (0).
+     * 
+     */
     void setAllLow();
    /**
     * @brief Equivalent to set(int pin, uint8_t value), except the physical shift register is not updated.

@@ -39,6 +39,14 @@ void ShiftRegister74HC595<Size>::setAll(const uint8_t* digitalValues){
 }
 
 template<uint8_t Size>
+void ShiftRegister74HC595<Size>::setAllLow(){
+    for (int i = 0; i < Size; i++) {
+        _digitalValues[i] = 0;
+    }
+    updateRegisters();
+}
+
+template<uint8_t Size>
 void ShiftRegister74HC595<Size>::setAllHigh(){
     for (int i = 0; i < Size; i++) {
         _digitalValues[i] = 0xFF;
@@ -58,16 +66,4 @@ void ShiftRegister74HC595<Size>::updateRegisters(){
     }    
     digitalWrite(_latchPin, HIGH); 
     digitalWrite(_latchPin, LOW); 
-}
-
-
-
-// Sets all pins of all shift registers to LOW (0).
-template<uint8_t Size>
-void ShiftRegister74HC595<Size>::setAllLow()
-{
-    for (int i = 0; i < Size; i++) {
-        _digitalValues[i] = 0;
-    }
-    updateRegisters();
 }
