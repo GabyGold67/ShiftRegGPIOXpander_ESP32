@@ -18,91 +18,96 @@
   * @warning **Use of this library is under your own responsibility**
   ******************************************************************************
 */
-
 #ifndef _SHIFTREGISTER74HC595_ESP32_H_
 #define _SHIFTREGISTER74HC595_ESP32_H_
 
 #include <Arduino.h>
+#include <stdint.h>
 
 /**
- * @brief A template class for easy 74HC595/74HCT595 shift register data management.
+ * @brief A class for easy 74HC595/74HCT595 shift register data management.
  * 
- * @tparam Size Quantity of registers set in cascade configuration.
- * @attention When more than one shift register is set as configuration they will be arranged as an array of 8 bits values (uint8_t, unsigned short int, char, byte) and not as a sequence of tparam*8 bits
  * @class ShiftRegister74HC595
 */
-template<uint8_t Size>
-class ShiftRegister74HC595 
-{
+class ShiftRegister74HC595 {
 private:
-    uint8_t _serialDataPin;
-    uint8_t _clockPin;
-    uint8_t _latchPin;
+   uint8_t _serialDataPin;
+   uint8_t _clockPin;
+   uint8_t _latchPin;
+   uint8_t _srQty;
 
-    uint8_t  _digitalValues[Size];
+   uint8_t _maxPin{};
+   uint8_t* _srArryBuffPtr{nullptr};
 public:
    /**
     * @brief Class constructor
     * 
-    * @param serialDataPin GPIO pin connected to the SDA pin of the 74HC595 to send output data serially
-    * @param clockPin GPIO pin connected to the CP pin of the 74HC595 to manage the communication's clock
-    * @param latchPin GPIO pin connected to the LP pin of the 74HC595 to set (latch) the Q0~Q7 output pins to the loaded register value
+    * Instantiates a ShiftRegister74HC595 object, a model of a 74HCx595 -or more than one in daisy-chain connection- for an easy transparent bit or multibit state management.
+    * 
+    * @param serialDataPin GPIO pin connected to the DS pin of the 74HC595 to send output data serially
+    * @param clockPin GPIO pin connected to the SH_CP pin of the 74HC595 to manage the communication's clock
+    * @param latchPin GPIO pin connected to the ST_CP pin of the 74HC595 to set (latch) the Q0~Q7 output pins from the internal buffer register.
+    * @param srQty Quantity of shift registers set in daisy-chain configuration (cascading)
+    * 
+    * @attention The array of bytes set to hold the values to set to the shift registers will be arranged sequentially with a pointer to the first byte, meaning the pointer position +0 will hold bits 00~08, the pointer position +1 will hold bits 09~15 and so on, with the lower bit representing the LSb or rightmost bit
     */
-   ShiftRegister74HC595(const uint8_t serialDataPin, const uint8_t clockPin, const uint8_t latchPin);
+   ShiftRegister74HC595(uint8_t serialDataPin, uint8_t clockPin, uint8_t latchPin, uint8_t srQty = 1);
    /**
     * @brief Returns the state of the requested pin.
     * 
     * @param pin Pin whose current value is required
-    * @return uint8_t The state value of the requested pin, either HIGH (1) or LOW (0)
-    */
-   uint8_t get(const uint8_t pin);
-   /**
-    * @brief Retrieve all states of the shift registers' output pins.
+    * @return The state value of the requested pin, either HIGH (0x01) or LOW (0x00)
     * 
-    * @return Pointer to the array of uint8_t holding the registers values
-    *
-    * @note The returned array's length is equal to the number of shift registers.
+    * @note The value is retrieved from the object's buffer, not the real chip
     */
-   uint8_t* getAll();
+   uint8_t digitalRead(const uint8_t &pin);
    /**
-   * @brief Set a specific pin to either HIGH (1) or LOW (0).
+    * @brief Retrieves the states of the all the shift registers' output pins.
+    * 
+    * @return Pointer to the array of uint8_t holding the buffered shift registers values
+    *
+    * @note The returned array's length is equal to the number of shift registers set in daisy-chain.
+    */
+   uint8_t* getArryBuffPtr();
+   /**
+   * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
    * @param pin a positive, zero-based integer, indicating which pin to set.
-   * @param value Value for the indicated Pin
+   * @param value Value to set for the indicated Pin
    */
-    void set(const uint8_t pin, const uint8_t value);
+    void digitalWrite(const uint8_t pin, const uint8_t value);
+    uint8_t getMaxPin();
+    uint8_t getSrQty();
     /**
      * @brief Set all pins of the shift registers at once.
      * 
      * @param digitalValues uint8_t array where the length is equal to the number of shift registers.
      */
-    void setAll(const uint8_t * digitalValues);
+    void digitalWriteOver(const uint8_t * digitalValues);
     /**
      * @brief Sets all pins of all shift registers to HIGH (1).
      */
-    void setAllHigh(); 
+    void digitalWriteAllSet(); 
     /**
      * @brief Sets all pins of all shift registers to LOW (0).
      * 
      */
-    void setAllLow();
+    void digitalWriteAllReset();
    /**
     * @brief Equivalent to set(int pin, uint8_t value), except the physical shift register is not updated.
     * 
     * @param pin 
     * @param value 
     *
-    * @attention Should be used in combination with updateRegisters().
+    * @attention Should be used in combination with updShftRgstrs().
    */
-   void setNoUpdate(const uint8_t pin, uint8_t value);
+   void digitalWriteBuff(const uint8_t pin, uint8_t value);
    /**
     * @brief Updates the shift register pins to the stored output values.
     *
     * @note This is the function that actually writes data into the shift registers of the 74HC595.
    */
-  void updateRegisters();
+  void updShftRgstrs();
 };
-
-#include <ShiftRegister74HC595.hpp>
 
 #endif //_SHIFTREGISTER74HC595_ESP32_H_
