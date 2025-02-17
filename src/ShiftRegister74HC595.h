@@ -19,8 +19,11 @@
   ******************************************************************************
 */
 
-#pragma once
+#ifndef _SHIFTREGISTER74HC595_ESP32_H_
+#define _SHIFTREGISTER74HC595_ESP32_H_
+
 #include <Arduino.h>
+
 /**
  * @brief A template class for easy 74HC595/74HCT595 shift register data management.
  * 
@@ -100,4 +103,6 @@ public:
   void updateRegisters();
 };
 
-#include "ShiftRegister74HC595.hpp"
+#include <ShiftRegister74HC595.hpp>
+
+#endif //_SHIFTREGISTER74HC595_ESP32_H_

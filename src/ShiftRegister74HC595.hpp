@@ -1,3 +1,7 @@
+
+#include <Arduino.h>
+#include "ShiftRegister74HC595.h"
+
 template<uint8_t Size>
 ShiftRegister74HC595<Size>::ShiftRegister74HC595(const uint8_t serialDataPin, const uint8_t clockPin, const uint8_t latchPin)
 :_clockPin{clockPin}, _serialDataPin {serialDataPin}, _latchPin{latchPin}
