@@ -124,11 +124,11 @@ public:
     *
     * @note This is the function that actually writes data into the 74HC595 shift registers.
    */
-   void updShftRgstrs();
-/*
-   void ShiftReg74HC595Chain::send(uint8_t content);
-   void ShiftReg74HC595Chain::send(const uint8_t &segments, const uint8_t &port);
-*/
+   void sendBuffr();
+
+   // void updShftRgstrs();
+   // void ShiftReg74HC595Chain::send(uint8_t content);
+   // void ShiftReg74HC595Chain::send(const uint8_t &segments, const uint8_t &port);
   };
 
 #endif //_SHIFTREGISTER74HC595_ESP32_H_
