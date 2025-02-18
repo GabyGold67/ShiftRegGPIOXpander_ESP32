@@ -1,13 +1,13 @@
 /**
   ******************************************************************************
-  * @file   ShiftRegister74HC595.h
-  * @brief  Header file for the ShiftRegister74HC595 Library for simplified control of 74HC595 shift registers.
+  * @file   ShiftReg74HC595Chain.h
+  * @brief  Header file for the ShiftReg74HC595Chain Library for simplified control of 74HC595 shift registers.
   *
   * @details Additional information is available at https://timodenk.com/blog/shift-register-arduino-library/
   *
   * @author	: Gabriel D. Goldman
   * 
-  * @version v
+  * @version v1.0.0
   * @date First release: 12/02/2025 
   *       Last update:   12/02/2025 10:50 (GMT+0200)
   * 
@@ -18,22 +18,26 @@
   * @warning **Use of this library is under your own responsibility**
   ******************************************************************************
 */
-#ifndef _SHIFTREGISTER74HC595_ESP32_H_
-#define _SHIFTREGISTER74HC595_ESP32_H_
+#ifndef _SHIFTREG74HC595CHAIN_ESP32_H_
+#define _SHIFTREG74HC595CHAIN_ESP32_H_
 
 #include <Arduino.h>
 #include <stdint.h>
 
 /**
- * @brief A class for easy 74HC595/74HCT595 shift register data management.
+ * @brief A class for easy 74HCx595 shift register data management.
  * 
- * @class ShiftRegister74HC595
+ * The class models a 74HCx595 shift register daisy-chain object, from 1 to 256 registers
+ * 
+ * @attention Altough the number of shift registers connected has no theoretical limits, a clock line sincronization limits the practical number of registers to daisy-chain. Read the specific product data sheet for precise information
+ * 
+ * @class ShiftReg74HC595Chain
 */
-class ShiftRegister74HC595 {
+class ShiftReg74HC595Chain {
 private:
-   uint8_t _serialDataPin;
-   uint8_t _clockPin;
-   uint8_t _latchPin;
+   uint8_t _ds;
+   uint8_t _sh_cp;
+   uint8_t _st_cp;
    uint8_t _srQty;
 
    uint8_t _maxPin{};
@@ -42,16 +46,16 @@ public:
    /**
     * @brief Class constructor
     * 
-    * Instantiates a ShiftRegister74HC595 object, a model of a 74HCx595 -or more than one in daisy-chain connection- for an easy transparent bit or multibit state management.
+    * Instantiates a ShiftReg74HC595Chain object, a model of a 74HCx595 -or more than one in daisy-chain connection- for an easy transparent bit or multibit state management.
     * 
-    * @param serialDataPin GPIO pin connected to the DS pin of the 74HC595 to send data serially to the shift register
-    * @param clockPin GPIO pin connected to the SH_CP pin of the 74HC595 to manage the communication's clock
-    * @param latchPin GPIO pin connected to the ST_CP pin of the 74HC595 to set (latch) the Q0~Q7 output pins from the internal buffer register.
+    * @param ds GPIO pin connected to the DS pin of the 74HC595 to send data output serially to the shift register
+    * @param sh_cp GPIO pin connected to the SH_CP pin of the 74HC595 to manage the communication's clock
+    * @param st_cp GPIO pin connected to the ST_CP pin of the 74HC595 to set (latch) the Q0~Q7 output pins from the internal buffer register.
     * @param srQty Quantity of shift registers set in daisy-chain configuration.
     * 
     * @attention The array of bytes set to hold the values to set to the shift registers will be arranged sequentially with a pointer to the first byte, meaning the pointer position +0 will hold bits 00~07, the pointer position +1 will hold bits 08~15 and so on, with the lower bit representing the LSb or rightmost bit
     */
-   ShiftRegister74HC595(uint8_t serialDataPin, uint8_t clockPin, uint8_t latchPin, uint8_t srQty = 1);
+   ShiftReg74HC595Chain(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -121,6 +125,10 @@ public:
     * @note This is the function that actually writes data into the 74HC595 shift registers.
    */
    void updShftRgstrs();
-};
+/*
+   void ShiftReg74HC595Chain::send(uint8_t content);
+   void ShiftReg74HC595Chain::send(const uint8_t &segments, const uint8_t &port);
+*/
+  };
 
 #endif //_SHIFTREGISTER74HC595_ESP32_H_
