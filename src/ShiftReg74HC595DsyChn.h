@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
-  * @file   ShiftReg74HC595Chain.h
-  * @brief  Header file for the ShiftReg74HC595Chain Library for simplified control of 74HC595 shift registers.
+  * @file   ShiftReg74HC595DsyChn.h
+  * @brief  Header file for the ShiftReg74HC595DsyChn Library for simplified control of 74HC595 shift registers.
   *
   * @details Additional information is available at https://timodenk.com/blog/shift-register-arduino-library/
   *
@@ -29,33 +29,40 @@
  * 
  * The class models a 74HCx595 shift register daisy-chain object, from 1 to 256 registers
  * 
- * @attention Altough the number of shift registers connected has no theoretical limits, a clock line sincronization limits the practical number of registers to daisy-chain. Read the specific product data sheet for precise information
+ * @attention Although the number of shift registers connected has no theoretical limit, the clock line sincronization limits the practical number of registers to daisy-chain. Read the specific product data sheet for precise information
  * 
- * @class ShiftReg74HC595Chain
+ * @class ShiftReg74HC595DsyChn
 */
-class ShiftReg74HC595Chain {
+class ShiftReg74HC595DsyChn {
 private:
-   uint8_t _ds;
-   uint8_t _sh_cp;
-   uint8_t _st_cp;
-   uint8_t _srQty;
+   uint8_t _ds{};
+   uint8_t _sh_cp{};
+   uint8_t _st_cp{};
+   uint8_t _srQty{};
+  //  static uint8_t _srQty;
 
-   uint8_t _maxPin{};
+   uint8_t _maxPin{0};
    uint8_t* _srArryBuffPtr{nullptr};
+  uint8_t _testBuff[2]; //FTPO avoiding the dynamic allocation
+  uint8_t* _testBuffPtr{_testBuff}; //FTPO avoiding the dynamic allocation
+
+  //  static uint8_t* _srArryBuffPtr;
 public:
    /**
     * @brief Class constructor
     * 
-    * Instantiates a ShiftReg74HC595Chain object, a model of a 74HCx595 -or more than one in daisy-chain connection- for an easy transparent bit or multibit state management.
+    * Instantiates a ShiftReg74HC595DsyChn object, a model of a 74HCx595 -or more than one in daisy-chain connection- for an easy transparent bit or multibit state management.
     * 
-    * @param ds GPIO pin connected to the DS pin of the 74HC595 to send data output serially to the shift register
-    * @param sh_cp GPIO pin connected to the SH_CP pin of the 74HC595 to manage the communication's clock
-    * @param st_cp GPIO pin connected to the ST_CP pin of the 74HC595 to set (latch) the Q0~Q7 output pins from the internal buffer register.
+    * @param ds GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HC595 to send data output serially to the shift register
+    * @param sh_cp GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HC595 to manage the communication's clock
+    * @param st_cp GPIO pin connected to the ST_CP pin of the 74HC595 -a.k.a. storage register clock input- to set (latch) the Q0~Q7 output pins from the internal buffer register.
     * @param srQty Quantity of shift registers set in daisy-chain configuration.
     * 
     * @attention The array of bytes set to hold the values to set to the shift registers will be arranged sequentially with a pointer to the first byte, meaning the pointer position +0 will hold bits 00~07, the pointer position +1 will hold bits 08~15 and so on, with the lower bit representing the LSb or rightmost bit
     */
-   ShiftReg74HC595Chain(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
+   ShiftReg74HC595DsyChn(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
+   
+   ~ShiftReg74HC595DsyChn();
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -128,7 +135,7 @@ public:
 
    // void updShftRgstrs();
    // void ShiftReg74HC595Chain::send(uint8_t content);
-   // void ShiftReg74HC595Chain::send(const uint8_t &segments, const uint8_t &port);
+   // void ShiftReg74HC595DsyChn::send(const uint8_t &segments, const uint8_t &port);
   };
 
 #endif //_SHIFTREGISTER74HC595_ESP32_H_
