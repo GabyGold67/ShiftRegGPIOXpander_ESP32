@@ -1,5 +1,5 @@
 /**
- * @file ShiftRegGPIOExtend.h
+ * @file ShiftRegGPIOXtender.h
  * @brief Header file for the ShiftRegGPIOExtend_ESP32 library 
  * 
  * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
@@ -9,7 +9,7 @@
  * @version 1.0.0
  * 
  * @date First release: 12/02/2025 
- *       Last update:   20/02/2025 16:30 (GMT+0200)
+ *       Last update:   24/02/2025 16:30 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025
  *******************************************************************************
@@ -24,7 +24,9 @@
 #include <Arduino.h>
 
 /**
- * @brief 
+ * @brief A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers
+ * 
+ * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected
  * 
  * @class ShiftRegGPIOXtender
  */
@@ -33,23 +35,14 @@ private:
    uint8_t _ds{};
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
-   const uint8_t _srQty{};
+   uint8_t _srQty{};
 
    uint8_t _maxPin{0};
-   // uint8_t* _srArryBuffPtr{nullptr};
-   static uint8_t* _srArryBuffPtr;
-
+   uint8_t* _srArryBuffPtr{nullptr};
    uint8_t* _auxArryBuffPtr{nullptr};
    bool _mainBuffBlckd{false};
 
-   /**
-    * @brief 
-    * 
-    * @param data 
-    * 
-    * @return 
-    */
-   bool _sendSnglSRCntnt(uint8_t data);
+   bool _sendSnglSRCntnt(uint8_t data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 public:
    /**
     * @brief Class default constructor
@@ -59,37 +52,138 @@ public:
    /**
     * @brief Class constructor
     * 
-    * Instantiates a ShiftRegGPIOXtender object, a model of a GPIO pin expansion that adds digital output pins managed with an API similar to the built in platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection parameters to the hardware is needed to build the object
+    * Instantiates a ShiftRegGPIOXtender object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement.  
     * 
     * @param ds MCU GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HCx595 to send data serially to the expander
     * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander
     * @param st_cp MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input- to set (latch) the output pins from the internal buffer of the expander
     * @param srQty Quantity of shift registers set in daisy-chain configuration composing the expander.
+    * 
+    * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or "the Main".  
+    * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
+    * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as **the Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
+    * 
+    * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
    ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
    /**
     * @brief Class destructor
     * 
     * Takes care of resources releasing
-    * 
     */
    ~ShiftRegGPIOXtender();
+   /**
+    * @brief Copies the Buffer content to the Auxiliary Buffer  
+    * 
+    * If there's no existent Auxiliary the method creates it and copies the content  
+    * If there's an Auxiliary, the method will proceed acording to the value passed in the parameter:
+    * - If the parameter passed is true the Auxiliary contents will be overwritten with the Buffer contents
+    * - If the parameter passed is true the Auxiliary will not be modified and the method will return a false to flag the failure of the operation
+    * 
+    * @param overWriteIfExists Indicates the authorization to overwrite the Auxiliary with the contents of the Main Buffer if the Auxiliary exists at the moment of the invocation.
+    * 
+    * @return The success of the overwriting operation
+    * @retval true The Auxiliary was non-existent, or existed and the parameter was true
+    * @retval false The Auxiliary was existent and the parameter was false, not allowing the Auxiliary to be overwritten
+    */
+   bool copyMainToAux(bool overWriteIfExists = true);
+   /**
+    * @brief Deletes Auxiliary Buffer
+    * 
+    * Deletes the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
+    */
+   void deleteAuxBuff();
+   /**
+    * @brief Returns the state of the requested pin.
+    * 
+    * @param pin Pin whose current value is required.
+    * 
+    * @return The state value of the requested pin, either HIGH (0x01) or LOW (0x00)
+    * @retval 0x00 The pin state was LOW
+    * @retval 0x01 The pin state was HIGH
+    * @retval 0xFF ERROR, the pin number was beyond implemented limit
+    * 
+    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the buffer was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency difference might be expected, so the method checks for the Auxiliary existence, if it exists a moveAuxToMain(true) will be executed before returning the pin state.  
+    * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. It's supposed every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.    
+    */
+   uint8_t digitalRead(const uint8_t &pin);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
    * @param pin a positive value indicating which pin to set. The valid range is 0 <= pin <= (srQty*8)-1
    * @param value Value to set for the indicated Pin
    */
-  void digitalWrite(const uint8_t pin, const uint8_t value);
+   void digitalWrite(const uint8_t pin, const uint8_t value);
+   /**
+   * @brief Sets all the pins to LOW (0x00).
+   */
+   void digitalWriteAllReset();
+   /**
+   * @brief Sets all the pins to HIGH (0x01).
+   */
+   void digitalWriteAllSet();
+   /**
+   * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
+   * 
+   * @param pin a positive value indicating which pin to set. The valid range is 0 <= pin <= (srQty*8)-1
+   * @param value Value to set for the indicated Pin
+   * 
+   * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool)
+   * 
+   * @note An alternative procedure in the line of the use of .print() and .println() methods is to invoke the several digitalWriteToAux() methods needed and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
+   */
+   void digitalWriteToAux(const uint8_t pin, const uint8_t value);
+   /**
+    * @brief Retrieves the pointer to the Main Buffer.
+    * 
+    * @return Pointer to the array of uint8_t holding the buffered shift registers values
+    *
+    * @note The returned array's length is equal to the number of shift registers set in daisy-chain, see uint8_t getSrQty() for information.
+    */
+   uint8_t* getMainBuffPtr();
+   /**
+     * @brief Return the greatest valid pin number
+     * 
+     * The greatest valid pin number is directly related to the quantity of shift registers connected
+     * 
+     * @return uint8_t maxPin value
+     */
+   uint8_t getMaxPin();
+   /**
+     * @brief Return the quantity of shift registers composing the GPIOXtender object
+     * 
+     * The value is passed as a parameter in the class constructor
+     * 
+     * @return uint8_t The number of shift registers represented by the object
+     */
+   uint8_t getSrQty();
   /**
-    * @brief Sends the content of the buffered expander output pins state to the hardware pins.
+    * @brief Moves the data in the Auxiliary to the Main
     * 
-    * The method will ensure the object buffer is updated -if there are modifications pending in the auxiliary buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
+    * Moving the contents from the Auxiliary to the Main implies several steps:  
+    * - Check the existence of the Auxiliary
+    * - Copy the contents from the Auxiliary to the Main
+    * - Delete the Auxiliary
     * 
-    * @return 
+    * @return The success of moving the data from the Auxiliar to the Main
+    * @retval true There was an Auxiliary an it's value could be moved
+    * @retval false There was no Auxiliary present, no data have been moved
+    */
+   bool moveAuxToMain(bool flushASAP = true);
+  /**
+    * @brief Flushes the contents of the Buffer to the GPIO Extender.
+    * 
+    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
+    * 
+    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.
+    * 
+    * @return true if the operation succeeds
+    * 
+    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would indicate otherwise
+    * 
+    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
     */
    bool sendAllSRCntnt();
-
 };
 
 
