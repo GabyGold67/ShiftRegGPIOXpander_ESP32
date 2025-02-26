@@ -43,6 +43,29 @@ ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
 }
 
+/*
+ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t* mainBuffPtr, uint8_t srQty)   //FTPO
+:_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srArryBuffPtr {mainBuffPtr}, _srQty{srQty}
+{
+   digitalWrite(_sh_cp, HIGH);
+   digitalWrite(_ds, LOW);
+   digitalWrite(_st_cp, HIGH);
+
+   pinMode(_sh_cp, OUTPUT);
+   pinMode(_ds, OUTPUT);
+   pinMode(_st_cp, OUTPUT);
+
+   _maxPin = (_srQty * 8) - 1;
+
+   //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
+   for(int i{0}; i < _srQty; i++){
+      *(_srArryBuffPtr + i) = 0x00;
+   }
+   sendAllSRCntnt();
+   //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
+}
+*/
+
 ShiftRegGPIOXtender::~ShiftRegGPIOXtender(){
    if(_auxArryBuffPtr !=nullptr){
       delete [] _auxArryBuffPtr;

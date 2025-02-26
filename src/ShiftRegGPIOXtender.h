@@ -65,6 +65,9 @@ public:
     * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
    ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
+
+  //  ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t* mainBuffPtr, uint8_t srQty = 1);  //FTPO failure in reserving dynamic memory in object
+
    /**
     * @brief Class destructor
     * 
