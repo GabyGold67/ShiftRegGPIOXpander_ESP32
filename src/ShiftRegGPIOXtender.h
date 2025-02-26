@@ -17,11 +17,11 @@
  * @warning 
  *******************************************************************************
  */
-
 #ifndef _ShiftRegGPIOXtender_ESP32_H_
 #define _ShiftRegGPIOXtender_ESP32_H_
 
 #include <Arduino.h>
+#include <stdint.h>
 
 /**
  * @brief A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers
@@ -37,10 +37,9 @@ private:
    uint8_t _st_cp{};
    uint8_t _srQty{};
 
+   uint8_t* _srArryBuffPtr{};
    uint8_t _maxPin{0};
-   uint8_t* _srArryBuffPtr{nullptr};
    uint8_t* _auxArryBuffPtr{nullptr};
-   bool _mainBuffBlckd{false};
 
    bool _sendSnglSRCntnt(uint8_t data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 public:

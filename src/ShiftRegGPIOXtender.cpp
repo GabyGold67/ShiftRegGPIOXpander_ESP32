@@ -33,12 +33,11 @@ ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    pinMode(_ds, OUTPUT);
    pinMode(_st_cp, OUTPUT);
 
-   // _srArryBuffPtr = new uint8_t [_srQty]; // Already taken care at initialization list
    _maxPin = (_srQty * 8) - 1;
 
    //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
    for(int i{0}; i < _srQty; i++){  //TODO This implementation forces the Buffer to be started with all output pins set to LOW/0x00 and flush the buffer to the physical pins. Maybe the initial value might be a configurable parameter to avoid erroneous activation of LOW level activation devices, like some relays? Just like the MCU, you first select it's inital value, then you set the pins as outputs!! The initial value to set then would be passed as a construction parameter, a pointer to an array of values to put at instantiation time
-      _srArryBuffPtr[i] = (uint8_t)0x00;
+      *(_srArryBuffPtr + i) = 0x00;
    }
    sendAllSRCntnt();
    //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
@@ -173,7 +172,7 @@ bool ShiftRegGPIOXtender::sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
    bool result{true};
 
-   if(_srQty > 0){
+   if((_srQty > 0) && (_srArryBuffPtr != nullptr)){
       digitalWrite(_st_cp, LOW); // Start of access to the shift register internal buffer to write -> Lower the latch pin
       for(int srBuffDsplcPtr{_srQty - 1}; srBuffDsplcPtr >= 0; srBuffDsplcPtr--){
          curSRcntnt = *(_srArryBuffPtr + srBuffDsplcPtr);
