@@ -87,7 +87,7 @@ bool ShiftRegGPIOXtender::copyMainToAux(bool overWriteIfExists){
    return result;
 }
 
-void ShiftRegGPIOXtender::deleteAuxBuff(){
+void ShiftRegGPIOXtender::discardAuxBuff(){
    if(_auxArryBuffPtr != nullptr){
       delete [] _auxArryBuffPtr;
       _auxArryBuffPtr = nullptr;
@@ -96,7 +96,7 @@ void ShiftRegGPIOXtender::deleteAuxBuff(){
    return;
 }
 
-uint8_t ShiftRegGPIOXtender::digitalRead(const uint8_t &pin){
+uint8_t ShiftRegGPIOXtender::digitalReadSr(const uint8_t &pin){
    uint8_t result{0xFF};
 
    if(pin <= _maxPin){
@@ -126,7 +126,7 @@ void ShiftRegGPIOXtender::digitalWriteSr(const uint8_t pin, const uint8_t value)
 
 void ShiftRegGPIOXtender::digitalWriteSrAllReset(){
    if(_auxArryBuffPtr != nullptr)
-      deleteAuxBuff();
+      discardAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
       *(_srArryBuffPtr + i) = 0x00;
    sendAllSRCntnt();
@@ -136,7 +136,7 @@ void ShiftRegGPIOXtender::digitalWriteSrAllReset(){
 
 void ShiftRegGPIOXtender::digitalWriteSrAllSet(){
    if(_auxArryBuffPtr != nullptr)
-      deleteAuxBuff();
+      discardAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
       *(_srArryBuffPtr + i) = (uint8_t)0xFF;
    sendAllSRCntnt();
@@ -179,7 +179,7 @@ bool ShiftRegGPIOXtender::moveAuxToMain(bool flushASAP){
 
    if(_auxArryBuffPtr != nullptr){
       memcpy( _srArryBuffPtr, _auxArryBuffPtr, _srQty);   // destPtr, srcPtr, size
-      deleteAuxBuff();
+      discardAuxBuff();
       if(flushASAP)
          sendAllSRCntnt();
    }
@@ -187,12 +187,12 @@ bool ShiftRegGPIOXtender::moveAuxToMain(bool flushASAP){
    return result;
 }
 
-bool ShiftRegGPIOXtender::overWriteMain(uint8_t* newCntntPtr){
+bool ShiftRegGPIOXtender::overwriteMain(uint8_t* newCntntPtr){
    bool result {false};
 
    if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
       if(_auxArryBuffPtr != nullptr){
-         deleteAuxBuff();
+         discardAuxBuff();
       }
       memcpy(_srArryBuffPtr, newCntntPtr, _srQty);
       sendAllSRCntnt();

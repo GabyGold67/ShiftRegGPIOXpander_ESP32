@@ -5,18 +5,21 @@
 ###############################################
 # Datatypes (KEYWORD1)
 ###############################################
-ShiftReg74HC595Chain	KEYWORD1
+ShiftRegGPIOXtender	KEYWORD1
 
 ###############################################
 # Methods and Functions (KEYWORD2)
 ###############################################
-digitalRead	KEYWORD2
-digitalWrite	KEYWORD2
-digitalWriteAllReset	KEYWORD2
-digitalWriteAllSet	KEYWORD2
-digitalWriteBuff	KEYWORD2
-digitalWriteOver	KEYWORD2
-getArryBuffPtr	KEYWORD2
+copyMainToAux	KEYWORD2
+discardAuxBuff	KEYWORD2
+digitalReadSr	KEYWORD2
+digitalWriteSr	KEYWORD2
+digitalWriteSrAllReset	KEYWORD2
+digitalWriteSrAllSet	KEYWORD2
+digitalWriteSrToAux	KEYWORD2
+getMainBuffPtr	KEYWORD2
 getMaxPin	KEYWORD2
 getSrQty	KEYWORD2
-updShftRgstrs  KEYWORD2
+moveAuxToMain	KEYWORD2
+overwriteMain	KEYWORD2
+sendAllSRCntnt	KEYWORD2

@@ -81,7 +81,6 @@ public:
     * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
    ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1, uint8_t* initCntnt = nullptr);
-
    /**
     * @brief Class destructor
     * 
@@ -108,7 +107,7 @@ public:
     * 
     * Deletes the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
     */
-   void deleteAuxBuff();
+   void discardAuxBuff();
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -122,7 +121,7 @@ public:
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the buffer was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency difference might be expected, so the method checks for the Auxiliary existence, if it exists a moveAuxToMain(true) will be executed before returning the pin state.  
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. It's supposed every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.    
     */
-   uint8_t digitalRead(const uint8_t &pin);
+   uint8_t digitalReadSr(const uint8_t &pin);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -200,7 +199,7 @@ public:
    * 
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
-  bool overWriteMain(uint8_t* newCntntPtr);
+  bool overwriteMain(uint8_t* newCntntPtr);
    /**
     * @brief Flushes the contents of the Buffer to the GPIO Extender.
     * 
