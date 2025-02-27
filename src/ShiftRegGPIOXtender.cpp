@@ -1,18 +1,33 @@
 /**
  * @file ShiftRegGPIOXtender.cpp
- * @brief Code file for the ShiftRegGPIOExtend_ESP32 library 
+ * @brief Code file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * @author Gabriel D. Goldman
  * 
  * @version 1.0.0
  * 
  * @date First release: 12/02/2025 
- *       Last update:   24/02/2025 16:30 (GMT+0200)
+ *       Last update:   27/02/2025 12:40 (GMT+0200)
  * 
- * @copyright Copyright (c) 2025
+ * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
- * @attention 
- * @warning 
+  * @attention	This library was developed as part of the refactoring process for
+  * an industrial machines security enforcement and productivity control
+  * (hardware & firmware update). As such every class included complies **AT LEAST**
+  * with the provision of the attributes and methods to make the hardware & firmware
+  * replacement transparent to the controlled machines. Generic use attribute and
+  * methods were added to extend the usability to other projects and application
+  * environments, but no fitness nor completeness of those are given but for the
+  * intended refactoring project.
+  * 
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category describe by The Alan 
+  * Parsons Project (c) 1980 Games People play:
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * Games people play in the middle of the night
  *******************************************************************************
  */
 #include <Arduino.h>
@@ -22,13 +37,12 @@ ShiftRegGPIOXtender::ShiftRegGPIOXtender()
 {
 }
 
-ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty)
+ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty, uint8_t* initCntnt)
 :_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _srArryBuffPtr {new uint8_t [srQty]}
 {
    digitalWrite(_sh_cp, HIGH);
    digitalWrite(_ds, LOW);
    digitalWrite(_st_cp, HIGH);
-
    pinMode(_sh_cp, OUTPUT);
    pinMode(_ds, OUTPUT);
    pinMode(_st_cp, OUTPUT);
@@ -36,35 +50,17 @@ ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    _maxPin = (_srQty * 8) - 1;
 
    //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
-   for(int i{0}; i < _srQty; i++){  //TODO This implementation forces the Buffer to be started with all output pins set to LOW/0x00 and flush the buffer to the physical pins. Maybe the initial value might be a configurable parameter to avoid erroneous activation of LOW level activation devices, like some relays? Just like the MCU, you first select it's inital value, then you set the pins as outputs!! The initial value to set then would be passed as a construction parameter, a pointer to an array of values to put at instantiation time
-      *(_srArryBuffPtr + i) = 0x00;
+   if(initCntnt != nullptr){
+      memcpy(_srArryBuffPtr, initCntnt, _srQty);   // destPtr, srcPtr, size
+   }
+   else{
+      for(int i{0}; i < _srQty; i++){ 
+         *(_srArryBuffPtr + i) = 0x00;
+      }   
    }
    sendAllSRCntnt();
    //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
 }
-
-/*
-ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t* mainBuffPtr, uint8_t srQty)   //FTPO
-:_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srArryBuffPtr {mainBuffPtr}, _srQty{srQty}
-{
-   digitalWrite(_sh_cp, HIGH);
-   digitalWrite(_ds, LOW);
-   digitalWrite(_st_cp, HIGH);
-
-   pinMode(_sh_cp, OUTPUT);
-   pinMode(_ds, OUTPUT);
-   pinMode(_st_cp, OUTPUT);
-
-   _maxPin = (_srQty * 8) - 1;
-
-   //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
-   for(int i{0}; i < _srQty; i++){
-      *(_srArryBuffPtr + i) = 0x00;
-   }
-   sendAllSRCntnt();
-   //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
-}
-*/
 
 ShiftRegGPIOXtender::~ShiftRegGPIOXtender(){
    if(_auxArryBuffPtr !=nullptr){
@@ -114,7 +110,7 @@ uint8_t ShiftRegGPIOXtender::digitalRead(const uint8_t &pin){
    return result;
 }
 
-void ShiftRegGPIOXtender::digitalWrite(const uint8_t pin, const uint8_t value){
+void ShiftRegGPIOXtender::digitalWriteSr(const uint8_t pin, const uint8_t value){
    if(pin <= _maxPin){
       if(_auxArryBuffPtr != nullptr)
          moveAuxToMain(false);
@@ -128,7 +124,7 @@ void ShiftRegGPIOXtender::digitalWrite(const uint8_t pin, const uint8_t value){
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteAllReset(){
+void ShiftRegGPIOXtender::digitalWriteSrAllReset(){
    if(_auxArryBuffPtr != nullptr)
       deleteAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
@@ -138,7 +134,7 @@ void ShiftRegGPIOXtender::digitalWriteAllReset(){
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteAllSet(){
+void ShiftRegGPIOXtender::digitalWriteSrAllSet(){
    if(_auxArryBuffPtr != nullptr)
       deleteAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
@@ -148,7 +144,7 @@ void ShiftRegGPIOXtender::digitalWriteAllSet(){
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteToAux(const uint8_t pin, const uint8_t value){
+void ShiftRegGPIOXtender::digitalWriteSrToAux(const uint8_t pin, const uint8_t value){
    if(pin <= _maxPin){
       if(_auxArryBuffPtr == nullptr){
          copyMainToAux();
@@ -191,12 +187,28 @@ bool ShiftRegGPIOXtender::moveAuxToMain(bool flushASAP){
    return result;
 }
 
+bool ShiftRegGPIOXtender::overWriteMain(uint8_t* newCntntPtr){
+   bool result {false};
+
+   if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
+      if(_auxArryBuffPtr != nullptr){
+         deleteAuxBuff();
+      }
+      memcpy(_srArryBuffPtr, newCntntPtr, _srQty);
+      sendAllSRCntnt();
+      result = true;
+   }
+   
+   return result;
+}
+
 bool ShiftRegGPIOXtender::sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
    bool result{true};
 
    if((_srQty > 0) && (_srArryBuffPtr != nullptr)){
       digitalWrite(_st_cp, LOW); // Start of access to the shift register internal buffer to write -> Lower the latch pin
+
       for(int srBuffDsplcPtr{_srQty - 1}; srBuffDsplcPtr >= 0; srBuffDsplcPtr--){
          curSRcntnt = *(_srArryBuffPtr + srBuffDsplcPtr);
          result = _sendSnglSRCntnt(curSRcntnt);

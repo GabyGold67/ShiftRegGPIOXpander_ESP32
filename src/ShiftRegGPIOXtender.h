@@ -1,6 +1,6 @@
 /**
  * @file ShiftRegGPIOXtender.h
- * @brief Header file for the ShiftRegGPIOExtend_ESP32 library 
+ * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
  * 
@@ -9,12 +9,27 @@
  * @version 1.0.0
  * 
  * @date First release: 12/02/2025 
- *       Last update:   24/02/2025 16:30 (GMT+0200)
+ *       Last update:   27/02/2025 12:40 (GMT+0200)
  * 
- * @copyright Copyright (c) 2025
+ * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
- * @attention 
- * @warning 
+  * @attention	This library was developed as part of the refactoring process for
+  * an industrial machines security enforcement and productivity control
+  * (hardware & firmware update). As such every class included complies **AT LEAST**
+  * with the provision of the attributes and methods to make the hardware & firmware
+  * replacement transparent to the controlled machines. Generic use attribute and
+  * methods were added to extend the usability to other projects and application
+  * environments, but no fitness nor completeness of those are given but for the
+  * intended refactoring project.
+  * 
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category describe by The Alan 
+  * Parsons Project (c) 1980 Games People play:
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * Games people play in the middle of the night
  *******************************************************************************
  */
 #ifndef _ShiftRegGPIOXtender_ESP32_H_
@@ -26,7 +41,7 @@
 /**
  * @brief A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers
  * 
- * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected
+ * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected is needed
  * 
  * @class ShiftRegGPIOXtender
  */
@@ -38,8 +53,8 @@ private:
    uint8_t _srQty{};
 
    uint8_t* _srArryBuffPtr{};
-   uint8_t _maxPin{0};
    uint8_t* _auxArryBuffPtr{nullptr};
+   uint8_t _maxPin{0};
 
    bool _sendSnglSRCntnt(uint8_t data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 public:
@@ -56,7 +71,8 @@ public:
     * @param ds MCU GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HCx595 to send data serially to the expander
     * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander
     * @param st_cp MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input- to set (latch) the output pins from the internal buffer of the expander
-    * @param srQty Quantity of shift registers set in daisy-chain configuration composing the expander.
+    * @param srQty Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.
+    * @param initCntnt Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions.
     * 
     * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or "the Main".  
     * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
@@ -64,9 +80,7 @@ public:
     * 
     * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
-   ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
-
-  //  ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t* mainBuffPtr, uint8_t srQty = 1);  //FTPO failure in reserving dynamic memory in object
+   ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1, uint8_t* initCntnt = nullptr);
 
    /**
     * @brief Class destructor
@@ -115,15 +129,15 @@ public:
    * @param pin a positive value indicating which pin to set. The valid range is 0 <= pin <= (srQty*8)-1
    * @param value Value to set for the indicated Pin
    */
-   void digitalWrite(const uint8_t pin, const uint8_t value);
+   void digitalWriteSr(const uint8_t pin, const uint8_t value);
    /**
    * @brief Sets all the pins to LOW (0x00).
    */
-   void digitalWriteAllReset();
+   void digitalWriteSrAllReset();
    /**
    * @brief Sets all the pins to HIGH (0x01).
    */
-   void digitalWriteAllSet();
+   void digitalWriteSrAllSet();
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
@@ -134,7 +148,7 @@ public:
    * 
    * @note An alternative procedure in the line of the use of .print() and .println() methods is to invoke the several digitalWriteToAux() methods needed and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
    */
-   void digitalWriteToAux(const uint8_t pin, const uint8_t value);
+   void digitalWriteSrToAux(const uint8_t pin, const uint8_t value);
    /**
     * @brief Retrieves the pointer to the Main Buffer.
     * 
@@ -171,8 +185,23 @@ public:
     * @retval true There was an Auxiliary an it's value could be moved
     * @retval false There was no Auxiliary present, no data have been moved
     */
-   bool moveAuxToMain(bool flushASAP = true);
+  bool moveAuxToMain(bool flushASAP = true);
   /**
+   * @brief Sets all of the output pins of the shift register to new provided values at once.  
+   * 
+   * The method gives a tool to change all the shift registers pins in one operation instead of pin by pin. The method uses the provided pointer as a data source to overwrite the Main Buffer with the new contents.
+   * 
+   * @param newCntntPtr A uint8_t* pointing the memory area containing the new values to be set to the buffer
+   * @return Success in overwritting the Buffer
+   * @retval true The Buffer was overwritten and the new contents flushed
+   * @retval false The parameter passed was a nullptr/NULL and no overwritting was possible.  
+   * 
+   * @attention If there was an ongoing set of deferred pin modifications through the use of writes to the Auxiliary they will be all lost, as the first data consistency prevention of the method is to delete the Auxiliary.
+   * 
+   * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
+   */
+  bool overWriteMain(uint8_t* newCntntPtr);
+   /**
     * @brief Flushes the contents of the Buffer to the GPIO Extender.
     * 
     * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
@@ -187,7 +216,6 @@ public:
     */
    bool sendAllSRCntnt();
 };
-
 
 #endif //ShiftRegGPIOXtender_ESP32_H_
 
