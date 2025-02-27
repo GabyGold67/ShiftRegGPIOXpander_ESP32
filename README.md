@@ -1,10 +1,5 @@
-# ShiftRegister 74HC595 Arduino Library
+# GPIO Extender Library (ShiftRegGPIOXtender_ESP32)  
 
-This library simplifies the usage of shift registers. For instance, it allows to set pins of the shift register just like normal Arduino pins: 
-```
-sr.set(1, HIGH)
-```
+## The driving concept is pretty simple:
+# - Add output pins to your project without changing your programming practices
 
-Please find the detailed **documentation** at https://timodenk.com/blog/shift-register-arduino-library/.
-
-An **example** sketch can be found in this repository at [/examples/example/example.ino](https://github.com/Simsso/ShiftRegister74HC595/blob/master/examples/example/example.ino).
