@@ -5,7 +5,7 @@
 ###############################################
 # Datatypes (KEYWORD1)
 ###############################################
-ShiftRegGPIOXtender	KEYWORD1
+ShiftRegGPIOXpander	KEYWORD1
 
 ###############################################
 # Methods and Functions (KEYWORD2)

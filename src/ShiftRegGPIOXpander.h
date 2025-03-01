@@ -1,5 +1,5 @@
 /**
- * @file ShiftRegGPIOXtender.h
+ * @file ShiftRegGPIOXpander.h
  * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
@@ -9,7 +9,7 @@
  * @version 1.0.0
  * 
  * @date First release: 12/02/2025 
- *       Last update:   27/02/2025 12:40 (GMT+0200)
+ *       Last update:   01/03/2025 20:40 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -32,8 +32,8 @@
   * Games people play in the middle of the night
  *******************************************************************************
  */
-#ifndef _ShiftRegGPIOXtender_ESP32_H_
-#define _ShiftRegGPIOXtender_ESP32_H_
+#ifndef _ShiftRegGPIOXpander_ESP32_H_
+#define _ShiftRegGPIOXpander_ESP32_H_
 
 #include <Arduino.h>
 #include <stdint.h>
@@ -43,9 +43,9 @@
  * 
  * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected is needed
  * 
- * @class ShiftRegGPIOXtender
+ * @class ShiftRegGPIOXpander
  */
-class ShiftRegGPIOXtender{
+class ShiftRegGPIOXpander{
 private:
    uint8_t _ds{};
    uint8_t _sh_cp{};
@@ -62,11 +62,11 @@ public:
     * @brief Class default constructor
     * 
     */
-   ShiftRegGPIOXtender();
+   ShiftRegGPIOXpander();
    /**
     * @brief Class constructor
     * 
-    * Instantiates a ShiftRegGPIOXtender object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement.  
+    * Instantiates a ShiftRegGPIOXpander object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement.  
     * 
     * @param ds MCU GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HCx595 to send data serially to the expander
     * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander
@@ -80,13 +80,13 @@ public:
     * 
     * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
-   ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1, uint8_t* initCntnt = nullptr);
+   ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1, uint8_t* initCntnt = nullptr);
    /**
     * @brief Class destructor
     * 
     * Takes care of resources releasing
     */
-   ~ShiftRegGPIOXtender();
+   ~ShiftRegGPIOXpander();
    /**
     * @brief Copies the Buffer content to the Auxiliary Buffer  
     * 
@@ -216,5 +216,5 @@ public:
    bool sendAllSRCntnt();
 };
 
-#endif //ShiftRegGPIOXtender_ESP32_H_
+#endif //ShiftRegGPIOXpander_ESP32_H_
 

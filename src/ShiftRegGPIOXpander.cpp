@@ -1,5 +1,5 @@
 /**
- * @file ShiftRegGPIOXtender.cpp
+ * @file ShiftRegGPIOXpander.cpp
  * @brief Code file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * @author Gabriel D. Goldman
@@ -31,13 +31,13 @@
  *******************************************************************************
  */
 #include <Arduino.h>
-#include <ShiftRegGPIOXtender.h>
+#include <ShiftRegGPIOXpander.h>
 
-ShiftRegGPIOXtender::ShiftRegGPIOXtender()
+ShiftRegGPIOXpander::ShiftRegGPIOXpander()
 {
 }
 
-ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty, uint8_t* initCntnt)
+ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty, uint8_t* initCntnt)
 :_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _srArryBuffPtr {new uint8_t [srQty]}
 {
    digitalWrite(_sh_cp, HIGH);
@@ -62,7 +62,7 @@ ShiftRegGPIOXtender::ShiftRegGPIOXtender(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
 }
 
-ShiftRegGPIOXtender::~ShiftRegGPIOXtender(){
+ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
    if(_auxArryBuffPtr !=nullptr){
       delete [] _auxArryBuffPtr;
       _auxArryBuffPtr = nullptr;
@@ -73,7 +73,7 @@ ShiftRegGPIOXtender::~ShiftRegGPIOXtender(){
    }
 }
 
-bool ShiftRegGPIOXtender::copyMainToAux(bool overWriteIfExists){
+bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
    bool result {false};
    
    if((_auxArryBuffPtr == nullptr) || overWriteIfExists){
@@ -87,7 +87,7 @@ bool ShiftRegGPIOXtender::copyMainToAux(bool overWriteIfExists){
    return result;
 }
 
-void ShiftRegGPIOXtender::discardAuxBuff(){
+void ShiftRegGPIOXpander::discardAuxBuff(){
    if(_auxArryBuffPtr != nullptr){
       delete [] _auxArryBuffPtr;
       _auxArryBuffPtr = nullptr;
@@ -96,7 +96,7 @@ void ShiftRegGPIOXtender::discardAuxBuff(){
    return;
 }
 
-uint8_t ShiftRegGPIOXtender::digitalReadSr(const uint8_t &pin){
+uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &pin){
    uint8_t result{0xFF};
 
    if(pin <= _maxPin){
@@ -110,7 +110,7 @@ uint8_t ShiftRegGPIOXtender::digitalReadSr(const uint8_t &pin){
    return result;
 }
 
-void ShiftRegGPIOXtender::digitalWriteSr(const uint8_t pin, const uint8_t value){
+void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t pin, const uint8_t value){
    if(pin <= _maxPin){
       if(_auxArryBuffPtr != nullptr)
          moveAuxToMain(false);
@@ -124,7 +124,7 @@ void ShiftRegGPIOXtender::digitalWriteSr(const uint8_t pin, const uint8_t value)
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteSrAllReset(){
+void ShiftRegGPIOXpander::digitalWriteSrAllReset(){
    if(_auxArryBuffPtr != nullptr)
       discardAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
@@ -134,7 +134,7 @@ void ShiftRegGPIOXtender::digitalWriteSrAllReset(){
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteSrAllSet(){
+void ShiftRegGPIOXpander::digitalWriteSrAllSet(){
    if(_auxArryBuffPtr != nullptr)
       discardAuxBuff();
    for(uint8_t i{0}; i < _srQty; i++)
@@ -144,7 +144,7 @@ void ShiftRegGPIOXtender::digitalWriteSrAllSet(){
    return;
 }
 
-void ShiftRegGPIOXtender::digitalWriteSrToAux(const uint8_t pin, const uint8_t value){
+void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t pin, const uint8_t value){
    if(pin <= _maxPin){
       if(_auxArryBuffPtr == nullptr){
          copyMainToAux();
@@ -159,22 +159,22 @@ void ShiftRegGPIOXtender::digitalWriteSrToAux(const uint8_t pin, const uint8_t v
    return;
 }
 
-uint8_t* ShiftRegGPIOXtender::getMainBuffPtr(){
+uint8_t* ShiftRegGPIOXpander::getMainBuffPtr(){
 
    return _srArryBuffPtr;
 }
 
-uint8_t ShiftRegGPIOXtender::getMaxPin(){
+uint8_t ShiftRegGPIOXpander::getMaxPin(){
 
    return _maxPin;
 }
 
-uint8_t ShiftRegGPIOXtender::getSrQty(){
+uint8_t ShiftRegGPIOXpander::getSrQty(){
 
    return _srQty;
 }
 
-bool ShiftRegGPIOXtender::moveAuxToMain(bool flushASAP){
+bool ShiftRegGPIOXpander::moveAuxToMain(bool flushASAP){
    bool result {false};
 
    if(_auxArryBuffPtr != nullptr){
@@ -187,7 +187,7 @@ bool ShiftRegGPIOXtender::moveAuxToMain(bool flushASAP){
    return result;
 }
 
-bool ShiftRegGPIOXtender::overwriteMain(uint8_t* newCntntPtr){
+bool ShiftRegGPIOXpander::overwriteMain(uint8_t* newCntntPtr){
    bool result {false};
 
    if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
@@ -202,7 +202,7 @@ bool ShiftRegGPIOXtender::overwriteMain(uint8_t* newCntntPtr){
    return result;
 }
 
-bool ShiftRegGPIOXtender::sendAllSRCntnt(){
+bool ShiftRegGPIOXpander::sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
    bool result{true};
 
@@ -222,7 +222,7 @@ bool ShiftRegGPIOXtender::sendAllSRCntnt(){
    return result;
 }
 
-bool ShiftRegGPIOXtender::_sendSnglSRCntnt(uint8_t data){
+bool ShiftRegGPIOXpander::_sendSnglSRCntnt(uint8_t data){
    bool result{true};
 
    for (int bitPos {7}; bitPos >= 0; bitPos--){   //Send each of the bits correspondig to one 8-bits shift register module

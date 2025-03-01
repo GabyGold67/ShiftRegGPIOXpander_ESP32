@@ -1,0 +1,31 @@
+{
+    "name": "ShiftRegGPIOXpander",
+    "version": "1.0.0",
+    
+    "description": "",
+    "keywords": "GPIO, Expansion, 74HC595, shift register",
+    
+    
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/GabyGold67/ShiftRegGPIOXpander"
+    },
+    "authors":
+    [
+      {
+        "name": "Gabriel D. Goldman",
+        "email": "gdgoldman67@hotmail.com",
+        "url": "https://github.com/GabyGold67",
+        "maintainer": true
+      }
+    ],
+
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://www.gnu.org/licenses/gpl-3.0-standalone.html",
+    "dependencies":
+    [
+    ] ,
+    "frameworks": "Arduino",
+    "platforms": "espressif32"
+  }
