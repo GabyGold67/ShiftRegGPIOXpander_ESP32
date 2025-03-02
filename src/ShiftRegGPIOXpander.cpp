@@ -47,7 +47,7 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    pinMode(_ds, OUTPUT);
    pinMode(_st_cp, OUTPUT);
 
-   _maxPin = (_srQty * 8) - 1;
+   _maxSrPin = (_srQty * 8) - 1;
 
    //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
    if(initCntnt != nullptr){
@@ -96,28 +96,28 @@ void ShiftRegGPIOXpander::discardAuxBuff(){
    return;
 }
 
-uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &pin){
+uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    uint8_t result{0xFF};
 
-   if(pin <= _maxPin){
+   if(srPin <= _maxSrPin){
       if(_auxArryBuffPtr != nullptr){
          moveAuxToMain(true);
       }   
 
-      result = (*(_srArryBuffPtr + (pin / 8)) >> (pin % 8)) & 0x01;
+      result = (*(_srArryBuffPtr + (srPin / 8)) >> (srPin % 8)) & 0x01;
    }
 
    return result;
 }
 
-void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t pin, const uint8_t value){
-   if(pin <= _maxPin){
+void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t srPin, const uint8_t value){
+   if(srPin <= _maxSrPin){
       if(_auxArryBuffPtr != nullptr)
          moveAuxToMain(false);
       if(value)
-         *(_srArryBuffPtr + (pin / 8)) |= (0x01 << (pin % 8));
+         *(_srArryBuffPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
       else
-         *(_srArryBuffPtr + (pin / 8)) &= ~(0x01 << (pin % 8));
+         *(_srArryBuffPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
    }
    sendAllSRCntnt();
 
@@ -144,16 +144,15 @@ void ShiftRegGPIOXpander::digitalWriteSrAllSet(){
    return;
 }
 
-void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t pin, const uint8_t value){
-   if(pin <= _maxPin){
+void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t value){
+   if(srPin <= _maxSrPin){
       if(_auxArryBuffPtr == nullptr){
          copyMainToAux();
       }
       if(value)
-         *(_auxArryBuffPtr + (pin / 8)) |= (0x01 << (pin % 8));
+         *(_auxArryBuffPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
       else
-         *(_auxArryBuffPtr + (pin / 8)) &= ~(0x01 << (pin % 8));
-
+         *(_auxArryBuffPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
    }
 
    return;
@@ -166,7 +165,7 @@ uint8_t* ShiftRegGPIOXpander::getMainBuffPtr(){
 
 uint8_t ShiftRegGPIOXpander::getMaxPin(){
 
-   return _maxPin;
+   return _maxSrPin;
 }
 
 uint8_t ShiftRegGPIOXpander::getSrQty(){
@@ -205,7 +204,9 @@ bool ShiftRegGPIOXpander::overwriteMain(uint8_t* newCntntPtr){
 bool ShiftRegGPIOXpander::sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
    bool result{true};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
+	taskENTER_CRITICAL(&mux);
    if((_srQty > 0) && (_srArryBuffPtr != nullptr)){
       digitalWrite(_st_cp, LOW); // Start of access to the shift register internal buffer to write -> Lower the latch pin
 
@@ -218,6 +219,7 @@ bool ShiftRegGPIOXpander::sendAllSRCntnt(){
    else{
       result = false;
    }      
+	taskEXIT_CRITICAL(&mux);
 
    return result;
 }

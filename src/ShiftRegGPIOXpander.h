@@ -54,7 +54,7 @@ private:
 
    uint8_t* _srArryBuffPtr{};
    uint8_t* _auxArryBuffPtr{nullptr};
-   uint8_t _maxPin{0};
+   uint8_t _maxSrPin{0};
 
    bool _sendSnglSRCntnt(uint8_t data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 public:
@@ -111,7 +111,7 @@ public:
    /**
     * @brief Returns the state of the requested pin.
     * 
-    * @param pin Pin whose current value is required.
+    * @param srPin Pin whose current value is required.
     * 
     * @return The state value of the requested pin, either HIGH (0x01) or LOW (0x00)
     * @retval 0x00 The pin state was LOW
@@ -121,14 +121,14 @@ public:
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the buffer was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency difference might be expected, so the method checks for the Auxiliary existence, if it exists a moveAuxToMain(true) will be executed before returning the pin state.  
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. It's supposed every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.    
     */
-   uint8_t digitalReadSr(const uint8_t &pin);
+   uint8_t digitalReadSr(const uint8_t &srPin);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
-   * @param pin a positive value indicating which pin to set. The valid range is 0 <= pin <= (srQty*8)-1
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= (srQty*8)-1
    * @param value Value to set for the indicated Pin
    */
-   void digitalWriteSr(const uint8_t pin, const uint8_t value);
+   void digitalWriteSr(const uint8_t srPin, const uint8_t value);
    /**
    * @brief Sets all the pins to LOW (0x00).
    */
@@ -140,14 +140,14 @@ public:
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
-   * @param pin a positive value indicating which pin to set. The valid range is 0 <= pin <= (srQty*8)-1
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= (srQty*8)-1
    * @param value Value to set for the indicated Pin
    * 
    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool)
    * 
    * @note An alternative procedure in the line of the use of .print() and .println() methods is to invoke the several digitalWriteToAux() methods needed and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
    */
-   void digitalWriteSrToAux(const uint8_t pin, const uint8_t value);
+   void digitalWriteSrToAux(const uint8_t srPin, const uint8_t value);
    /**
     * @brief Retrieves the pointer to the Main Buffer.
     * 
