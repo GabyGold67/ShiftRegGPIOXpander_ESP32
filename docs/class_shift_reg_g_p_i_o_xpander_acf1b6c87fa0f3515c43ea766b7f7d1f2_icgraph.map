@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::copyMainToAux" name="ShiftRegGPIOXpander::copyMainToAux">
+<area shape="rect" id="Node000001" title="Copies the Buffer content to the Auxiliary Buffer" alt="" coords="207,5,360,48"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
+</map>

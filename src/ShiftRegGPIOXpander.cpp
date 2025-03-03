@@ -87,15 +87,6 @@ bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
    return result;
 }
 
-void ShiftRegGPIOXpander::discardAuxBuff(){
-   if(_auxArryBuffPtr != nullptr){
-      delete [] _auxArryBuffPtr;
-      _auxArryBuffPtr = nullptr;
-   }
-
-   return;
-}
-
 uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    uint8_t result{0xFF};
 
@@ -126,7 +117,7 @@ void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t srPin, const uint8_t valu
 
 void ShiftRegGPIOXpander::digitalWriteSrAllReset(){
    if(_auxArryBuffPtr != nullptr)
-      discardAuxBuff();
+      discardAux();
    for(uint8_t i{0}; i < _srQty; i++)
       *(_srArryBuffPtr + i) = 0x00;
    sendAllSRCntnt();
@@ -136,7 +127,7 @@ void ShiftRegGPIOXpander::digitalWriteSrAllReset(){
 
 void ShiftRegGPIOXpander::digitalWriteSrAllSet(){
    if(_auxArryBuffPtr != nullptr)
-      discardAuxBuff();
+      discardAux();
    for(uint8_t i{0}; i < _srQty; i++)
       *(_srArryBuffPtr + i) = (uint8_t)0xFF;
    sendAllSRCntnt();
@@ -153,6 +144,15 @@ void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t
          *(_auxArryBuffPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
       else
          *(_auxArryBuffPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+   }
+
+   return;
+}
+
+void ShiftRegGPIOXpander::discardAux(){
+   if(_auxArryBuffPtr != nullptr){
+      delete [] _auxArryBuffPtr;
+      _auxArryBuffPtr = nullptr;
    }
 
    return;
@@ -178,26 +178,11 @@ bool ShiftRegGPIOXpander::moveAuxToMain(bool flushASAP){
 
    if(_auxArryBuffPtr != nullptr){
       memcpy( _srArryBuffPtr, _auxArryBuffPtr, _srQty);   // destPtr, srcPtr, size
-      discardAuxBuff();
+      discardAux();
       if(flushASAP)
          sendAllSRCntnt();
    }
 
-   return result;
-}
-
-bool ShiftRegGPIOXpander::overwriteMain(uint8_t* newCntntPtr){
-   bool result {false};
-
-   if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
-      if(_auxArryBuffPtr != nullptr){
-         discardAuxBuff();
-      }
-      memcpy(_srArryBuffPtr, newCntntPtr, _srQty);
-      sendAllSRCntnt();
-      result = true;
-   }
-   
    return result;
 }
 
@@ -237,3 +222,18 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(uint8_t data){
 
    return result;
 }
+bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
+   bool result {false};
+
+   if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
+      if(_auxArryBuffPtr != nullptr){
+         discardAux();
+      }
+      memcpy(_srArryBuffPtr, newCntntPtr, _srQty);
+      sendAllSRCntnt();
+      result = true;
+   }
+   
+   return result;
+}
+

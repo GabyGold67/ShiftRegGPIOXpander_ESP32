@@ -103,11 +103,11 @@ public:
     */
    bool copyMainToAux(bool overWriteIfExists = true);
    /**
-    * @brief Deletes Auxiliary Buffer
+    * @brief Deletes the Auxiliary Buffer
     * 
-    * Deletes the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
+    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
     */
-   void discardAuxBuff();
+   void discardAux();
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -199,7 +199,7 @@ public:
    * 
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
-  bool overwriteMain(uint8_t* newCntntPtr);
+  bool stampOverMain(uint8_t* newCntntPtr);
    /**
     * @brief Flushes the contents of the Buffer to the GPIO Extender.
     * 
