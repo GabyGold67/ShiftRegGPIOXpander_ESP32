@@ -60,7 +60,6 @@ private:
 public:
    /**
     * @brief Class default constructor
-    * 
     */
    ShiftRegGPIOXpander();
    /**
@@ -245,4 +244,3 @@ public:
 };
 
 #endif //ShiftRegGPIOXpander_ESP32_H_
-
