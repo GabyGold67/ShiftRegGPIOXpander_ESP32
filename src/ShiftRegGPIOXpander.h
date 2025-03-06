@@ -6,7 +6,7 @@
  * 
  * @author Gabriel D. Goldman
  * 
- * @version 1.0.0
+ * @version 1.0.1
  * 
  * @date First release: 12/02/2025 
  *       Last update:   01/03/2025 20:40 (GMT+0200)
@@ -17,14 +17,14 @@
   * an industrial machines security enforcement and productivity control
   * (hardware & firmware update). As such every class included complies **AT LEAST**
   * with the provision of the attributes and methods to make the hardware & firmware
-  * replacement transparent to the controlled machines. Generic use attribute and
+  * replacement transparent to the controlled machines. Generic use attributes and
   * methods were added to extend the usability to other projects and application
   * environments, but no fitness nor completeness of those are given but for the
   * intended refactoring project.
   * 
   * @warning **Use of this library is under your own responsibility**
   * 
-  * @warning The use of this library falls in the category describe by The Alan 
+  * @warning The use of this library falls in the category described by The Alan 
   * Parsons Project (c) 1980 Games People play:
   * Games people play, you take it or you leave it
   * Things that they say aren't alright
@@ -137,6 +137,34 @@ public:
    * @brief Sets all the pins to HIGH (0x01).
    */
    void digitalWriteSrAllSet();
+  /**
+   * @brief Modifies the Main buffer contents by resetting simultaneously certain pins.
+   * 
+   * The pins to be reset are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be reset in the buffer, leaving the reset pins (LOW, 0x00) positions of the mask unmodified in the Main Buffer.
+   * 
+   * @param newResetMask Pointer to the array containing the mask to modify the Main.
+   * 
+   * @note The method provides a mechanism for clearing (reseting or lowering) various Main buffer bit positions in a single operation.
+   * 
+   * @attention Any modifications made in the Auxiliary will be moved to the Main before applying the mask.
+   * 
+   * @attention The Main Buffer will be flushed after the mask modificatons are applied.
+   */
+   void digitalWriteSrMaskReset(uint8_t* newResetMask);
+  /**
+   * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
+   * 
+   * The pins to be set are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be set in the buffer, leaving the reset pins (LOW, 0x00) positions of the mask unmodified in the Main Buffer.
+   * 
+   * @param newResetMask Pointer to the array containing the mask to modify the Main.
+   * 
+   * @note The method provides a mechanism for seting (rising) various Main buffer bit positions in a single operation.
+   * 
+   * @attention Any modifications made in the Auxiliary will be moved to the Main before applying the mask.
+   * 
+   * @attention The Main Buffer will be flushed after the mask modificatons are applied.
+   */
+  void digitalWriteSrMaskSet(uint8_t* newSetMask);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 

@@ -11,10 +11,13 @@ ShiftRegGPIOXpander	KEYWORD1
 # Methods and Functions (KEYWORD2)
 ###############################################
 copyMainToAux	KEYWORD2
+discardAux  KEYWORD2
 digitalReadSr	KEYWORD2
 digitalWriteSr	KEYWORD2
 digitalWriteSrAllReset	KEYWORD2
 digitalWriteSrAllSet	KEYWORD2
+digitalWriteSrMaskReset KEYWORD2
+digitalWriteSrMaskSet   KEYWORD2
 digitalWriteSrToAux	KEYWORD2
 discardAux	KEYWORD2
 getMainBuffPtr	KEYWORD2
