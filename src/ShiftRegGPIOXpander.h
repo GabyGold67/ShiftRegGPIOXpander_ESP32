@@ -60,7 +60,6 @@ private:
 public:
    /**
     * @brief Class default constructor
-    * 
     */
    ShiftRegGPIOXpander();
    /**
