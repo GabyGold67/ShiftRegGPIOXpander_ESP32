@@ -277,7 +277,6 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(uint8_t data){
       data <<= 1;
       delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet
       digitalWrite(_sh_cp, HIGH);   // End of next bit value addition to the shift register internal buffer -> Lower the clock pin
-      // delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet. Seems not to be needed in this implementation...
    }
 
    return result;

@@ -26,8 +26,8 @@
 static BaseType_t xReturned; /*!<Static variable to keep returning result value from Tasks and Timers executions*/
 static BaseType_t errorFlag {pdFALSE};
 
-BaseType_t srgxExecTskCore = xPortGetCoreID();
-BaseType_t srgxExecTskPrrtyCnfg = MainCtrlTskPrrtyLvl;
+BaseType_t ssdExecTskCore = xPortGetCoreID();
+BaseType_t ssdExecTskPrrtyCnfg = MainCtrlTskPrrtyLvl;
 //================================================>> General use definitions END
  
 //======================================>> General use function prototypes BEGIN
@@ -50,9 +50,9 @@ void setup() {
        "MainControlTask",  // Name of the task
        2048,   // Stack size (in bytes in ESP32, words in FreeRTOS), the minimum value is in the config file, for this is 768 bytes
        NULL,  // Pointer to the parameters for the function to work with
-       srgxExecTskPrrtyCnfg, // Priority level given to the task
+       ssdExecTskPrrtyCnfg, // Priority level given to the task
        &mainCtrlTskHndl, // Task handle
-       srgxExecTskCore // Run in the App Core if it's a dual core mcu (ESP-FreeRTOS specific)
+       ssdExecTskCore // Run in the App Core if it's a dual core mcu (ESP-FreeRTOS specific)
     );
     if(xReturned != pdPASS)
        Error_Handler();
