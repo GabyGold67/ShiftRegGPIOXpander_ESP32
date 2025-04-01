@@ -222,7 +222,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>digitalWriteSrAllSet<
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the <b>Main Buffer</b>, <b>the Buffer</b> or "the Main". <br  />
+<dl class="section note"><dt>Note</dt><dd>The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the <b>Main Buffer</b>, <b>the Buffer</b> or <b>the Main</b>. <br  />
  The action of sending the Buffer contents to the shift registers array will be reffered as <b>Flushing</b>. Every time the Buffer is <b>flushed</b> to the shift registers array the whole contents of that array will be sent. <br  />
  A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as <b>the Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
 </dd></dl>

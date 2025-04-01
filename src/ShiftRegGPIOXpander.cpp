@@ -4,10 +4,10 @@
  * 
  * @author Gabriel D. Goldman
  * 
- * @version 1.0.1
+ * @version 1.1.1
  * 
  * @date First release: 12/02/2025 
- *       Last update:   04/03/2025 12:00 (GMT+0200)
+ *       Last update:   01/04/2025 11:10 (GMT+0200) DST
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -27,7 +27,6 @@
   * Games people play, you take it or you leave it
   * Things that they say aren't alright
   * If I promised you the moon and the stars, would you believe it?
-  * Games people play in the middle of the night
  *******************************************************************************
  */
 #include <Arduino.h>
@@ -53,15 +52,11 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_c
 
    taskENTER_CRITICAL(&mux);
    if(initCntnt != nullptr){
-      memcpy(_srArryBuffPtr, initCntnt, _srQty);   // destPtr, srcPtr, size
+      memcpy(_srArryBuffPtr, initCntnt, _srQty);
    }
    else{
-   //-------------------->> Section that migh be replaced by a digitalWritteAllReset BEGIN
-      for(int i{0}; i < _srQty; i++){ 
-         *(_srArryBuffPtr + i) = 0x00;
-      }   
+      memset(_srArryBuffPtr,0x00, _srQty);
    }
-   //---------------------->> Section that migh be replaced by a digitalWritteAllReset END
    sendAllSRCntnt();
    taskEXIT_CRITICAL(&mux);
 }
@@ -135,8 +130,7 @@ void ShiftRegGPIOXpander::digitalWriteSrAllReset(){
    taskENTER_CRITICAL(&mux);
    if(_auxArryBuffPtr != nullptr)
       discardAux();
-   for(uint8_t i{0}; i < _srQty; i++)
-      *(_srArryBuffPtr + i) = 0x00;
+   memset(_srArryBuffPtr,0x00, _srQty);
    sendAllSRCntnt();
    taskEXIT_CRITICAL(&mux);
 
@@ -149,8 +143,7 @@ void ShiftRegGPIOXpander::digitalWriteSrAllSet(){
    taskENTER_CRITICAL(&mux);
    if(_auxArryBuffPtr != nullptr)
       discardAux();
-   for(uint8_t i{0}; i < _srQty; i++)
-      *(_srArryBuffPtr + i) = (uint8_t)0xFF;
+   memset(_srArryBuffPtr,0xFF, _srQty);
    sendAllSRCntnt();
    taskEXIT_CRITICAL(&mux);
 

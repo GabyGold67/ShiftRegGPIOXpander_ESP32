@@ -6,10 +6,10 @@
  * 
  * @author Gabriel D. Goldman
  * 
- * @version 1.0.1
+ * @version 1.1.1
  * 
  * @date First release: 12/02/2025 
- *       Last update:   01/03/2025 20:40 (GMT+0200)
+ *       Last update:   01/04/2025 11:10 (GMT+0200) DST
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -29,7 +29,6 @@
   * Games people play, you take it or you leave it
   * Things that they say aren't alright
   * If I promised you the moon and the stars, would you believe it?
-  * Games people play in the middle of the night
  *******************************************************************************
  */
 #ifndef _ShiftRegGPIOXpander_ESP32_H_
@@ -73,7 +72,7 @@ public:
     * @param srQty Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.
     * @param initCntnt Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions.
     * 
-    * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or "the Main".  
+    * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or **the Main**.  
     * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
     * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as **the Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
     * 
