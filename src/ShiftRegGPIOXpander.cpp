@@ -1,15 +1,23 @@
 /**
+ ******************************************************************************
  * @file ShiftRegGPIOXpander.cpp
  * @brief Code file for the ShiftRegGPIOXtender_ESP32 library 
  * 
- * @author Gabriel D. Goldman
+ * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
  * 
- * @version 1.1.1
+ * Framework: Arduino
+ * Platform: ESP32
  * 
- * @date First release: 12/02/2025 
- *       Last update:   01/04/2025 11:10 (GMT+0200) DST
+ * @author Gabriel D. Goldman  
+ * mail <gdgoldman67@hotmail.com>  
+ * Github <https://github.com/GabyGold67>  
  * 
- * @copyright Copyright (c) 2025  GPL-3.0 license
+ * @version 1.1.2
+ * 
+ * @date First release: 12/02/2025  
+ *       Last update:   01/04/2025 11:10 (GMT+0200) DST  
+ * 
+ * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
   * @attention	This library was developed as part of the refactoring process for
   * an industrial machines security enforcement and productivity control
@@ -23,10 +31,10 @@
   * @warning **Use of this library is under your own responsibility**
   * 
   * @warning The use of this library falls in the category described by The Alan 
-  * Parsons Project (c) 1980 Games People play:
-  * Games people play, you take it or you leave it
-  * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?
+  * Parsons Project (c) 1980 Games People play disclaimer:  
+  * Games people play, you take it or you leave it  
+  * Things that they say aren't alright  
+  * If I promised you the moon and the stars, would you believe it?  
  *******************************************************************************
  */
 #include <Arduino.h>

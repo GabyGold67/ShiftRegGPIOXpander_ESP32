@@ -1,17 +1,29 @@
 /**
   ******************************************************************************
   * @file	: ShiftRegGPIOXpander_Example01.cpp
-  * @brief  : 
+  * @brief  : Code example of the use of the ShiftRegGPIOXpander_ESP32 library
+  * 
+  * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
+  * Simulation url: https://wokwi.com/projects/423845574469125121
   * 
   * Framework: Arduino
   * Platform: ESP32
   * 
   * @author	: Gabriel D. Goldman
+  * mail <gdgoldman67@hotmail.com>
+  * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   24/02/2025 17:20 GMT+0200
+  *       Last update:   02/04/2025 13:50 GMT+0200 DST
   ******************************************************************************
-  * @attention	
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 "Games People play":
+  * 
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
   * 
   * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
   ******************************************************************************
