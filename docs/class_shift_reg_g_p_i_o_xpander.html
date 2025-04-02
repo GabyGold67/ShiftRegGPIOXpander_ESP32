@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ShiftRegGPIOXpander Library for ESP32 (Arduino)<span id="projectnumber">&#160;v1.1.0</span>
+   <div id="projectname">ShiftRegGPIOXpander Library for ESP32 (Arduino)<span id="projectnumber">&#160;v1.1.1</span>
    </div>
    <div id="projectbrief">A library that provides an easy mechanism to add GPIO digital output pins by using Shift Registers</div>
   </td>
@@ -104,7 +104,7 @@ $(function(){initNavTree('class_shift_reg_g_p_i_o_xpander.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 
-<p>A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers.  
+<p>A class that models a GPIO outputs pins expander through the use of 8-bits serial in paralell out (SIPO) shift registers.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_shift_reg_g_p_i_o_xpander_8h_source.html">ShiftRegGPIOXpander.h</a>&gt;</code></p>
@@ -168,11 +168,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>digitalWriteSrAllSet<
   <br /></td></tr>
 <tr class="separator:a07e5c7279e11044eec16e9d9020a77cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5de617c5611ad017e94a858bd5fa9c5" id="r_aa5de617c5611ad017e94a858bd5fa9c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5">sendAllSRCntnt</a> ()</td></tr>
-<tr class="memdesc:aa5de617c5611ad017e94a858bd5fa9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the contents of the Buffer to the GPIO Extender.  <br /></td></tr>
+<tr class="memdesc:aa5de617c5611ad017e94a858bd5fa9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the contents of the Buffer to the GPIO Expander pins.  <br /></td></tr>
 <tr class="separator:aa5de617c5611ad017e94a858bd5fa9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers. </p>
+<div class="textblock"><p>A class that models a GPIO outputs pins expander through the use of 8-bits serial in paralell out (SIPO) shift registers. </p>
 <p>The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected is needed </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0d7dc9ed973c0786f85641f29d8d8f8e" name="a0d7dc9ed973c0786f85641f29d8d8f8e"></a>
@@ -210,7 +210,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>digitalWriteSrAllSet<
 </div><div class="memdoc">
 
 <p>Class constructor. </p>
-<p>Instantiates a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SI...">ShiftRegGPIOXpander</a> object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement. <br  />
+<p>Instantiates a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits serial in paralell out (SI...">ShiftRegGPIOXpander</a> object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -226,7 +226,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>digitalWriteSrAllSet<
  The action of sending the Buffer contents to the shift registers array will be reffered as <b>Flushing</b>. Every time the Buffer is <b>flushed</b> to the shift registers array the whole contents of that array will be sent. <br  />
  A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as <b>the Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool <a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender.">sendAllSRCntnt()</a> - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool <a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins.">sendAllSRCntnt()</a> - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. <br  />
  </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -234,7 +234,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a0d7dc9ed973c0786f85641f29d8d8f8e_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a0d7dc9ed973c0786f85641f29d8d8f8e_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_a0d7dc9ed973c0786f85641f29d8d8f8e_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a0d7dc9ed973c0786f85641f29d8d8f8e_cgraph">
 <area shape="rect" title="Class constructor." alt="" coords="5,5,167,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="215,5,368,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="215,5,368,48"/>
 <area shape="poly" title=" " alt="" coords="167,24,199,24,199,29,167,29"/>
 </map>
 </div>
@@ -356,7 +356,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="159,57,191,57,191,63,159,63"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
 <area shape="poly" title=" " alt="" coords="360,45,393,39,394,44,361,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="408,72,561,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
 <area shape="poly" title=" " alt="" coords="361,70,394,76,393,81,360,75"/>
 </map>
 </div>
@@ -398,7 +398,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,43,159,85"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a23e6b3809c0ff4d98d4424fd22b715a0" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
 <area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="408,72,561,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
 <area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
 <area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
@@ -443,7 +443,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Modifies the Main buffer contents by resetting simultaneously certain pins." alt="" coords="5,43,179,85"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a23e6b3809c0ff4d98d4424fd22b715a0" title="Moves the data in the Auxiliary to the Main." alt="" coords="227,13,380,56"/>
 <area shape="poly" title=" " alt="" coords="178,49,211,45,212,50,179,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="428,72,581,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="428,72,581,115"/>
 <area shape="poly" title=" " alt="" coords="179,67,413,84,412,90,179,73"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="428,5,581,48"/>
 <area shape="poly" title=" " alt="" coords="380,29,413,28,413,33,380,34"/>
@@ -488,7 +488,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Modifies the Main buffer contents by setting simultaneously certain pins." alt="" coords="5,43,164,85"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a23e6b3809c0ff4d98d4424fd22b715a0" title="Moves the data in the Auxiliary to the Main." alt="" coords="212,13,365,56"/>
 <area shape="poly" title=" " alt="" coords="164,50,196,45,197,51,165,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="413,72,566,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="413,72,566,115"/>
 <area shape="poly" title=" " alt="" coords="164,67,398,84,397,89,164,72"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="413,5,566,48"/>
 <area shape="poly" title=" " alt="" coords="365,29,398,28,398,33,365,34"/>
@@ -685,7 +685,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Moves the data in the Auxiliary to the Main." alt="" coords="5,39,159,81"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,45,191,39,192,44,159,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="207,72,360,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,72,360,115"/>
 <area shape="poly" title=" " alt="" coords="159,70,192,76,191,81,159,75"/>
 </map>
 </div>
@@ -723,11 +723,11 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Flushes the contents of the Buffer to the GPIO Extender. </p>
+<p>Flushes the contents of the Buffer to the GPIO Expander pins. </p>
 <p>The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">flushASAP</td><td>indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool <a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender.">sendAllSRCntnt()</a> by itself.</td></tr>
+    <tr><td class="paramname">flushASAP</td><td>indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool <a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins.">sendAllSRCntnt()</a> by itself.</td></tr>
   </table>
   </dd>
 </dl>
@@ -739,7 +739,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph">
-<area shape="rect" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="436,203,589,245"/>
+<area shape="rect" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="436,203,589,245"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a0d7dc9ed973c0786f85641f29d8d8f8e" title="Class constructor." alt="" coords="227,5,388,48"/>
 <area shape="poly" title=" " alt="" coords="489,191,445,130,417,98,386,69,359,51,362,46,390,65,421,94,449,127,493,188"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a9397ea794b577dfebc8280ef54613740" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="15,48,169,91"/>
@@ -810,7 +810,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Sets all of the output pins of the shift register to new provided values at once." alt="" coords="5,39,159,81"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,45,191,39,192,44,159,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="207,72,360,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,72,360,115"/>
 <area shape="poly" title=" " alt="" coords="159,70,192,76,191,81,159,75"/>
 </map>
 </div>

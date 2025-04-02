@@ -38,7 +38,7 @@
 #include <stdint.h>
 
 /**
- * @brief A class that models a GPIO outputs pins extender through the use of 8-bits serial in paralell out (SIPO) shift registers
+ * @brief A class that models a GPIO outputs pins expander through the use of 8-bits serial in paralell out (SIPO) shift registers
  * 
  * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected is needed
  * 
@@ -227,7 +227,7 @@ public:
    */
   bool stampOverMain(uint8_t* newCntntPtr);
    /**
-    * @brief Flushes the contents of the Buffer to the GPIO Extender.
+    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.
     * 
     * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
     * 

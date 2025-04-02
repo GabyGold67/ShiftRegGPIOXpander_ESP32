@@ -1,5 +1,5 @@
 <map id="ShiftRegGPIOXpander::sendAllSRCntnt" name="ShiftRegGPIOXpander::sendAllSRCntnt">
-<area shape="rect" id="Node000001" title="Flushes the contents of the Buffer to the GPIO Extender." alt="" coords="436,203,589,245"/>
+<area shape="rect" id="Node000001" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="436,203,589,245"/>
 <area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a0d7dc9ed973c0786f85641f29d8d8f8e" title="Class constructor." alt="" coords="227,5,388,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="489,191,445,130,417,98,386,69,359,51,362,46,390,65,421,94,449,127,493,188"/>
 <area shape="rect" id="Node000003" href="$class_shift_reg_g_p_i_o_xpander.html#a9397ea794b577dfebc8280ef54613740" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="15,48,169,91"/>

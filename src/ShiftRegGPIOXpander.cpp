@@ -51,12 +51,10 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    _maxSrPin = (_srQty * 8) - 1;
 
    taskENTER_CRITICAL(&mux);
-   if(initCntnt != nullptr){
+   if(initCntnt != nullptr)
       memcpy(_srArryBuffPtr, initCntnt, _srQty);
-   }
-   else{
+   else
       memset(_srArryBuffPtr,0x00, _srQty);
-   }
    sendAllSRCntnt();
    taskEXIT_CRITICAL(&mux);
 }
@@ -78,9 +76,8 @@ bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
    
    if((_auxArryBuffPtr == nullptr) || overWriteIfExists){
       taskENTER_CRITICAL(&mux);
-      if(_auxArryBuffPtr == nullptr){
+      if(_auxArryBuffPtr == nullptr)
          _auxArryBuffPtr = new uint8_t [_srQty];
-      }
       memcpy(_auxArryBuffPtr, _srArryBuffPtr, _srQty);   // destPtr, srcPtr, size
       taskEXIT_CRITICAL(&mux);
       result = true;
@@ -95,10 +92,8 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
 
    if(srPin <= _maxSrPin){
       taskENTER_CRITICAL(&mux);
-      if(_auxArryBuffPtr != nullptr){
+      if(_auxArryBuffPtr != nullptr)
          moveAuxToMain(true);
-      }   
-
       result = (*(_srArryBuffPtr + (srPin / 8)) >> (srPin % 8)) & 0x01;
       taskEXIT_CRITICAL(&mux);
    }
@@ -154,9 +149,8 @@ void ShiftRegGPIOXpander::digitalWriteSrMaskReset(uint8_t* newResetMask){
    if(newResetMask != nullptr){
       if(_auxArryBuffPtr != nullptr)
          moveAuxToMain(false);
-      for (int ptrInc{0}; ptrInc < _srQty; ptrInc++){
+      for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
          *(_srArryBuffPtr + ptrInc) &= ~(*(newResetMask + ptrInc));
-      }
       sendAllSRCntnt();
    }
 
@@ -181,9 +175,8 @@ void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t
 
    if(srPin <= _maxSrPin){
       taskENTER_CRITICAL(&mux);
-      if(_auxArryBuffPtr == nullptr){
+      if(_auxArryBuffPtr == nullptr)
          copyMainToAux();
-      }
       if(value)
          *(_auxArryBuffPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
       else
@@ -281,9 +274,8 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
 
    if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
       taskENTER_CRITICAL(&mux);
-      if(_auxArryBuffPtr != nullptr){
+      if(_auxArryBuffPtr != nullptr)
          discardAux();
-      }
       memcpy(_srArryBuffPtr, newCntntPtr, _srQty);
       sendAllSRCntnt();
       result = true;
@@ -292,4 +284,3 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
    
    return result;
 }
-
