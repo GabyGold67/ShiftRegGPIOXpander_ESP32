@@ -42,7 +42,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_shift_reg_g_p_i_o_xpander_8cpp.html"
+"_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

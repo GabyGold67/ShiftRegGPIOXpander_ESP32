@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file ShiftRegGPIOXpander.cpp
+ * @file ShiftRegGPIOXpander_ESP32.cpp
  * @brief Code file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 1.1.2
+ * @version 1.1.3
  * 
  * @date First release: 12/02/2025  
- *       Last update:   01/04/2025 11:10 (GMT+0200) DST  
+ *       Last update:   09/04/2025 13:30 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -38,7 +38,7 @@
  *******************************************************************************
  */
 #include <Arduino.h>
-#include <ShiftRegGPIOXpander.h>
+#include <ShiftRegGPIOXpander_ESP32.h>
 
 ShiftRegGPIOXpander::ShiftRegGPIOXpander()
 {

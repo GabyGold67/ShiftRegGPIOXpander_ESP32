@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file ShiftRegGPIOXpander.h
+ * @file ShiftRegGPIOXpander_ESP32.h
  * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
  * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 1.1.2
+ * @version 1.1.3
  * 
  * @date First release: 12/02/2025  
- *       Last update:   01/04/2025 11:10 (GMT+0200) DST  
+ *       Last update:   09/04/2025 13:30 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************

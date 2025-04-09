@@ -1,6 +1,6 @@
 # GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)  
 
-## [Complete library documentation](https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/)
+## [Complete library documentation HERE!](https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/)
 
 ## The main concepts driving this development are:
    - Output pins addition to a project without making substantial changes to the standard programming practices referring to output pin values writes and reads.

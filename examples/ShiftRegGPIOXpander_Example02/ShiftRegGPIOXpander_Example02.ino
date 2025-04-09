@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   02/04/2025 13:50 GMT+0200 DST
+  *       Last update:   09/04/2025 13:30 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -29,7 +29,7 @@
   ******************************************************************************
 */
 #include <Arduino.h>
-#include <ShiftRegGPIOXpander.h>
+#include <ShiftRegGPIOXpander_ESP32.h>
 
 //==============================================>> General use definitions BEGIN
 //================================================>> General use definitions END
