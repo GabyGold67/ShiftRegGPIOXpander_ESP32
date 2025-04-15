@@ -19,11 +19,10 @@
   * @warning **Use of this library is under your own responsibility**
   * 
   * @warning The use of this library falls in the category described by The Alan 
-  * Parsons Project (c) 1980 "Games People play" disclaimer:
-  * 
-  * Games people play, you take it or you leave it
-  * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?
+  * Parsons Project (c) 1980 "Games People play" disclaimer:    * 
+  * Games people play, you take it or you leave it  
+  * Things that they say aren't alright  
+  * If I promised you the moon and the stars, would you believe it?  
   * 
   * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
   ******************************************************************************

@@ -3,7 +3,7 @@
  * @file ShiftRegGPIOXpander_ESP32.h
  * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
- * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
+ * @details The library provides the means to extend the GPIO available pins -**for digital output only**- by providing a pin output manipulation API similar to the provided by Arduino, for it's own GPIO pins, for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins for the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
  * 
  * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
  * 
@@ -109,12 +109,6 @@ public:
     */
    bool copyMainToAux(bool overWriteIfExists = true);
    /**
-    * @brief Deletes the Auxiliary Buffer
-    * 
-    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
-    */
-   void discardAux();
-   /**
     * @brief Returns the state of the requested pin.
     * 
     * @param srPin Pin whose current value is required.
@@ -183,6 +177,12 @@ public:
    */
    void digitalWriteSrToAux(const uint8_t srPin, const uint8_t value);
    /**
+    * @brief Deletes the Auxiliary Buffer
+    * 
+    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
+    */
+   void discardAux();
+   /**
     * @brief Retrieves the pointer to the Main Buffer.
     * 
     * @return Pointer to the array of uint8_t holding the buffered shift registers values
@@ -219,6 +219,20 @@ public:
     * @retval false There was no Auxiliary present, no data have been moved
     */
   bool moveAuxToMain(bool flushASAP = true);
+   /**
+    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.
+    * 
+    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
+    * 
+    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.
+    * 
+    * @return true if the operation succeeds
+    * 
+    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would indicate otherwise
+    * 
+    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
+    */
+   bool sendAllSRCntnt();
   /**
    * @brief Sets all of the output pins of the shift register to new provided values at once.  
    * 
@@ -234,20 +248,6 @@ public:
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
   bool stampOverMain(uint8_t* newCntntPtr);
-   /**
-    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.
-    * 
-    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
-    * 
-    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.
-    * 
-    * @return true if the operation succeeds
-    * 
-    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would indicate otherwise
-    * 
-    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
-    */
-   bool sendAllSRCntnt();
 };
 
 #endif //ShiftRegGPIOXpander_ESP32_H_
