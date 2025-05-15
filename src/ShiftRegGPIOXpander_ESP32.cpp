@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 1.1.3
+ * @version 2.0.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   09/04/2025 13:30 (GMT+0200) DST  
+ *       Last update:   15/05/2025 13:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -44,9 +44,25 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander()
 {
 }
 
-ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty, uint8_t* initCntnt)
+ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty)
 :_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _srArryBuffPtr {new uint8_t [srQty]}
 {
+   _maxSrPin = (_srQty * 8) - 1;
+}
+
+ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
+   end();
+   if(_auxArryBuffPtr !=nullptr){
+      delete [] _auxArryBuffPtr;
+      _auxArryBuffPtr = nullptr;
+   }
+   if(_srArryBuffPtr !=nullptr){
+      delete [] _srArryBuffPtr;
+      _srArryBuffPtr = nullptr;
+   }
+}
+
+void ShiftRegGPIOXpander::begin(uint8_t* initCntnt){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    digitalWrite(_sh_cp, HIGH);
@@ -56,8 +72,6 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_c
    pinMode(_ds, OUTPUT);
    pinMode(_st_cp, OUTPUT);
 
-   _maxSrPin = (_srQty * 8) - 1;
-
    taskENTER_CRITICAL(&mux);
    if(initCntnt != nullptr)
       memcpy(_srArryBuffPtr, initCntnt, _srQty);
@@ -65,17 +79,6 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_c
       memset(_srArryBuffPtr,0x00, _srQty);
    sendAllSRCntnt();
    taskEXIT_CRITICAL(&mux);
-}
-
-ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
-   if(_auxArryBuffPtr !=nullptr){
-      delete [] _auxArryBuffPtr;
-      _auxArryBuffPtr = nullptr;
-   }
-   if(_srArryBuffPtr !=nullptr){
-      delete [] _srArryBuffPtr;
-      _srArryBuffPtr = nullptr;
-   }
 }
 
 bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
@@ -204,6 +207,11 @@ void ShiftRegGPIOXpander::discardAux(){
       _auxArryBuffPtr = nullptr;
    }
    taskEXIT_CRITICAL(&mux);
+
+   return;
+}
+
+void ShiftRegGPIOXpander::end(){
 
    return;
 }

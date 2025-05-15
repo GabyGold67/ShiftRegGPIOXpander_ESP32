@@ -10,6 +10,7 @@ ShiftRegGPIOXpander	KEYWORD1
 ###############################################
 # Methods and Functions (KEYWORD2)
 ###############################################
+begin KEYWORD2
 copyMainToAux	KEYWORD2
 discardAux  KEYWORD2
 digitalReadSr	KEYWORD2
@@ -20,6 +21,7 @@ digitalWriteSrMaskReset KEYWORD2
 digitalWriteSrMaskSet   KEYWORD2
 digitalWriteSrToAux	KEYWORD2
 discardAux	KEYWORD2
+end   KEYWORD2
 getMainBuffPtr	KEYWORD2
 getMaxPin	KEYWORD2
 getSrQty	KEYWORD2

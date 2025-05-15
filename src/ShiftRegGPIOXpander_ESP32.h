@@ -3,7 +3,7 @@
  * @file ShiftRegGPIOXpander_ESP32.h
  * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
- * @details The library provides the means to extend the GPIO available pins -for digital output only- by providing a pin output manipulation API similar to the provided by Arduino for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
+ * @details The library provides the means to extend the GPIO available pins -**for digital output only**- by providing a pin output manipulation API similar to the provided by Arduino, for it's own GPIO pins, for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins for the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
  * 
  * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
  * 
@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 1.1.3
+ * @version 1.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   09/04/2025 13:30 (GMT+0200) DST  
+ *       Last update:   15/05/2025 13:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -78,7 +78,6 @@ public:
     * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander
     * @param st_cp MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input- to set (latch) the output pins from the internal buffer of the expander
     * @param srQty Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.
-    * @param initCntnt Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions.
     * 
     * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or **the Main**.  
     * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
@@ -86,13 +85,21 @@ public:
     * 
     * @attention There is no mechanism to flush the Auxiliary straight to the shift registers, every method that invokes a Main Buffer modification -see void digitalWrite(const uint8_t, const uint8_t) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary.  
     */
-   ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1, uint8_t* initCntnt = nullptr);
+   ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
    /**
     * @brief Class destructor
     * 
     * Takes care of resources releasing
     */
    ~ShiftRegGPIOXpander();
+   /**
+    * @brief GPIOXpander object setup and activation 
+    * 
+    * This method sets the controller pins configuration, and optionally sets the initial pin values for the GPIOXpander pins.
+    * 
+    * @param initCntnt Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions, making all pins' output 0/LOW/RESET.  
+    */
+   void begin(uint8_t* initCntnt = nullptr);   
    /**
     * @brief Copies the Buffer content to the Auxiliary Buffer  
     * 
@@ -108,12 +115,6 @@ public:
     * @retval false The Auxiliary was existent and the parameter was false, not allowing the Auxiliary to be overwritten
     */
    bool copyMainToAux(bool overWriteIfExists = true);
-   /**
-    * @brief Deletes the Auxiliary Buffer
-    * 
-    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
-    */
-   void discardAux();
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -183,6 +184,12 @@ public:
    */
    void digitalWriteSrToAux(const uint8_t srPin, const uint8_t value);
    /**
+    * @brief Deletes the Auxiliary Buffer
+    * 
+    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer
+    */
+   void discardAux();
+   /**
     * @brief Retrieves the pointer to the Main Buffer.
     * 
     * @return Pointer to the array of uint8_t holding the buffered shift registers values
@@ -190,6 +197,12 @@ public:
     * @note The returned array's length is equal to the number of shift registers set in daisy-chain, see uint8_t getSrQty() for information.
     */
    uint8_t* getMainBuffPtr();
+   /**
+    * @brief Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method. 
+    * 
+    * The method will be invoked as part of the class destructor.  
+    */
+   void end();
    /**
      * @brief Return the greatest valid pin number
      * 
@@ -219,6 +232,20 @@ public:
     * @retval false There was no Auxiliary present, no data have been moved
     */
   bool moveAuxToMain(bool flushASAP = true);
+   /**
+    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.
+    * 
+    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
+    * 
+    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.
+    * 
+    * @return true if the operation succeeds
+    * 
+    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would indicate otherwise
+    * 
+    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
+    */
+   bool sendAllSRCntnt();
   /**
    * @brief Sets all of the output pins of the shift register to new provided values at once.  
    * 
@@ -234,20 +261,6 @@ public:
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
   bool stampOverMain(uint8_t* newCntntPtr);
-   /**
-    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.
-    * 
-    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information and invoke the needed methods to send serially the information required to each physical shift register.
-    * 
-    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The avoidance is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.
-    * 
-    * @return true if the operation succeeds
-    * 
-    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would indicate otherwise
-    * 
-    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
-    */
-   bool sendAllSRCntnt();
 };
 
 #endif //ShiftRegGPIOXpander_ESP32_H_

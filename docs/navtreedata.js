@@ -25,7 +25,6 @@
 var NAVTREE =
 [
   [ "ShiftRegGPIOXpander Library for ESP32 (Arduino)", "index.html", [
-    [ "GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)", "index.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -45,5 +44,5 @@ var NAVTREEINDEX =
 "_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
