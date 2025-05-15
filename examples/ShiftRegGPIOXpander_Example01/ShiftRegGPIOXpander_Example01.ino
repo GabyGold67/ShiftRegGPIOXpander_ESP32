@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   09/04/2025 13:30 GMT+0200 DST
+  *       Last update:   15/05/2025 14:00 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -86,10 +86,11 @@ void loop() {
    uint8_t st_cp{25};
    uint8_t srQty{1};
    
-   uint8_t strtngVals [1] {0xFF};
+   uint8_t strtngVals [1] {0x00};
    uint8_t* stVlsPtr = strtngVals;
 
-   ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty, stVlsPtr);
+   ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty);
+   srgx.begin(stVlsPtr);
 
    uint8_t pinUpdtd{0};
    uint8_t setVal{HIGH};

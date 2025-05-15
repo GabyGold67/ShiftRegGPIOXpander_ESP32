@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['getmainbuffptr_0',['getMainBuffPtr',['../class_shift_reg_g_p_i_o_xpander.html#a7ca688abf5eab3f4984320b90956e1f2',1,'ShiftRegGPIOXpander']]],
-  ['getmaxpin_1',['getMaxPin',['../class_shift_reg_g_p_i_o_xpander.html#a5d26546d401570b73507325f2ffb9add',1,'ShiftRegGPIOXpander']]],
-  ['getsrqty_2',['getSrQty',['../class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152',1,'ShiftRegGPIOXpander']]],
-  ['gpio_20digital_20outputs_20expander_20library_20shiftreggpioxpander_5fesp32_3',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]]
+  ['end_0',['end',['../class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049',1,'ShiftRegGPIOXpander']]]
 ];

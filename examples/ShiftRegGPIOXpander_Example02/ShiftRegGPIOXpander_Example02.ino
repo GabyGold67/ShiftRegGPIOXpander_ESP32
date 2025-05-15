@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   09/04/2025 13:30 GMT+0200 DST
+  *       Last update:   15/05/2025 14:20 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -56,9 +56,10 @@ uint8_t mask_2 [] {0b01010101, 0b01010101, 0b01010101, 0b01010101};
 uint8_t pinUpdtd{0};
 uint8_t setVal{};
 
-ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty, stVlsPtr);
+ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty);
 
 void setup() { 
+   srgx.begin(stVlsPtr);
    Serial.begin(9600);
 }
 
@@ -135,8 +136,6 @@ void loop() {
    srgx.digitalWriteSrAllReset();
    vTaskDelay(3000);
 }  
-
-
 
 //================================================>> General use functions BEGIN
 //==================================================>> General use functions END

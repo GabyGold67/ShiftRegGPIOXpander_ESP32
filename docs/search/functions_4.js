@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sendallsrcntnt_0',['sendAllSRCntnt',['../class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5',1,'ShiftRegGPIOXpander']]],
-  ['shiftreggpioxpander_1',['ShiftRegGPIOXpander',['../class_shift_reg_g_p_i_o_xpander.html#a633eb548723eeebf75d524b1c3e5b0f1',1,'ShiftRegGPIOXpander::ShiftRegGPIOXpander()'],['../class_shift_reg_g_p_i_o_xpander.html#a0d7dc9ed973c0786f85641f29d8d8f8e',1,'ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty=1, uint8_t *initCntnt=nullptr)']]],
-  ['stampovermain_2',['stampOverMain',['../class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf',1,'ShiftRegGPIOXpander']]]
+  ['getmainbuffptr_0',['getMainBuffPtr',['../class_shift_reg_g_p_i_o_xpander.html#a7ca688abf5eab3f4984320b90956e1f2',1,'ShiftRegGPIOXpander']]],
+  ['getmaxpin_1',['getMaxPin',['../class_shift_reg_g_p_i_o_xpander.html#a5d26546d401570b73507325f2ffb9add',1,'ShiftRegGPIOXpander']]],
+  ['getsrqty_2',['getSrQty',['../class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152',1,'ShiftRegGPIOXpander']]]
 ];

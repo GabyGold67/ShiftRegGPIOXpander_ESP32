@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::end" name="ShiftRegGPIOXpander::end">
+<area shape="rect" id="Node000001" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="223,13,405,40"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a68fe6cf0609e80ec31a622b8e1265a20" title="Class destructor." alt="" coords="5,5,175,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
+</map>
