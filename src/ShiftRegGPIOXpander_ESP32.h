@@ -39,8 +39,8 @@
   * If I promised you the moon and the stars, would you believe it?  
  *******************************************************************************
  */
-#ifndef _ShiftRegGPIOXpander_ESP32_H_
-#define _ShiftRegGPIOXpander_ESP32_H_
+#ifndef _SHIFTREGGPIOXPANDER_ESP32_H_
+#define _SHIFTREGGPIOXPANDER_ESP32_H_
 
 #include <Arduino.h>
 #include <stdint.h>

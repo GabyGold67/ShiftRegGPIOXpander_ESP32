@@ -12,7 +12,6 @@ ShiftRegGPIOXpander	KEYWORD1
 ###############################################
 begin KEYWORD2
 copyMainToAux	KEYWORD2
-discardAux  KEYWORD2
 digitalReadSr	KEYWORD2
 digitalWriteSr	KEYWORD2
 digitalWriteSrAllReset	KEYWORD2
