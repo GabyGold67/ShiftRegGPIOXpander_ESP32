@@ -6,6 +6,8 @@ var class_shift_reg_g_p_i_o_xpander =
     [ "begin", "class_shift_reg_g_p_i_o_xpander.html#a6fd936a7f8f4547d238f9b4e79bc9c0d", null ],
     [ "copyMainToAux", "class_shift_reg_g_p_i_o_xpander.html#a58b895bd50325c063a71d2ad4da1c961", null ],
     [ "digitalReadSr", "class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb", null ],
+    [ "digitalToggleSr", "class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3", null ],
+    [ "digitalToggleSrToAux", "class_shift_reg_g_p_i_o_xpander.html#ae25f89bca0203940410ff1afad8362cf", null ],
     [ "digitalWriteSr", "class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1", null ],
     [ "digitalWriteSrAllReset", "class_shift_reg_g_p_i_o_xpander.html#a8ea656bb9c28c671df4888d0dff533b5", null ],
     [ "digitalWriteSrAllSet", "class_shift_reg_g_p_i_o_xpander.html#a67319a086effaab688feae45c95c5cc3", null ],

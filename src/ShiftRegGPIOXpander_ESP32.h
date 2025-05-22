@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 2.0.1
+ * @version 2.1.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   22/05/2025 16:10 (GMT+0200) DST  
+ *       Last update:   22/05/2025 17:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -132,6 +132,18 @@ public:
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);
+    /**
+     * @brief Toggles the state of a specific pin.
+     * 
+     * @details The method will set the pin to LOW (0x00) if it was HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on the GPIO pin.
+     * 
+     * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()
+     * 
+     * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.
+     * 
+     * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.
+     */
+  void digitalToggleSr(const uint8_t &srPin);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -184,7 +196,17 @@ public:
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
   void digitalWriteSrMaskSet(uint8_t* newSetMask);  
-   /**
+ /**
+  * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
+  * 
+  * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()  
+  * 
+  * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
+  * 
+  * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
+  */
+  void digitalToggleSrToAux(const uint8_t &srPin); 
+  /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
    * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxPin()

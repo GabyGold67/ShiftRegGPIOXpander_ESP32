@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 2.0.1
+ * @version 2.1.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   22/05/2025 16:10 (GMT+0200) DST  
+ *       Last update:   22/05/2025 17:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -112,6 +112,21 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    return result;
 }
 
+void ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   if(srPin <= _maxSrPin){
+      taskENTER_CRITICAL(&mux);
+      if(_auxArryBuffPtr != nullptr)
+         moveAuxToMain(false);
+      *(_srArryBuffPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+      sendAllSRCntnt();
+      taskEXIT_CRITICAL(&mux);
+   }
+
+   return;
+}
+
 void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t &srPin, const uint8_t &value){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
@@ -176,6 +191,20 @@ void ShiftRegGPIOXpander::digitalWriteSrMaskSet(uint8_t* newSetMask){
          *(_srArryBuffPtr + ptrInc) |= *(newSetMask + ptrInc);
       }
       sendAllSRCntnt();
+   }
+
+   return;
+}
+
+void ShiftRegGPIOXpander::digitalToggleSrToAux(const uint8_t &srPin){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   if(srPin <= _maxSrPin){
+      taskENTER_CRITICAL(&mux);
+      if(_auxArryBuffPtr == nullptr)
+         copyMainToAux();
+      *(_auxArryBuffPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+      taskEXIT_CRITICAL(&mux);
    }
 
    return;

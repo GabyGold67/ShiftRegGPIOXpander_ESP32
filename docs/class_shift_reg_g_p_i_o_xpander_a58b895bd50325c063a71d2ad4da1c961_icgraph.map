@@ -1,5 +1,7 @@
 <map id="ShiftRegGPIOXpander::copyMainToAux" name="ShiftRegGPIOXpander::copyMainToAux">
-<area shape="rect" id="Node000001" title="Copies the Buffer content to the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
+<area shape="rect" id="Node000001" title="Copies the Buffer content to the Auxiliary Buffer." alt="" coords="207,39,360,81"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#ae25f89bca0203940410ff1afad8362cf" title="Toggles the state of a specific pin in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,47,158,42,159,37,192,42"/>
+<area shape="rect" id="Node000003" href="$class_shift_reg_g_p_i_o_xpander.html#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,72,159,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,78,159,83,158,78,191,73"/>
 </map>
