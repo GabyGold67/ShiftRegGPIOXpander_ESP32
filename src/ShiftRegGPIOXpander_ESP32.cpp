@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 2.0.0
+ * @version 2.0.1
  * 
  * @date First release: 12/02/2025  
- *       Last update:   15/05/2025 13:00 (GMT+0200) DST  
+ *       Last update:   22/05/2025 16:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -81,7 +81,7 @@ void ShiftRegGPIOXpander::begin(uint8_t* initCntnt){
    taskEXIT_CRITICAL(&mux);
 }
 
-bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
+bool ShiftRegGPIOXpander::copyMainToAux(const bool &overWriteIfExists){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    
@@ -89,7 +89,7 @@ bool ShiftRegGPIOXpander::copyMainToAux(bool overWriteIfExists){
       taskENTER_CRITICAL(&mux);
       if(_auxArryBuffPtr == nullptr)
          _auxArryBuffPtr = new uint8_t [_srQty];
-      memcpy(_auxArryBuffPtr, _srArryBuffPtr, _srQty);   // destPtr, srcPtr, size
+      memcpy(_auxArryBuffPtr, _srArryBuffPtr, _srQty);
       taskEXIT_CRITICAL(&mux);
       result = true;
    }
@@ -112,7 +112,7 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    return result;
 }
 
-void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t srPin, const uint8_t value){
+void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t &srPin, const uint8_t &value){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    if(srPin <= _maxSrPin){
@@ -134,7 +134,7 @@ void ShiftRegGPIOXpander::digitalWriteSrAllReset(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
-   if(_auxArryBuffPtr != nullptr)
+   if(_auxArryBuffPtr != nullptr)   //!< Altough the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
       discardAux();
    memset(_srArryBuffPtr,0x00, _srQty);
    sendAllSRCntnt();
@@ -147,7 +147,7 @@ void ShiftRegGPIOXpander::digitalWriteSrAllSet(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
-   if(_auxArryBuffPtr != nullptr)
+   if(_auxArryBuffPtr != nullptr)   //!< Altough the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
       discardAux();
    memset(_srArryBuffPtr,0xFF, _srQty);
    sendAllSRCntnt();
@@ -231,7 +231,7 @@ uint8_t ShiftRegGPIOXpander::getSrQty(){
    return _srQty;
 }
 
-bool ShiftRegGPIOXpander::moveAuxToMain(bool flushASAP){
+bool ShiftRegGPIOXpander::moveAuxToMain(const bool &flushASAP){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
 
@@ -270,13 +270,15 @@ bool ShiftRegGPIOXpander::sendAllSRCntnt(){
    return result;
 }
 
-bool ShiftRegGPIOXpander::_sendSnglSRCntnt(uint8_t data){
+bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){  
+   uint8_t  mask{0x80};
    bool result{true};
 
    for (int bitPos {7}; bitPos >= 0; bitPos--){   //Send each of the bits correspondig to one 8-bits shift register module
       digitalWrite(_sh_cp, LOW); // Start of next bit value addition to the shift register internal buffer -> Lower the clock pin         
-      digitalWrite(_ds, (data & 0x80)?HIGH:LOW);   // Set the value of the next bit value
-      data <<= 1;
+      digitalWrite(_ds, (data & mask)?HIGH:LOW);
+      // data <<= 1;
+      mask >>= 1; // Shift the mask to the right to get the next bit value
       delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet  //FFDR esp_timer_get_time() might be used instead of delayMicroseconds
       digitalWrite(_sh_cp, HIGH);   // End of next bit value addition to the shift register internal buffer -> Lower the clock pin      
    }

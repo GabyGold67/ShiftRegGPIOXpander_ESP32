@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 2.0.0
+ * @version 2.0.1
  * 
  * @date First release: 12/02/2025  
- *       Last update:   15/05/2025 13:00 (GMT+0200) DST  
+ *       Last update:   22/05/2025 16:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -63,7 +63,7 @@ private:
    uint8_t* _auxArryBuffPtr{nullptr};
    uint8_t _maxSrPin{0};
 
-   bool _sendSnglSRCntnt(uint8_t data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
+   bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 
 public:
    /**
@@ -117,7 +117,7 @@ public:
     * @retval true The Auxiliary was non-existent, or existed and the parameter allowing overwritting was true.  
     * @retval false The Auxiliary was existent and the parameter allowing overwritting was false, generating a failure in the operation.  
     */
-   bool copyMainToAux(bool overWriteIfExists = true);
+   bool copyMainToAux(const bool &overWriteIfExists = true);
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -131,7 +131,7 @@ public:
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
-   uint8_t digitalReadSr(const uint8_t &srPin); //FFDR Check the correct Auxiliary buffer management
+   uint8_t digitalReadSr(const uint8_t &srPin);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -141,35 +141,35 @@ public:
    * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.  
    * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.    
    */
-   void digitalWriteSr(const uint8_t srPin, const uint8_t value); //FFDR Check the correct Auxiliary buffer management
+   void digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
    /**
    * @brief Sets all the pins to LOW (0x00/Reset).
    * 
    * @attention As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before setting the new values to the Main.  
-   * @warning If discardAux() had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
+   * @warning If discardAux() has to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
    */
-   void digitalWriteSrAllReset(); //FFDR Check the correct Auxiliary buffer management
+   void digitalWriteSrAllReset();
    /**
    * @brief Sets all the pins to HIGH (0x01).
    * 
    * @attention As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before setting the new values to the Main.  
    * @warning If discardAux() had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
    */
-   void digitalWriteSrAllSet(); //FFDR Check the correct Auxiliary buffer management
+   void digitalWriteSrAllSet();
   /**
    * @brief Modifies the Main buffer contents by resetting simultaneously certain pins.
    * 
-   * The pins to be reset are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).
+   * The pins to be reset are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).
    * 
    * @param newResetMask Pointer to the array containing the mask to modify the Main.
    * 
-   * @note The method provides a mechanism for clearing (reseting or lowering) various Main buffer bit positions in a single operation.
+   * @note The method provides a mechanism for clearing (reseting/lowering) various Main buffer bit positions in a single operation.
    * 
-   * @attention Any modifications made in the Auxiliary will be moved to the Main before applying the mask, and the Auxiliary will be deleted.  
+   * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
    * 
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
-   void digitalWriteSrMaskReset(uint8_t* newResetMask); //FFDR Check the correct Auxiliary buffer management
+   void digitalWriteSrMaskReset(uint8_t* newResetMask);
   /**
    * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
    * 
@@ -179,11 +179,11 @@ public:
    * 
    * @note The method provides a mechanism for seting (rising) various Main buffer bit positions in a single operation.
    * 
-   * @attention Any modifications made in the Auxiliary will be moved to the Main before applying the mask, and the Auxiliary will be deleted.
+   * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
    * 
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
-  void digitalWriteSrMaskSet(uint8_t* newSetMask);  //FFDR Check the correct Auxiliary buffer management
+  void digitalWriteSrMaskSet(uint8_t* newSetMask);  
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
@@ -248,7 +248,7 @@ public:
     * @retval true There was an Auxiliary an it's value could be moved.  
     * @retval false There was no Auxiliary present, no data have been moved.  
     */
-  bool moveAuxToMain(bool flushASAP = true);  //FFDR Check the correct Auxiliary buffer management
+  bool moveAuxToMain(const bool &flushASAP = true);
    /**
     * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
     * 
