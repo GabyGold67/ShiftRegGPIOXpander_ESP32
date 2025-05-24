@@ -97,6 +97,13 @@ bool ShiftRegGPIOXpander::copyMainToAux(const bool &overWriteIfExists){
    return result;
 }
 
+SRGVXVPort ShiftRegGPIOXpander::createVXVPort(uint8_t strtPin, uint8_t pinsQty){
+   if((strtPin <= _maxSrPin) && ((strtPin + pinsQty - 1) <= _maxSrPin))   
+      return SRGVXVPort(this, strtPin, pinsQty);
+   else
+      return SRGVXVPort();
+}
+
 uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    uint8_t result{0xFF};
@@ -112,6 +119,20 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    return result;
 }
 
+void ShiftRegGPIOXpander::digitalToggleSrAll(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
+   if(_auxArryBuffPtr != nullptr)
+      moveAuxToMain(false);
+   for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+      *(_srArryBuffPtr + ptrInc) ^= 0xFF;
+   sendAllSRCntnt();
+   taskEXIT_CRITICAL(&mux);
+
+   return;
+}
+
 void ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
@@ -122,6 +143,19 @@ void ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
       *(_srArryBuffPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
       sendAllSRCntnt();
       taskEXIT_CRITICAL(&mux);
+   }
+
+   return;
+}
+
+void ShiftRegGPIOXpander::digitalToggleSrMask(uint8_t *newToggleMask)
+{
+   if(newToggleMask != nullptr){
+      if(_auxArryBuffPtr != nullptr)
+         moveAuxToMain(false);
+      for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+         *(_srArryBuffPtr + ptrInc) ^= *(newToggleMask + ptrInc);
+      sendAllSRCntnt();
    }
 
    return;
@@ -260,6 +294,11 @@ uint8_t ShiftRegGPIOXpander::getSrQty(){
    return _srQty;
 }
 
+bool ShiftRegGPIOXpander::isValid(SRGVXVPort &VPort){
+
+   return (VPort.getSRGXPtr() != nullptr);
+}
+
 bool ShiftRegGPIOXpander::moveAuxToMain(const bool &flushASAP){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
@@ -331,3 +370,30 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
    
    return result;
 }
+
+//=========================================================================> Class methods delimiter
+
+SRGVXVPort::SRGVXVPort()
+{
+}
+
+SRGVXVPort::SRGVXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty) 
+:_srGpioXpdrPtr{SRGXPtr}, _strtPin{strtPin}, _pinsQty{pinsQty}
+{
+   if(!((strtPin <= _maxSrPin) && ((strtPin + pinsQty - 1) <= _maxSrPin))){ //!< Failed conditions
+      _srGpioXpdrPtr = nullptr;
+      _strtPin = 0;
+      _pinsQty = 0;
+   }
+}
+
+SRGVXVPort::~SRGVXVPort()
+{
+}
+
+
+ShiftRegGPIOXpander* SRGVXVPort::getSRGXPtr(){
+
+   return _srGpioXpdrPtr;
+}
+

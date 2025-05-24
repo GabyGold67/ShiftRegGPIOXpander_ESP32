@@ -45,10 +45,14 @@
 #include <Arduino.h>
 #include <stdint.h>
 
+class SRGVXVPort;
+
 /**
- * @brief A class that models a GPIO outputs pins expander through the use of 8-bits serial in paralell out (SIPO) shift registers
+ * @brief A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
  * 
- * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as the number of shift registers daisy-chain connected is needed
+ * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the number of shift registers daisy-chain connected is needed.  
+ * 
+ * Being those three parameters hardware construction related, no mechanisms are provided to modify them after the object is created.
  * 
  * @class ShiftRegGPIOXpander
  */
@@ -59,11 +63,13 @@ private:
    uint8_t _st_cp{};
    uint8_t _srQty{};
 
+   bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
+
+protected:
    uint8_t* _srArryBuffPtr{};
    uint8_t* _auxArryBuffPtr{nullptr};
    uint8_t _maxSrPin{0};
 
-   bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 
 public:
    /**
@@ -118,6 +124,9 @@ public:
     * @retval false The Auxiliary was existent and the parameter allowing overwritting was false, generating a failure in the operation.  
     */
    bool copyMainToAux(const bool &overWriteIfExists = true);
+
+   SRGVXVPort createVXVPort(uint8_t strtPin, uint8_t endPin);   
+
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -132,6 +141,12 @@ public:
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);
+   /**
+    * @brief Toggles the state of all the pins.
+    * 
+    * @details The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
+    */
+   void digitalToggleSrAll();
     /**
      * @brief Toggles the state of a specific pin.
      * 
@@ -144,6 +159,18 @@ public:
      * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.
      */
   void digitalToggleSr(const uint8_t &srPin);
+   /**
+    * @brief Toggles the state of the pins in the Main Buffer according to the provided mask.
+    * 
+    * The pins to be toggled are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be toggling the bit position.
+    * 
+    * @param newToggleMask Pointer to the array containing the mask to modify the Main.
+    * 
+    * @note The method provides a mechanism for toggling various Main buffer bit positions in a single operation.
+    * 
+    * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.
+    */
+   void digitalToggleSrMask(uint8_t* newToggleMask);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -255,6 +282,9 @@ public:
      * @return uint8_t The number of shift registers composing the physical port extender modeled by the class.  
      */
    uint8_t getSrQty();
+
+   bool isValid(SRGVXVPort &VPort);
+
   /**
     * @brief Moves the data in the Auxiliary to the Main
     * 
@@ -298,6 +328,35 @@ public:
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
   bool stampOverMain(uint8_t* newCntntPtr);
+
 };
+
+//==========================================================>>
+
+/**
+ * @brief A class that models **Virtual Ports** from  the resources provideed by a ShiftRegGPIOXpander object.  
+ * 
+ * The **Virtual Ports** are a set of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the ShiftRegGPIOXpander object. The **Virtual Ports** main advantage is to provide a means to focus on a group of pins that are somehow associated, as are meant to manage the communications with a specific device or group of devices, manage different related signals, etc.
+ * 
+ * The class objects provide the means to translate the pin numbers from the **Virtual Port** to the real pins in the ShiftRegGPIOXpander object.
+ * 
+ * @class SRGVXVPort
+ */
+class SRGVXVPort: public ShiftRegGPIOXpander{
+private:
+   uint8_t _strtPin{0};
+   uint8_t _pinsQty{0};
+   ShiftRegGPIOXpander* _srGpioXpdrPtr{nullptr};
+
+public:
+   SRGVXVPort();   
+   SRGVXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
+   ~SRGVXVPort();
+   void begin(uint8_t* initCntnt);
+   ShiftRegGPIOXpander* getSRGXPtr();
+
+};
+
+//==========================================================>>
 
 #endif //ShiftRegGPIOXpander_ESP32_H_
