@@ -137,6 +137,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a58b895bd50325c063a71d2ad4da1c961" id="r_a58b895bd50325c063a71d2ad4da1c961"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58b895bd50325c063a71d2ad4da1c961">copyMainToAux</a> (const bool &amp;overWriteIfExists=true)</td></tr>
 <tr class="memdesc:a58b895bd50325c063a71d2ad4da1c961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the Buffer content to the Auxiliary Buffer.  <br /></td></tr>
 <tr class="separator:a58b895bd50325c063a71d2ad4da1c961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d305039ce3dad33e05d04c62af891b3" id="r_a8d305039ce3dad33e05d04c62af891b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_r_g_v_x_v_port.html">SRGVXVPort</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d305039ce3dad33e05d04c62af891b3">createVXVPort</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
+<tr class="memdesc:a8d305039ce3dad33e05d04c62af891b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate a <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object.  <br /></td></tr>
+<tr class="separator:a8d305039ce3dad33e05d04c62af891b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0a3e91286d39a4c9622b1382febf4cb" id="r_ad0a3e91286d39a4c9622b1382febf4cb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0a3e91286d39a4c9622b1382febf4cb">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:ad0a3e91286d39a4c9622b1382febf4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin.  <br /></td></tr>
 <tr class="separator:ad0a3e91286d39a4c9622b1382febf4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +152,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a13239b97cf7821acf9fdaf717584c77f" id="r_a13239b97cf7821acf9fdaf717584c77f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13239b97cf7821acf9fdaf717584c77f">digitalToggleSrMask</a> (uint8_t *newToggleMask)</td></tr>
 <tr class="memdesc:a13239b97cf7821acf9fdaf717584c77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of the pins in the Main Buffer according to the provided mask.  <br /></td></tr>
 <tr class="separator:a13239b97cf7821acf9fdaf717584c77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae25f89bca0203940410ff1afad8362cf" id="r_ae25f89bca0203940410ff1afad8362cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae25f89bca0203940410ff1afad8362cf">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
+<tr class="memdesc:ae25f89bca0203940410ff1afad8362cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Auxiliary Buffer.  <br /></td></tr>
+<tr class="separator:ae25f89bca0203940410ff1afad8362cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfd96750d7fa23aa9195db016608b2a1" id="r_acfd96750d7fa23aa9195db016608b2a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfd96750d7fa23aa9195db016608b2a1">digitalWriteSr</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
 <tr class="memdesc:acfd96750d7fa23aa9195db016608b2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
 <tr class="separator:acfd96750d7fa23aa9195db016608b2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,9 +170,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a92e32bde032b5f1e064025dff57ecaad" id="r_a92e32bde032b5f1e064025dff57ecaad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92e32bde032b5f1e064025dff57ecaad">digitalWriteSrMaskSet</a> (uint8_t *newSetMask)</td></tr>
 <tr class="memdesc:a92e32bde032b5f1e064025dff57ecaad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting simultaneously certain pins.  <br /></td></tr>
 <tr class="separator:a92e32bde032b5f1e064025dff57ecaad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae25f89bca0203940410ff1afad8362cf" id="r_ae25f89bca0203940410ff1afad8362cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae25f89bca0203940410ff1afad8362cf">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
-<tr class="memdesc:ae25f89bca0203940410ff1afad8362cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Auxiliary Buffer.  <br /></td></tr>
-<tr class="separator:ae25f89bca0203940410ff1afad8362cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a41a23fec35a378644308504320b12c" id="r_a6a41a23fec35a378644308504320b12c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a41a23fec35a378644308504320b12c">digitalWriteSrToAux</a> (const uint8_t srPin, const uint8_t value)</td></tr>
 <tr class="memdesc:a6a41a23fec35a378644308504320b12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.  <br /></td></tr>
 <tr class="separator:a6a41a23fec35a378644308504320b12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,6 +188,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1857b10f93cd3adadf73da5907891152" id="r_a1857b10f93cd3adadf73da5907891152"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1857b10f93cd3adadf73da5907891152">getSrQty</a> ()</td></tr>
 <tr class="memdesc:a1857b10f93cd3adadf73da5907891152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the quantity of shift registers composing the GPIOXtender object.  <br /></td></tr>
 <tr class="separator:a1857b10f93cd3adadf73da5907891152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c84a35497c8ef98607a0885a864b023" id="r_a6c84a35497c8ef98607a0885a864b023"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c84a35497c8ef98607a0885a864b023">isValid</a> (<a class="el" href="class_s_r_g_v_x_v_port.html">SRGVXVPort</a> &amp;VPort)</td></tr>
+<tr class="memdesc:a6c84a35497c8ef98607a0885a864b023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the provided <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object is valid.  <br /></td></tr>
+<tr class="separator:a6c84a35497c8ef98607a0885a864b023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71bc30fb6dad11508776435a15a20e38" id="r_a71bc30fb6dad11508776435a15a20e38"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71bc30fb6dad11508776435a15a20e38">moveAuxToMain</a> (const bool &amp;flushASAP=true)</td></tr>
 <tr class="memdesc:a71bc30fb6dad11508776435a15a20e38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the data in the Auxiliary to the Main.  <br /></td></tr>
 <tr class="separator:a71bc30fb6dad11508776435a15a20e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -375,6 +381,39 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="192,78,159,83,158,78,191,73"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a8d305039ce3dad33e05d04c62af891b3" name="a8d305039ce3dad33e05d04c62af891b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d305039ce3dad33e05d04c62af891b3">&#9670;&#160;</a></span>createVXVPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_r_g_v_x_v_port.html">SRGVXVPort</a> ShiftRegGPIOXpander::createVXVPort </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>strtPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>pinsQty</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Instantiate a <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object. </p>
+<p>The method will create a <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strtPin</td><td><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> pin number from which the virtual port will start. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a>. </td></tr>
+    <tr><td class="paramname">pinsQty</td><td>Number of pins that will compose the virtual port. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> - strtPin + 1). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> The <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object created, or an empty <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object if the parameters provided were not valid.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object. </dd></dl>
 
 </div>
 </div>
@@ -988,6 +1027,37 @@ Here is the caller graph for this function:</div>
 <p>The value is passed as a parameter in the class constructor. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t The number of shift registers composing the physical port extender modeled by the class. </dd></dl>
+
+</div>
+</div>
+<a id="a6c84a35497c8ef98607a0885a864b023" name="a6c84a35497c8ef98607a0885a864b023"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c84a35497c8ef98607a0885a864b023">&#9670;&#160;</a></span>isValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ShiftRegGPIOXpander::isValid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_r_g_v_x_v_port.html">SRGVXVPort</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>VPort</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the provided <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object is valid. </p>
+<p>The method is useful to verify after a createVXVPort(uint8_t&amp;, uint8_t&amp;) invocation that the <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object created is valid, i.e. that it was created with a valid <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object pointer and that the parameters provided to create the <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object were valid.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">VPort</td><td><a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object to be checked for validity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true The created <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object is valid and usable. <br  />
+ </dd>
+<dd>
+false The created <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object is not valid, and should not be used.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the method returns false, the <a class="el" href="class_s_r_g_v_x_v_port.html" title="A class that models Virtual Ports from the resources provideed by a ShiftRegGPIOXpander object.">SRGVXVPort</a> object should not be used. Consider destructing it and creating a new one with valid parameters. </dd></dl>
 
 </div>
 </div>

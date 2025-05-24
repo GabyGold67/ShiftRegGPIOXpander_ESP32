@@ -70,7 +70,6 @@ protected:
    uint8_t* _auxArryBuffPtr{nullptr};
    uint8_t _maxSrPin{0};
 
-
 public:
    /**
     * @brief Class default constructor
@@ -124,9 +123,18 @@ public:
     * @retval false The Auxiliary was existent and the parameter allowing overwritting was false, generating a failure in the operation.  
     */
    bool copyMainToAux(const bool &overWriteIfExists = true);
-
-   SRGVXVPort createVXVPort(uint8_t strtPin, uint8_t endPin);   
-
+   /**
+    * @brief Instantiate a SRGVXVPort object
+    * 
+    * The method will create a SRGVXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port. 
+    * 
+    * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. The valid range is 0 <= strtPin <= getMaxPin().
+    * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxPin() - strtPin + 1).
+    * @return SRGVXVPort The SRGVXVPort object created, or an empty SRGVXVPort object if the parameters provided were not valid.
+    * 
+    * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
+    */
+   SRGVXVPort createVXVPort(const uint8_t &strtPin, const uint8_t &pinsQty);
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -158,7 +166,7 @@ public:
      * 
      * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.
      */
-  void digitalToggleSr(const uint8_t &srPin);
+   void digitalToggleSr(const uint8_t &srPin);
    /**
     * @brief Toggles the state of the pins in the Main Buffer according to the provided mask.
     * 
@@ -171,6 +179,16 @@ public:
     * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.
     */
    void digitalToggleSrMask(uint8_t* newToggleMask);
+   /**
+    * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
+    * 
+    * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()  
+    * 
+    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
+    * 
+    * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
+    */
+   void digitalToggleSrToAux(const uint8_t &srPin); 
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -209,7 +227,7 @@ public:
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
    void digitalWriteSrMaskReset(uint8_t* newResetMask);
-  /**
+   /**
    * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
    * 
    * The pins to be set are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01).  
@@ -222,18 +240,8 @@ public:
    * 
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
-  void digitalWriteSrMaskSet(uint8_t* newSetMask);  
- /**
-  * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
-  * 
-  * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()  
-  * 
-  * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
-  * 
-  * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
-  */
-  void digitalToggleSrToAux(const uint8_t &srPin); 
-  /**
+   void digitalWriteSrMaskSet(uint8_t* newSetMask);  
+   /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
    * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxPin()
@@ -282,10 +290,19 @@ public:
      * @return uint8_t The number of shift registers composing the physical port extender modeled by the class.  
      */
    uint8_t getSrQty();
-
+   /**
+    * @brief Checks if the provided SRGVXVPort object is valid.
+    * 
+    * The method is useful to verify after a createVXVPort(uint8_t&, uint8_t&) invocation that the SRGVXVPort object created is valid, i.e. that it was created with a valid ShiftRegGPIOXpander object pointer and that the parameters provided to create the SRGVXVPort object were valid.
+    * 
+    * @param VPort SRGVXVPort object to be checked for validity.
+    * @return true The created SRGVXVPort object is valid and usable.  
+    * @return false The created SRGVXVPort object is not valid, and should not be used.
+    * 
+    * @note If the method returns false, the SRGVXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
+    */
    bool isValid(SRGVXVPort &VPort);
-
-  /**
+   /**
     * @brief Moves the data in the Auxiliary to the Main
     * 
     * Moving the contents from the Auxiliary to the Main implies several steps:  
@@ -300,7 +317,7 @@ public:
     * @retval true There was an Auxiliary an it's value could be moved.  
     * @retval false There was no Auxiliary present, no data have been moved.  
     */
-  bool moveAuxToMain(const bool &flushASAP = true);
+   bool moveAuxToMain(const bool &flushASAP = true);
    /**
     * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
     * 
@@ -313,7 +330,7 @@ public:
     * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
     */
    bool sendAllSRCntnt();
-  /**
+   /**
    * @brief Sets all of the output pins of the shift register to new provided values at once.  
    * 
    * The method gives a tool to change all the shift registers pins in one operation instead of pin by pin. The method uses the provided pointer as a data source to overwrite the Main Buffer with the new contents.  
@@ -327,7 +344,7 @@ public:
    * 
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
-  bool stampOverMain(uint8_t* newCntntPtr);
+   bool stampOverMain(uint8_t* newCntntPtr);
 
 };
 

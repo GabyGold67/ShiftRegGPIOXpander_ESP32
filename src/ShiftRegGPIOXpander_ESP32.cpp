@@ -97,7 +97,7 @@ bool ShiftRegGPIOXpander::copyMainToAux(const bool &overWriteIfExists){
    return result;
 }
 
-SRGVXVPort ShiftRegGPIOXpander::createVXVPort(uint8_t strtPin, uint8_t pinsQty){
+SRGVXVPort ShiftRegGPIOXpander::createVXVPort(const uint8_t &strtPin, const uint8_t &pinsQty){
    if((strtPin <= _maxSrPin) && ((strtPin + pinsQty - 1) <= _maxSrPin))   
       return SRGVXVPort(this, strtPin, pinsQty);
    else
@@ -391,9 +391,7 @@ SRGVXVPort::~SRGVXVPort()
 {
 }
 
-
 ShiftRegGPIOXpander* SRGVXVPort::getSRGXPtr(){
 
    return _srGpioXpdrPtr;
 }
-
