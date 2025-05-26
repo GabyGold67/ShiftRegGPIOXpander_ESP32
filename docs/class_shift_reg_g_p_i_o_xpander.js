@@ -5,7 +5,7 @@ var class_shift_reg_g_p_i_o_xpander =
     [ "~ShiftRegGPIOXpander", "class_shift_reg_g_p_i_o_xpander.html#a68fe6cf0609e80ec31a622b8e1265a20", null ],
     [ "begin", "class_shift_reg_g_p_i_o_xpander.html#a6fd936a7f8f4547d238f9b4e79bc9c0d", null ],
     [ "copyMainToAux", "class_shift_reg_g_p_i_o_xpander.html#a58b895bd50325c063a71d2ad4da1c961", null ],
-    [ "createVXVPort", "class_shift_reg_g_p_i_o_xpander.html#a8d305039ce3dad33e05d04c62af891b3", null ],
+    [ "createSRGXVPort", "class_shift_reg_g_p_i_o_xpander.html#ac36a36a34fbcf6b9761e201599f3bacc", null ],
     [ "digitalReadSr", "class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb", null ],
     [ "digitalToggleSr", "class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3", null ],
     [ "digitalToggleSrAll", "class_shift_reg_g_p_i_o_xpander.html#ac80c4970c7c4df0d66e0e89411dff2a5", null ],
@@ -19,11 +19,16 @@ var class_shift_reg_g_p_i_o_xpander =
     [ "digitalWriteSrToAux", "class_shift_reg_g_p_i_o_xpander.html#a6a41a23fec35a378644308504320b12c", null ],
     [ "discardAux", "class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d", null ],
     [ "end", "class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049", null ],
+    [ "flipBit", "class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68", null ],
     [ "getMainBuffPtr", "class_shift_reg_g_p_i_o_xpander.html#a7ca688abf5eab3f4984320b90956e1f2", null ],
     [ "getMaxPin", "class_shift_reg_g_p_i_o_xpander.html#a5d26546d401570b73507325f2ffb9add", null ],
     [ "getSrQty", "class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152", null ],
-    [ "isValid", "class_shift_reg_g_p_i_o_xpander.html#a6c84a35497c8ef98607a0885a864b023", null ],
+    [ "isValid", "class_shift_reg_g_p_i_o_xpander.html#a10566c68d46c779eb54e407a39893cef", null ],
     [ "moveAuxToMain", "class_shift_reg_g_p_i_o_xpander.html#a71bc30fb6dad11508776435a15a20e38", null ],
+    [ "resetBit", "class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c", null ],
     [ "sendAllSRCntnt", "class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5", null ],
-    [ "stampOverMain", "class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf", null ]
+    [ "setBit", "class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc", null ],
+    [ "stampMaskOverMain", "class_shift_reg_g_p_i_o_xpander.html#aa457d8ff9eab909b87a120d312be1a13", null ],
+    [ "stampOverMain", "class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf", null ],
+    [ "stampSgmntOverMain", "class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122", null ]
 ];

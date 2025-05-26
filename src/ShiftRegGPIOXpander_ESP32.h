@@ -134,7 +134,7 @@ public:
     * 
     * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
     */
-   SRGVXVPort createVXVPort(const uint8_t &strtPin, const uint8_t &pinsQty);
+   SRGXVPort createSRGXVPort(const uint8_t &strtPin, const uint8_t &pinsQty);
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -149,12 +149,6 @@ public:
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);
-   /**
-    * @brief Toggles the state of all the pins.
-    * 
-    * @details The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
-    */
-   void digitalToggleSrAll();
     /**
      * @brief Toggles the state of a specific pin.
      * 
@@ -167,6 +161,12 @@ public:
      * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.
      */
    void digitalToggleSr(const uint8_t &srPin);
+   /**
+    * @brief Toggles the state of all the pins.
+    * 
+    * @details The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
+    */
+   void digitalToggleSrAll();
    /**
     * @brief Toggles the state of the pins in the Main Buffer according to the provided mask.
     * 
@@ -265,6 +265,16 @@ public:
     */
    void end();
    /**
+    * @brief Toggles the state of a specific pin in the Main Buffer.  
+    * 
+    * @param srPin Pin whose state is to be toggled. The valid range is 0 <= srPin <= getMaxPin()  
+    * @retval true The pin was in the valid range and was toggled in the Main Buffer.
+    * @retval false The pin was not in the valid range, and no action was taken.
+    * 
+    * @note flipBit(n) is a synonym for digitalToggleSr(n), and is provided for shortening and using more meaningful name in the code.
+    */
+   bool flipBit(const uint8_t &srPin);
+   /**
     * @brief Retrieves the pointer to the Main Buffer.  
     * 
     * @return Pointer to the array of uint8_t holding the buffered shift registers values.  
@@ -301,7 +311,7 @@ public:
     * 
     * @note If the method returns false, the SRGVXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
     */
-   bool isValid(SRGVXVPort &VPort);
+   bool isValid(SRGXVPort &VPort);
    /**
     * @brief Moves the data in the Auxiliary to the Main
     * 
@@ -319,6 +329,16 @@ public:
     */
    bool moveAuxToMain(const bool &flushASAP = true);
    /**
+    * @brief Sets a specific pin to LOW (0x00/Reset) in the Main Buffer.
+    * 
+    * @param srPin Pin whose state is to be reset. The valid range is 0 <= srPin <= getMaxPin()
+    * @retval true The pin was in the valid range and was reset to LOW (0x00/Reset) in the Main Buffer.
+    * @retval false The pin was not in the valid range, and no action was taken.
+    * 
+    * @note resetBit(n) is a synonym for digitalWriteSr(n, LOW), and is provided for shortening and using more meaningful name in the code.
+    */
+   bool resetBit(const uint8_t &srPin);
+   /**
     * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
     * 
     * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the internal buffer values.  
@@ -330,6 +350,26 @@ public:
     * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
     */
    bool sendAllSRCntnt();
+   /**
+    * @brief Sets a specific pin to HIGH (0x01/Set) in the Main Buffer.
+    * 
+    * @param srPin Pin whose state is to be set. The valid range is 0 <= srPin <= getMaxPin()
+    * @retval true The pin was in the valid range and was set to HIGH (0x01/Set) in the Main Buffer.
+    * @retval false The pin was not in the valid range, and no action was taken.
+    * 
+    * @note setBit(n) is a synonym for digitalWriteSr(n, HIGH), and is provided for shortening and using more meaningful name in the code.
+    */
+   bool setBit(const uint8_t &srPin);
+   /**
+    * @brief Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.
+    * 
+    * @param newMaskPtr Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the newValsPtr parameter. 
+    * @param newValsPtr Pointer to the memory area containing the values to be set in the Main Buffer. The values are provided as a bit array, where each bit position corresponds to the pin in the Main Buffer that will be modified according to the mask provided in the newMaskPtr parameter: for the array positions set in the mask, the value of the bit in the newValsPtr will be set in the corresponding pin in the Main Buffer, for the array positions not set in the mask, the value in the Main Buffer will remain unchanged.
+    * 
+    * @retval true Main Buffer was modified with the new values and flushed to the shift registers.
+    * @retval false Main Buffer was not modified, either because the parameters provided were not valid or because the operation failed for some other reason.
+    */
+   bool stampMaskOverMain(uint8_t* newMaskPtr, uint8_t* newValsPtr);
    /**
    * @brief Sets all of the output pins of the shift register to new provided values at once.  
    * 
@@ -345,32 +385,126 @@ public:
    * @warning As soon as the Main is overwritten with the new values, the Buffer will be flushed.  
    */
    bool stampOverMain(uint8_t* newCntntPtr);
+   /**
+    * @brief Sets the value of a set of consecutive pins (the segment) in the Main Buffer. 
+    * 
+    * Each pin value is set or reset according to the value provided in the data array pointed by the newSgmntPtr parameter as source.  
+    * 
+    * @param newSgmntPtr Pointer to the memory area containing the new values to be set to the segment of pins in the Main Buffer. The value to be set in each pin is provided as a bit in the data pointed by the newSgmntPtr parameter, where the first bit in the data pointed by newSgmntPtr will be set to the first pin in the segment, and so on. For that logic to work the data must be right aligned (LSb of the segment placed in position 0) in the data pointed by newSgmntPtr.  
+    * @param strtPin First pin number in the Main buffer to be overwritten. The valid range is 0 <= strtPin <= getMaxPin().
+    * @param pinsQty The number of pins to be set in the segment. The valid range is 1 <= pinsQty <= (getMaxPin() - strtPin + 1).
+    * 
+    * @return A boolean indicating the success of the operation.  
+    * @retval true The segment was set in the Main Buffer and the Buffer was flushed.  
+    * @retval false The segment could not be set in the Main Buffer, either because the parameters provided were not valid or because the operation failed for some other reason.  
+    * 
+    * @note The intended behavior of the method is to present the resulting Main in a single operation, so the method will make all the segment modifications to the Main Buffer before flushing it. If the Auxiliary Buffer contains any pending modifications, they will be moved to the Main Buffer before the segment stamping execution.  
+    * 
+    * @warning The method expects newSgmntPtr to point to a valid memory area containing the data to be set in the segment. If the pointer is nullptr/NULL, the method will return false and no operation will be performed.
+    * 
+    * @attention Altough the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same lenght as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. 
+    */
+   bool stampSgmntOverMain(uint8_t* newSgmntPtr, const uint8_t &strtPin, const uint8_t &pinsQty);
 
 };
 
 //==========================================================>>
 
 /**
- * @brief A class that models **Virtual Ports** from  the resources provideed by a ShiftRegGPIOXpander object.  
+ * @brief A class that models **Virtual Ports** from  the resources provided by a ShiftRegGPIOXpander object.  
  * 
  * The **Virtual Ports** are a set of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the ShiftRegGPIOXpander object. The **Virtual Ports** main advantage is to provide a means to focus on a group of pins that are somehow associated, as are meant to manage the communications with a specific device or group of devices, manage different related signals, etc.
  * 
  * The class objects provide the means to translate the pin numbers from the **Virtual Port** to the real pins in the ShiftRegGPIOXpander object.
  * 
+ * A simple example of use is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, is solved by using a ShiftRegGPIOXpander object with 2 shift registers. Using the ShiftRegGPIOXpander object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a SRGVXVPort object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to remember the real pin numbers in the ShiftRegGPIOXpander object.
+ * 
+ * @note The open possibility of creating virtual ports that overlap pins in the ShiftRegGPIOXpander object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the  32-bits registers, and the 32-bits registers are a superset of the 16-bits registers. The user can use the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports.
+ * 
  * @class SRGVXVPort
  */
-class SRGVXVPort: public ShiftRegGPIOXpander{
+class SRGXVPort: public ShiftRegGPIOXpander{
+   const static uint8_t _maxPortPinsQty{16}; // Maximum number of pins that can be used in a virtual port, as the shift register is an 8-bits SIPO device, the maximum number of pins that can be used in a virtual port is 16.
 private:
    uint8_t _strtPin{0};
    uint8_t _pinsQty{0};
    ShiftRegGPIOXpander* _srGpioXpdrPtr{nullptr};
+   uint16_t _vportBuffer{0};
+   uint8_t* _srgxStampMaskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer, if needed. The pointer is set to nullptr if no mask is needed, or if the mask is not set.
 
 public:
-   SRGVXVPort();   
-   SRGVXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
-   ~SRGVXVPort();
+   /**
+    * @brief Default constructor
+    */
+   SRGXVPort();   
+   /**
+    * @brief Class constructor
+    * 
+    * This constructor will instantiate a virtual port object that will allow the user to manipulate a subset of the pins available in the ShiftRegGPIOXpander object as a unit. The main driving concept is that the contiguous subset of pins are logically related, and thus can be manipulated as a single entity. The pins are numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.
+    * 
+    * @param SRGXPtr A pointer to the ShiftRegGPIOXpander object that will provide the resources (pins) for the virtual port.  
+    * @param strtPin The pin number from the ShiftRegGPIOXpander to be used as the first pin (pin 0) of the virtual port. 
+    * @param pinsQty The number of pins that will compose the virtual port. 
+    */
+   SRGXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
+   /**
+    * @brief Class destructor
+    */
+   ~SRGXVPort();
+   /**
+    * @brief Begins the virtual port, setting the initial state of the pins.
+    * 
+    * @param initCntnt Initial value to be loaded into the virtual port. 
+    */
    void begin(uint8_t* initCntnt);
+   /**
+    * @brief Reads the state of a specific pin in the virtual port.  
+    * 
+    * @param srPin Pin number whose state is to be read. The valid range is 0 <= srPin < _pinsQty.  
+    * 
+    * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset).  
+    */
+   uint8_t digitalReadSr(const uint8_t &srPin);
+   /**
+    * @brief Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset).
+    * 
+    * @param srPin Pin number whose state is to be set. The valid range is 0 <= srPin < _pinsQty.
+    * @param value The value to set the pin to, either HIGH (0x01/Set) or LOW (0x00/Reset).
+    */
+   void digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
+   /**
+    * @brief Toggles the state of a specific pin in the virtual port.
+    * 
+    * If the pin state was HIGH (0x01/Set) it will be set to LOW (0x00/Reset), and vice versa. The method will flush the buffer, so the change will be reflected on the GPIO pin.
+    * 
+    * @param srPin Pin number whose state is to be toggled. The valid range is 0 <= srPin < _pinsQty.
+    * @return The success of the operation.
+    * @retval true The pin was in the valid range and was toggled in the Main Buffer.
+    * @retval false The pin was not in the valid range, and no action was taken.
+    */
+   bool flipBit(const uint8_t &srPin);
+   /**
+    * @brief Returns a pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port.
+    * 
+    * @return A ShiftRegGPIOXpander* pointer to the object that provides the resources for the virtual port.
+    */
    ShiftRegGPIOXpander* getSRGXPtr();
+   /**
+    * @brief Sets the state of a pin to LOW (0x00/Reset) in the virtual port.
+    * 
+    * @param srPin The pin number whose state is to be reset. The valid range is 0 <= srPin < _pinsQty.
+    * @return true The pin was in the valid range and was reset to LOW (0x00/Reset) in the Main Buffer.
+    * @return false The pin was not in the valid range, and no action was taken.
+    */
+   bool resetBit(const uint8_t &srPin);
+   /**
+    * @brief Sets the state of a pin to HIGH (0x01/Set) in the virtual port.
+    * 
+    * @param srPin The pin number whose state is to be set. The valid range is 0 <= srPin < _pinsQty.
+    * @return true The pin was in the valid range and was set to HIGH (0x01/Set) in the Main Buffer.
+    * @return false The pin was not in the valid range, and no action was taken.
+    */
+   bool setBit(const uint8_t &srPin);
 
 };
 
