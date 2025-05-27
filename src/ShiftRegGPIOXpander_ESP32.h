@@ -317,21 +317,22 @@ public:
     */
    bool isValid(SRGXVPort &VPort);
    /**
+    * @attention Method deprecated, kept for compatibility with previous versions, see moveAuxToMain() for the new method signature.
+    */
+   bool moveAuxToMain(const bool &flushASAP);
+   /**
     * @brief Moves the data in the Auxiliary to the Main
     * 
     * Moving the contents from the Auxiliary to the Main implies several steps:  
     * - Check the existence of the Auxiliary
     * - Copy the contents from the Auxiliary to the Main (see stampOverMain(uint8_t*))
     * - Delete the Auxiliary (see discardAux())
-    * - Flush the Main Buffer to the shift registers if the parameter flushASAP = true (see sendAllSRCntnt())
-    * 
-    * @param flushASAP indicates if the method should take care of sending the updated Main Buffer to the shift registers before exiting, or avoid doing so. The option to flush or avoid doing it is related to the use of the method by another method or procedure that will take care of invoking a bool sendAllSRCntnt() by itself.  
     * 
     * @return The success of moving the data from the Auxiliar to the Main.  
-    * @retval true There was an Auxiliary an it's value could be moved.  
+    * @retval true There was an Auxiliary and it's value could be moved.  
     * @retval false There was no Auxiliary present, no data have been moved.  
     */
-   bool moveAuxToMain(const bool &flushASAP = true);
+   bool moveAuxToMain();
    /**
     * @brief Sets a specific pin to LOW (0x00/Reset) in the Main Buffer.
     * 
@@ -367,13 +368,13 @@ public:
    /**
     * @brief Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.
     * 
-    * @param newMaskPtr Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the newValsPtr parameter. 
-    * @param newValsPtr Pointer to the memory area containing the values to be set in the Main Buffer. The values are provided as a bit array, where each bit position corresponds to the pin in the Main Buffer that will be modified according to the mask provided in the newMaskPtr parameter: for the array positions set in the mask, the value of the bit in the newValsPtr will be set in the corresponding pin in the Main Buffer, for the array positions not set in the mask, the value in the Main Buffer will remain unchanged.
+    * @param maskPtr Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the newValsPtr parameter. 
+    * @param valsPtr Pointer to the memory area containing the values to be set in the Main Buffer. The values are provided as a bit array, where each bit position corresponds to the pin in the Main Buffer that will be modified according to the mask provided in the newMaskPtr parameter: for the array positions set in the mask, the value of the bit in the newValsPtr will be set in the corresponding pin in the Main Buffer, for the array positions not set in the mask, the value in the Main Buffer will remain unchanged.
     * 
     * @retval true Main Buffer was modified with the new values and flushed to the shift registers.
     * @retval false Main Buffer was not modified, either because the parameters provided were not valid or because the operation failed for some other reason.
     */
-   bool stampMaskOverMain(uint8_t* newMaskPtr, uint8_t* newValsPtr);
+   bool stampMaskOverMain(uint8_t* maskPtr, uint8_t* valsPtr);
    /**
    * @brief Sets all of the output pins of the shift register to new provided values at once.  
    * 

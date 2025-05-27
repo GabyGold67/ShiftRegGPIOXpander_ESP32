@@ -345,17 +345,22 @@ bool ShiftRegGPIOXpander::isValid(SRGXVPort &VPort){
 }
 
 bool ShiftRegGPIOXpander::moveAuxToMain(const bool &flushASAP){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   
+   return moveAuxToMain();
+}
+
+bool ShiftRegGPIOXpander::moveAuxToMain(){
    bool result {false};
 
    if(_auxBuffArryPtr != nullptr){
-      taskENTER_CRITICAL(&mux);
+      xSemaphoreTake(_SRGXAuxBffMutex, portMAX_DELAY);
+      xSemaphoreTake(_SRGXMnBffMutex, portMAX_DELAY);
       memcpy( _mainBuffArryPtr, _auxBuffArryPtr, _srQty);
       discardAux();
-      if(flushASAP)
-         sendAllSRCntnt();
-	   taskEXIT_CRITICAL(&mux);
-   }
+      sendAllSRCntnt();
+      xSemaphoreGive(_SRGXAuxBffMutex);
+      xSemaphoreGive(_SRGXMnBffMutex);
+      result = true;}
 
    return result;
 }
@@ -365,32 +370,32 @@ bool ShiftRegGPIOXpander::resetBit(const uint8_t &srPin){
 
    if(srPin <= _maxSrPin){
       digitalWriteSr(srPin, LOW); // Set the pin to LOW
+      result = true;
    }
-   else
-      result = false;
 
    return result;
 }
 
 bool ShiftRegGPIOXpander::sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-   bool result{true};
+   // portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   bool result{false};
 
-	taskENTER_CRITICAL(&mux);
+	// taskENTER_CRITICAL(&mux);
    if((_srQty > 0) && (_mainBuffArryPtr != nullptr)){
+      xSemaphoreTake(_SRGXMnBffMutex, portMAX_DELAY);
       digitalWrite(_st_cp, LOW); // Start of access to the shift register internal buffer to write -> Lower the latch pin
 
       for(int srBuffDsplcPtr{_srQty - 1}; srBuffDsplcPtr >= 0; srBuffDsplcPtr--){
          curSRcntnt = *(_mainBuffArryPtr + srBuffDsplcPtr);
          result = _sendSnglSRCntnt(curSRcntnt);
       }
+
       digitalWrite(_st_cp, HIGH);   // End of access to the shift register internal buffer, copy the buffer values to the output pins -> Lower the latch pin
+      xSemaphoreGive(_SRGXMnBffMutex);
+      result = true;
    }
-   else{
-      result = false;
-   }      
-	taskEXIT_CRITICAL(&mux);
+	// taskEXIT_CRITICAL(&mux);
 
    return result;
 }
@@ -402,7 +407,6 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
    for (int bitPos {7}; bitPos >= 0; bitPos--){   //Send each of the bits correspondig to one 8-bits shift register module
       digitalWrite(_sh_cp, LOW); // Start of next bit value addition to the shift register internal buffer -> Lower the clock pin         
       digitalWrite(_ds, (data & mask)?HIGH:LOW);
-      // data <<= 1;
       mask >>= 1; // Shift the mask to the right to get the next bit value
       delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet  //FFDR esp_timer_get_time() might be used instead of delayMicroseconds
       digitalWrite(_sh_cp, HIGH);   // End of next bit value addition to the shift register internal buffer -> Lower the clock pin      
@@ -423,42 +427,33 @@ bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
    return result;
 }
 
-bool ShiftRegGPIOXpander::stampMaskOverMain(uint8_t* newMaskPtr, uint8_t* newValsPtr){
-   bool mainBitState{false};
-   bool maskBitState{false};
+bool ShiftRegGPIOXpander::stampMaskOverMain(uint8_t* maskPtr, uint8_t* valsPtr){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-   bool newValBitState{false};
    bool result{false};  
-   
-   if((newMaskPtr != nullptr) && (newValsPtr != nullptr)){
-      taskENTER_CRITICAL(&mux);
+
+   if((maskPtr != nullptr) && (valsPtr != nullptr)){
+      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
+      uint8_t* localMaskPtr = new uint8_t[_srQty];
+      memcpy(localMaskPtr, maskPtr, _srQty);
+      uint8_t* localValsPtr = new uint8_t[_srQty];
+      memcpy(localValsPtr, valsPtr, _srQty);
+      taskEXIT_CRITICAL(&mux);   // Exit critical section
+
+      xSemaphoreTake(_SRGXAuxBffMutex, portMAX_DELAY);
+      xSemaphoreTake(_SRGXMnBffMutex, portMAX_DELAY);
       if(_auxBuffArryPtr != nullptr)
-         moveAuxToMain(false); // Move the Auxiliary Buffer to the Main Buffer, if it exists
-      
+         moveAuxToMain(false); // Move the Auxiliary Buffer to the Main Buffer, if it exists      
       for (int ptrInc{0}; ptrInc < _maxSrPin; ptrInc++){
-         if(*(newMaskPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))){  // If the bit is set in the mask check if the bit state in the Main needs to be changed
-
-            /*if(*(_mainBuffArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8)))
-               mainBitState = true;
-            else
-               mainBitState = false;
-
-            if(*(newValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8)))
-               newValBitState = true;
-            else
-               newValBitState = false;
-
-            if(mainBitState != newValBitState) // If the bit state in the new values is different from the bit state in the Main Buffer
-               *(_mainBuffArryPtr + (ptrInc / 8)) ^= (static_cast<uint8_t>(0x01) << (ptrInc % 8));
-            */
-
-            if((*(_mainBuffArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))) != (*(newValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8))))
+         if(*(localMaskPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))){  // If the bit is set in the mask check if the bit state in the Main needs to be changed
+            if((*(_mainBuffArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))) != (*(localValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8))))
                *(_mainBuffArryPtr + (ptrInc / 8)) ^= (static_cast<uint8_t>(0x01) << (ptrInc % 8));
          }
-      }
-      taskEXIT_CRITICAL(&mux);
-      
+      }      
       sendAllSRCntnt(); // Flush the Main Buffer to the shift registers
+      xSemaphoreGive(_SRGXAuxBffMutex);
+      xSemaphoreGive(_SRGXMnBffMutex);
+      delete [] localMaskPtr; // Free the memory allocated for the local mask
+      delete [] localValsPtr; // Free the memory allocated for the local values
       result = true; // If the parameters were valid, the operation was successful
    }
 
@@ -471,22 +466,29 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
 
    if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
       taskENTER_CRITICAL(&mux);
+      uint8_t* localNewCntntkPtr = new uint8_t[_srQty];
+      memcpy(localNewCntntkPtr, newCntntPtr, _srQty);
+      taskEXIT_CRITICAL(&mux);
+
+      xSemaphoreTake(_SRGXAuxBffMutex, portMAX_DELAY);
+      xSemaphoreTake(_SRGXMnBffMutex, portMAX_DELAY);
       if(_auxBuffArryPtr != nullptr)
          discardAux();
       memcpy(_mainBuffArryPtr, newCntntPtr, _srQty);
       sendAllSRCntnt();
+      xSemaphoreGive(_SRGXAuxBffMutex);
+      xSemaphoreGive(_SRGXMnBffMutex);
+      
+      delete [] localNewCntntkPtr; // Free the memory allocated for the local new content
       result = true;
-      taskEXIT_CRITICAL(&mux);
    }
    
    return result;
 }
 
 bool ShiftRegGPIOXpander::stampSgmntOverMain(uint8_t *newSgmntPtr, const uint8_t &strtPin, const uint8_t &pinsQty){
-   bool mainBitState{false};
-   bool result{false};  
-   bool sgmntBitState{false};
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   bool result{false};  
 
    if((newSgmntPtr != nullptr) && (strtPin <= _maxSrPin) && (pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSrPin)){
       taskENTER_CRITICAL(&mux);
@@ -494,17 +496,7 @@ bool ShiftRegGPIOXpander::stampSgmntOverMain(uint8_t *newSgmntPtr, const uint8_t
          moveAuxToMain(false); // Move the Auxiliary Buffer to the Main Buffer, if it exists
       
       for (int ptrInc{0}; ptrInc < pinsQty; ptrInc++){
-         if(*(_mainBuffArryPtr + ((strtPin + ptrInc) / 8)) & (0x01 << ((strtPin + ptrInc) % 8)))
-            mainBitState = true; // The bit is set in the Main Buffer
-         else
-            mainBitState = false; // The bit is reset in the Main Buffer            
-
-         if(*(newSgmntPtr + (ptrInc / 8)) & (0x01 << (ptrInc % 8)))
-            sgmntBitState = true; // The bit is set in the segment
-         else
-            sgmntBitState = false; // The bit is reset in the segment
-         
-         if(sgmntBitState != mainBitState) // If the bit state in the segment is different from the bit state in the Main Buffer
+         if((*(_mainBuffArryPtr + ((strtPin + ptrInc) / 8)) & (0x01 << ((strtPin + ptrInc) % 8))) != (*(newSgmntPtr + (ptrInc / 8)) & (0x01 << (ptrInc % 8)))) // If the bit state in the segment is different from the bit state in the Main Buffer
             *(_mainBuffArryPtr + ((strtPin + ptrInc) / 8)) ^= (0x01 << ((strtPin + ptrInc) % 8));
       }
 
