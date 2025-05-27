@@ -44,8 +44,9 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include <mutex>
 
-class SRGVXVPort;
+class SRGXVPort;
 
 /**
  * @brief A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
@@ -57,6 +58,9 @@ class SRGVXVPort;
  * @class ShiftRegGPIOXpander
  */
 class ShiftRegGPIOXpander{
+   static SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
+   static SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
+
 private:
    uint8_t _ds{};
    uint8_t _sh_cp{};
@@ -66,8 +70,8 @@ private:
    bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 
 protected:
-   uint8_t* _srArryBuffPtr{};
-   uint8_t* _auxArryBuffPtr{nullptr};
+   uint8_t* _mainBuffArryPtr{};
+   uint8_t* _auxBuffArryPtr{nullptr};
    uint8_t _maxSrPin{0};
 
 public:
@@ -124,13 +128,13 @@ public:
     */
    bool copyMainToAux(const bool &overWriteIfExists = true);
    /**
-    * @brief Instantiate a SRGVXVPort object
+    * @brief Instantiate a SRGXVPort object
     * 
-    * The method will create a SRGVXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port. 
+    * The method will create a SRGXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port. 
     * 
     * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. The valid range is 0 <= strtPin <= getMaxPin().
     * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxPin() - strtPin + 1).
-    * @return SRGVXVPort The SRGVXVPort object created, or an empty SRGVXVPort object if the parameters provided were not valid.
+    * @return SRGXVPort The SRGXVPort object created, or an empty SRGXVPort object if the parameters provided were not valid.
     * 
     * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
     */
@@ -178,7 +182,7 @@ public:
     * 
     * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.
     */
-   void digitalToggleSrMask(uint8_t* newToggleMask);
+   void digitalToggleSrMask(uint8_t* toggleMask);
    /**
     * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
     * 
@@ -226,7 +230,7 @@ public:
    * 
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
-   void digitalWriteSrMaskReset(uint8_t* newResetMask);
+   void digitalWriteSrMaskReset(uint8_t* resetMask);
    /**
    * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
    * 
@@ -240,7 +244,7 @@ public:
    * 
    * @attention The Main Buffer will be flushed after the mask modificatons are applied.
    */
-   void digitalWriteSrMaskSet(uint8_t* newSetMask);  
+   void digitalWriteSrMaskSet(uint8_t* setMask);  
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
@@ -301,15 +305,15 @@ public:
      */
    uint8_t getSrQty();
    /**
-    * @brief Checks if the provided SRGVXVPort object is valid.
+    * @brief Checks if the provided SRGXVPort object is valid.
     * 
-    * The method is useful to verify after a createVXVPort(uint8_t&, uint8_t&) invocation that the SRGVXVPort object created is valid, i.e. that it was created with a valid ShiftRegGPIOXpander object pointer and that the parameters provided to create the SRGVXVPort object were valid.
+    * The method is useful to verify after a createVXVPort(uint8_t&, uint8_t&) invocation that the SRGXVPort object created is valid, i.e. that it was created with a valid ShiftRegGPIOXpander object pointer and that the parameters provided to create the SRGXVPort object were valid.
     * 
-    * @param VPort SRGVXVPort object to be checked for validity.
-    * @return true The created SRGVXVPort object is valid and usable.  
-    * @return false The created SRGVXVPort object is not valid, and should not be used.
+    * @param VPort SRGXVPort object to be checked for validity.
+    * @return true The created SRGXVPort object is valid and usable.  
+    * @return false The created SRGXVPort object is not valid, and should not be used.
     * 
-    * @note If the method returns false, the SRGVXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
+    * @note If the method returns false, the SRGXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
     */
    bool isValid(SRGXVPort &VPort);
    /**
@@ -417,18 +421,20 @@ public:
  * 
  * The class objects provide the means to translate the pin numbers from the **Virtual Port** to the real pins in the ShiftRegGPIOXpander object.
  * 
- * A simple example of use is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, is solved by using a ShiftRegGPIOXpander object with 2 shift registers. Using the ShiftRegGPIOXpander object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a SRGVXVPort object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to remember the real pin numbers in the ShiftRegGPIOXpander object.
+ * A simple example of use is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, is solved by using a ShiftRegGPIOXpander object with 2 shift registers. Using the ShiftRegGPIOXpander object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a SRGXVPort object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to remember the real pin numbers in the ShiftRegGPIOXpander object.
  * 
  * @note The open possibility of creating virtual ports that overlap pins in the ShiftRegGPIOXpander object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the  32-bits registers, and the 32-bits registers are a superset of the 16-bits registers. The user can use the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports.
  * 
- * @class SRGVXVPort
+ * @class SRGXVPort
  */
 class SRGXVPort: public ShiftRegGPIOXpander{
    const static uint8_t _maxPortPinsQty{16}; // Maximum number of pins that can be used in a virtual port, as the shift register is an 8-bits SIPO device, the maximum number of pins that can be used in a virtual port is 16.
 private:
+   ShiftRegGPIOXpander* _SRGXPtr{nullptr};
    uint8_t _strtPin{0};
    uint8_t _pinsQty{0};
-   ShiftRegGPIOXpander* _srGpioXpdrPtr{nullptr};
+
+   uint16_t _vportMaxVal{0}; // Maximum value that can be set in the virtual port, calculated as (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. The value is used to check if the value to be set in the virtual port is valid.
    uint16_t _vportBuffer{0};
    uint8_t* _srgxStampMaskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer, if needed. The pointer is set to nullptr if no mask is needed, or if the mask is not set.
 
