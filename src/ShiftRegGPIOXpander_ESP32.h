@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 2.1.0
+ * @version 3.0.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   22/05/2025 17:50 (GMT+0200) DST  
+ *       Last update:   27/05/2025 22:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -58,21 +58,24 @@ class SRGXVPort;
  * @class ShiftRegGPIOXpander
  */
 class ShiftRegGPIOXpander{
-   static SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
-   static SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
 
 private:
    uint8_t _ds{};
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
-   uint8_t _srQty{};
 
    bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
 
 protected:
+   static SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
+   static SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
+
    uint8_t* _mainBuffArryPtr{};
    uint8_t* _auxBuffArryPtr{nullptr};
    uint8_t _maxSrPin{0};
+   uint8_t _srQty{};
+   
+   bool _get0BasedMainBuffSgmnt(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &buffSgmnt);
 
 public:
    /**
@@ -176,7 +179,7 @@ public:
     * 
     * The pins to be toggled are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be toggling the bit position.
     * 
-    * @param newToggleMask Pointer to the array containing the mask to modify the Main.
+    * @param toggleMask Pointer to the array containing the mask to modify the Main.
     * 
     * @note The method provides a mechanism for toggling various Main buffer bit positions in a single operation.
     * 
@@ -222,7 +225,7 @@ public:
    * 
    * The pins to be reset are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).
    * 
-   * @param newResetMask Pointer to the array containing the mask to modify the Main.
+   * @param resetMask Pointer to the array containing the mask to modify the Main.
    * 
    * @note The method provides a mechanism for clearing (reseting/lowering) various Main buffer bit positions in a single operation.
    * 
@@ -236,7 +239,7 @@ public:
    * 
    * The pins to be set are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01).  
    * 
-   * @param newSetMask Pointer to the array containing the mask to modify the Main.
+   * @param setMask Pointer to the array containing the mask to modify the Main.
    * 
    * @note The method provides a mechanism for seting (rising) various Main buffer bit positions in a single operation.
    * 
@@ -316,10 +319,6 @@ public:
     * @note If the method returns false, the SRGXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
     */
    bool isValid(SRGXVPort &VPort);
-   /**
-    * @attention Method deprecated, kept for compatibility with previous versions, see moveAuxToMain() for the new method signature.
-    */
-   bool moveAuxToMain(const bool &flushASAP);
    /**
     * @brief Moves the data in the Auxiliary to the Main
     * 
@@ -429,17 +428,20 @@ public:
  * @class SRGXVPort
  */
 class SRGXVPort: public ShiftRegGPIOXpander{
+   friend class ShiftRegGPIOXpander; // Allow the ShiftRegGPIOXpander class to access the private members of the SRGXVPort class. In this case the ShiftRegGPIOXpander class will be able instantiate SRGXVPort objects, as the SRGXVPort class constructor is protected!
    const static uint8_t _maxPortPinsQty{16}; // Maximum number of pins that can be used in a virtual port, as the shift register is an 8-bits SIPO device, the maximum number of pins that can be used in a virtual port is 16.
 private:
-   ShiftRegGPIOXpander* _SRGXPtr{nullptr};
+   ShiftRegGPIOXpander* _SRGXPtr{nullptr};   //!< Pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port.   
    uint8_t _strtPin{0};
    uint8_t _pinsQty{0};
 
-   uint16_t _vportMaxVal{0}; // Maximum value that can be set in the virtual port, calculated as (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. The value is used to check if the value to be set in the virtual port is valid.
+   uint16_t _vportMaxVal{0}; // Maximum value that can be set in the virtual port, calculated as (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. The value is used to enforce the range of valid values. 
    uint16_t _vportBuffer{0};
-   uint8_t* _srgxStampMaskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer, if needed. The pointer is set to nullptr if no mask is needed, or if the mask is not set.
+   uint8_t* _srgxStampMskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer.
 
-public:
+   bool _buildSRGXVPortMsk(uint8_t* &maskPtr);
+
+protected:
    /**
     * @brief Default constructor
     */
@@ -452,8 +454,12 @@ public:
     * @param SRGXPtr A pointer to the ShiftRegGPIOXpander object that will provide the resources (pins) for the virtual port.  
     * @param strtPin The pin number from the ShiftRegGPIOXpander to be used as the first pin (pin 0) of the virtual port. 
     * @param pinsQty The number of pins that will compose the virtual port. 
+    * 
+    * @attention This constructor is not accesible but through the ShiftRegGPIOXpander class, as it is a private constructor. The user should use the createSRGXVPort(uint8_t&, uint8_t&) method to create a SRGXVPort object.
     */
    SRGXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
+
+public:
    /**
     * @brief Class destructor
     */
@@ -497,6 +503,22 @@ public:
     */
    ShiftRegGPIOXpander* getSRGXPtr();
    /**
+    * @brief Returns the maximum value that can be set in the virtual port.
+    * 
+    * The maximum value is calculated as (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. The value is used to enforce the range of valid values that can be set in the virtual port.
+    * 
+    * @return uint16_t Maximum value that can be set in the virtual port.
+    */
+   uint16_t getVPortMaxVal();
+   /**
+    * @brief Reads the state of the virtual port as an integer value.
+    * 
+    * The method reads the state of all the pins in the virtual port as a pinsQty binary number and returns the value as an unsigned integer. The bits in the returned value are ordered from the least significant bit (LSB) to the most significant bit (MSB), where the LSB corresponds to pin 0 of the virtual port and the MSB corresponds to pin pinsQty - 1.
+    * 
+    * @return The state of the virtual port as an unsigned integer value, where each bit represents the state of a pin in the virtual port.
+    */
+   uint16_t readPort();   
+   /**
     * @brief Sets the state of a pin to LOW (0x00/Reset) in the virtual port.
     * 
     * @param srPin The pin number whose state is to be reset. The valid range is 0 <= srPin < _pinsQty.
@@ -512,7 +534,15 @@ public:
     * @return false The pin was not in the valid range, and no action was taken.
     */
    bool setBit(const uint8_t &srPin);
-
+   /**
+    * @brief Sets the state of the pins in the Main Buffer (i.e. the GPIOXpander pins) according to the provided value.
+    * 
+    * The value is provided as an unsigned integer, where each bit represents the state of a pin in the virtual port. The bits are ordered from the least significant bit (LSB) to the most significant bit (MSB), where the LSB corresponds to pin 0 of the virtual port and the MSB corresponds to pin pinsQty - 1.
+    * 
+    * @param newPortVal The value to set the virtual port to, where each bit represents the state of a pin in the virtual port. The valid range is 0 <= newPortVal <= _vportMaxVal.
+    * @return 
+    */
+   bool writePort(uint16_t newPortVal);
 };
 
 //==========================================================>>

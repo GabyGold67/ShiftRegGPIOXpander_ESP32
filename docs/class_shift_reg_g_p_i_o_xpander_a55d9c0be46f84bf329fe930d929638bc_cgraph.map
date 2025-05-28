@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,43,159,85"/>
 <area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,43,360,85"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,61,191,61,191,67,159,67"/>
-<area shape="rect" id="Node000003" href="$class_shift_reg_g_p_i_o_xpander.html#a71bc30fb6dad11508776435a15a20e38" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
+<area shape="rect" id="Node000003" href="$class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,50,392,45,393,51,361,55"/>
 <area shape="rect" id="Node000005" href="$class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="609,72,763,115"/>
 <area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="361,67,594,84,594,89,360,72"/>
