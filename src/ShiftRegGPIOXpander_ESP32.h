@@ -66,6 +66,8 @@ private:
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
 
+   bool _copyMainToAux(const bool &overWriteIfExists = true);
+   void _discardAux();
    bool _moveAuxToMain();
    /*
     * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
