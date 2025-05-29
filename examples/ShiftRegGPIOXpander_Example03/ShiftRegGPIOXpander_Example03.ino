@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 24/05/2025 
-  *       Last update:   24/05/2025 22:00 GMT+0200 DST
+  *       Last update:   28/05/2025 16:00 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -90,6 +90,8 @@ void loop() {
    ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty);
    srgx.begin(stVlsPtr);
 
+   SRGXVPort myVPort = srgx.createSRGXVPort(1, 3);
+
    uint8_t mask{0b00001111};
    uint8_t* maskPtr = &mask;
 
@@ -131,7 +133,7 @@ void loop() {
       srgx.digitalToggleSrToAux(6);
       srgx.digitalToggleSrToAux(7);
       Serial.println("Move the Auxiliary Buffer to the Main Buffer and flush it using the moveAuxToMain() method");
-      srgx.moveAuxToMain(true);
+      srgx.moveAuxToMain();
       vTaskDelay(4000);
 
       Serial.println("Clear al bits of the Shift Register GPIO Expander using the digitalWriteSrAllReset() method");

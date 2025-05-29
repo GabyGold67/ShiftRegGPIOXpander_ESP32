@@ -44,7 +44,9 @@
 
 #include <Arduino.h>
 #include <stdint.h>
-#include <mutex>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
 
 class SRGXVPort;
 
@@ -64,11 +66,26 @@ private:
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
 
-   bool _sendSnglSRCntnt(const uint8_t &data); // Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
+   bool _moveAuxToMain();
+   /*
+    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
+    * 
+    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the internal buffer values.  
+    * 
+    * @return true if the operation succeeds.  
+    * 
+    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would produce such outcome.  
+    * 
+    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
+    */
+   bool _sendAllSRCntnt();
+   /*Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
+   */
+   bool _sendSnglSRCntnt(const uint8_t &data); 
 
 protected:
-   static SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
-   static SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
+   SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
+   SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
 
    uint8_t* _mainBuffArryPtr{};
    uint8_t* _auxBuffArryPtr{nullptr};
@@ -98,7 +115,7 @@ public:
     * 
     * @note There is no mechanism to flush the **Auxiliary** straight to the shift registers.  
     * 
-    * @attention Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), digitalWriteSrAllReset(), digitalWriteSrAllSet(), digitalWriteSrMaskReset(uint8_t*), digitalWriteSrMaskSet(uint8_t*) - and/or flushing -see bool sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a moveAuxToMain() before returning the requested pin state. See digitalReadSr(const uint8_t) for more information.
+    * @attention Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), digitalWriteSrAllReset(), digitalWriteSrAllSet(), digitalWriteSrMaskReset(uint8_t*), digitalWriteSrMaskSet(uint8_t*) - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a moveAuxToMain() before returning the requested pin state. See digitalReadSr(const uint8_t) for more information.
     */
    ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
    /**
@@ -342,18 +359,6 @@ public:
     * @note resetBit(n) is a synonym for digitalWriteSr(n, LOW), and is provided for shortening and using more meaningful name in the code.
     */
    bool resetBit(const uint8_t &srPin);
-   /**
-    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
-    * 
-    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the internal buffer values.  
-    * 
-    * @return true if the operation succeeds.  
-    * 
-    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would produce such outcome.  
-    * 
-    * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
-    */
-   bool sendAllSRCntnt();
    /**
     * @brief Sets a specific pin to HIGH (0x01/Set) in the Main Buffer.
     * 
