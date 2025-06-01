@@ -137,9 +137,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SRGXVPort</b> ()</td></tr>
 <tr class="memdesc:ae058de4139c2756336c0517c4eab36ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="separator:ae058de4139c2756336c0517c4eab36ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2405dfa1db47eda689e50fcda4407ce9" id="r_a2405dfa1db47eda689e50fcda4407ce9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2405dfa1db47eda689e50fcda4407ce9">begin</a> (uint8_t *initCntnt)</td></tr>
-<tr class="memdesc:a2405dfa1db47eda689e50fcda4407ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the virtual port, setting the initial state of the pins.  <br /></td></tr>
-<tr class="separator:a2405dfa1db47eda689e50fcda4407ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5eb06f7d026f5eb17545a78b3f80a4" id="r_a2e5eb06f7d026f5eb17545a78b3f80a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e5eb06f7d026f5eb17545a78b3f80a4">begin</a> (uint16_t initCntnt)</td></tr>
+<tr class="memdesc:a2e5eb06f7d026f5eb17545a78b3f80a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the virtual port, setting the initial state of the VPort pins.  <br /></td></tr>
+<tr class="separator:a2e5eb06f7d026f5eb17545a78b3f80a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a025a8760411de0966ee40d246bbb164c" id="r_a025a8760411de0966ee40d246bbb164c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a025a8760411de0966ee40d246bbb164c">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a025a8760411de0966ee40d246bbb164c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the state of a specific pin in the virtual port.  <br /></td></tr>
 <tr class="separator:a025a8760411de0966ee40d246bbb164c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,9 +247,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1589457b53bda15c73cb00b6d0c66b1c inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a1589457b53bda15c73cb00b6d0c66b1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c">resetBit</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a1589457b53bda15c73cb00b6d0c66b1c inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a specific pin to LOW (0x00/Reset) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a1589457b53bda15c73cb00b6d0c66b1c inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5de617c5611ad017e94a858bd5fa9c5 inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_aa5de617c5611ad017e94a858bd5fa9c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5">sendAllSRCntnt</a> ()</td></tr>
-<tr class="memdesc:aa5de617c5611ad017e94a858bd5fa9c5 inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the contents of the Buffer to the GPIO Expander pins.  <br /></td></tr>
-<tr class="separator:aa5de617c5611ad017e94a858bd5fa9c5 inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55d9c0be46f84bf329fe930d929638bc inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a55d9c0be46f84bf329fe930d929638bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc">setBit</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a55d9c0be46f84bf329fe930d929638bc inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a specific pin to HIGH (0x01/Set) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a55d9c0be46f84bf329fe930d929638bc inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -272,6 +269,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0419134f57ef63fe35c3c530b7852bb4" id="r_a0419134f57ef63fe35c3c530b7852bb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0419134f57ef63fe35c3c530b7852bb4">SRGXVPort</a> (<a class="el" href="class_shift_reg_g_p_i_o_xpander.html">ShiftRegGPIOXpander</a> *SRGXPtr, uint8_t strtPin, uint8_t pinsQty)</td></tr>
 <tr class="memdesc:a0419134f57ef63fe35c3c530b7852bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
 <tr class="separator:a0419134f57ef63fe35c3c530b7852bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_shift_reg_g_p_i_o_xpander"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_shift_reg_g_p_i_o_xpander')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_shift_reg_g_p_i_o_xpander.html">ShiftRegGPIOXpander</a></td></tr>
+<tr class="memitem:a83b9b0f028f28df4b43825af46b29a21 inherit pro_methods_class_shift_reg_g_p_i_o_xpander" id="r_a83b9b0f028f28df4b43825af46b29a21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a83b9b0f028f28df4b43825af46b29a21">_getZeroBasedMainBffrSgmnt</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
+<tr class="memdesc:a83b9b0f028f28df4b43825af46b29a21 inherit pro_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
+<tr class="separator:a83b9b0f028f28df4b43825af46b29a21 inherit pro_methods_class_shift_reg_g_p_i_o_xpander"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -281,10 +282,18 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ShiftRegGPIOXpander<
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that models <b>Virtual Ports</b> from the resources provided by a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. </p>
-<p>The <b>Virtual Ports</b> are a set of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. The <b>Virtual Ports</b> main advantage is to provide a means to focus on a group of pins that are somehow associated, as are meant to manage the communications with a specific device or group of devices, manage different related signals, etc.</p>
-<p>The class objects provide the means to translate the pin numbers from the <b>Virtual Port</b> to the real pins in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object.</p>
-<p>A simple example of use is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, is solved by using a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object with 2 shift registers. Using the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to remember the real pin numbers in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object.</p>
-<dl class="section note"><dt>Note</dt><dd>The open possibility of creating virtual ports that overlap pins in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the 32-bits registers, and the 32-bits registers are a superset of the 16-bits registers. The user can use the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports. </dd></dl>
+<p>The <b>Virtual Ports</b> are sets of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. The <b>Virtual Ports</b> main advantage is to provide a means to focus on a group of pins that are somehow associated: are meant to manage the communications with a specific device or group of devices, manage different related signals, etc. <br  />
+</p>
+<p>The class objects provide the means to translate the pin numbers from the <b>Virtual Port</b> to the real pins in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. <br  />
+</p>
+<p>A simple example use case is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, might be solved by using a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object with 2 shift registers. Using the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to convert each light to the real pin numbers in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object, and make the addition of new traffic lights easier, as the managing methods would be the same for each virtual port. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class has set a maximum of 16 pins that can be used in each virtual port. The number of pins assigned will be checked against the maximum number of pins available in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. <br  />
+</dd>
+<dd>
+The open possibility of creating virtual ports that overlap pins in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the 32-bits registers, the 32-bits registers are a superset of the 16-bits registers and the 16-bits are superset of 8-bits registers, with the possibility of managing the 64 bits at once or subsets by using the corresponding designations provided. The user can manage the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports. <br  />
+</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class uses the buffer memory provided by the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object to handle the pins state. The user might decide to use the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> objects to manipulate the pins state, or use the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object directly. The classes are designed to allow the user to use both methods, but the user must be aware that the state of a pin might be modified by the shiftRegGPIOXpander object directly, and by any and all the SRGXPVPort objects that same pin is part of. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0419134f57ef63fe35c3c530b7852bb4" name="a0419134f57ef63fe35c3c530b7852bb4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0419134f57ef63fe35c3c530b7852bb4">&#9670;&#160;</a></span>SRGXVPort()</h2>
@@ -319,7 +328,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ShiftRegGPIOXpander<
 </div><div class="memdoc">
 
 <p>Class constructor. </p>
-<p>This constructor will instantiate a virtual port object that will allow the user to manipulate a subset of the pins available in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object as a unit. The main driving concept is that the contiguous subset of pins are logically related, and thus can be manipulated as a single entity. The pins are numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.</p>
+<p>This constructor will instantiate a virtual port object that will allow the user to manipulate a subset of the pins available in the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object as a unit. The main driving concept is that the contiguous subset of pins are logically related, and thus might benefit of the chance to be manipulated as a single entity. The pins are numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">SRGXPtr</td><td>A pointer to the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object that will provide the resources (pins) for the virtual port. <br  />
@@ -329,33 +338,43 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ShiftRegGPIOXpander<
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>This constructor is not accesible but through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> class, as it is a private constructor. The user should use the createSRGXVPort(uint8_t&amp;, uint8_t&amp;) method to create a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>This constructor is not accesible but through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> class, as it is a protected constructor. The user should use the createSRGXVPort(uint8_t&amp;, uint8_t&amp;) method to create a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2405dfa1db47eda689e50fcda4407ce9" name="a2405dfa1db47eda689e50fcda4407ce9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2405dfa1db47eda689e50fcda4407ce9">&#9670;&#160;</a></span>begin()</h2>
+<a id="a2e5eb06f7d026f5eb17545a78b3f80a4" name="a2e5eb06f7d026f5eb17545a78b3f80a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e5eb06f7d026f5eb17545a78b3f80a4">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SRGXVPort::begin </td>
+          <td class="memname">bool SRGXVPort::begin </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>initCntnt</em></span></td><td>)</td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>initCntnt</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Begins the virtual port, setting the initial state of the pins. </p>
+<p>Begins the virtual port, setting the initial state of the VPort pins. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">initCntnt</td><td>Initial value to be loaded into the virtual port. </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_a2e5eb06f7d026f5eb17545a78b3f80a4_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a2e5eb06f7d026f5eb17545a78b3f80a4_cgraph" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_a2e5eb06f7d026f5eb17545a78b3f80a4_cgraph" id="aclass_s_r_g_x_v_port_a2e5eb06f7d026f5eb17545a78b3f80a4_cgraph">
+<area shape="rect" title="Begins the virtual port, setting the initial state of the VPort pins." alt="" coords="5,13,137,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="185,5,344,48"/>
+<area shape="poly" title=" " alt="" coords="137,24,169,24,169,29,137,29"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -519,6 +538,16 @@ Here is the caller graph for this function:</div>
 <p>Reads the state of the virtual port as an integer value. </p>
 <p>The method reads the state of all the pins in the virtual port as a pinsQty binary number and returns the value as an unsigned integer. The bits in the returned value are ordered from the least significant bit (LSB) to the most significant bit (MSB), where the LSB corresponds to pin 0 of the virtual port and the MSB corresponds to pin pinsQty - 1.</p>
 <dl class="section return"><dt>Returns</dt><dd>The state of the virtual port as an unsigned integer value, where each bit represents the state of a pin in the virtual port. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph" id="aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph">
+<area shape="rect" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a83b9b0f028f28df4b43825af46b29a21" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,406,48"/>
+<area shape="poly" title=" " alt="" coords="155,24,187,24,187,29,155,29"/>
+</map>
+</div>
 
 </div>
 </div>

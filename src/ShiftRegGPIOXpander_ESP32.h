@@ -66,35 +66,80 @@ private:
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
 
-   bool _copyMainToAux(const bool &overWriteIfExists = true);
-   void _discardAux();
-   bool _moveAuxToMain();
-   /*
-    * @brief Flushes the contents of the Buffer to the GPIO Expander pins.  
+   /**
+    * @brief A private version of the copyMainToAux() method
     * 
-    * The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the internal buffer values.  
+    * This method is used internally to copy the contents of the Main Buffer to the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    * 
+    * @note The method is used by the copyMainToAux() method, which takes care of the mutexes before calling this method.
+    */
+   bool _copyMainToAux(const bool &overWriteIfExists = true);
+   /**
+    * @brief A private version of the discardAux() method
+    * 
+    * This method is used internally to discard the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    */
+   void _discardAux();
+   /**
+    * @brief A private version of the moveAuxToMain() method
+    * 
+    * This method is used internally to move the contents of the Auxiliary Buffer to the Main Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The Auxiliary Buffer was successfully moved to the Main Buffer, and the Auxiliary Buffer was discarded.
+    * @return false The Auxiliary Buffer move operation failed, either because the Auxiliary Buffer does not exist or because the Main Buffer is not available for writing.
+    */
+   bool _moveAuxToMain();
+   /**
+    * @brief Flushes the contents of the Main Buffer to the GPIO Expander pins.  
+    * 
+    * The **private method** will ensure the object's Main Buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the Main Buffer values.  
     * 
     * @return true if the operation succeeds.  
     * 
-    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would produce such outcome.  
+    * @note The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At this development stage there's no conditions that would produce such outcome.  
     * 
     * @warning The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer 
     */
    bool _sendAllSRCntnt();
-   /*Sends the content of a single byte to a Shift Register filling it's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party.
-   */
+   /**
+    * @brief Sends the content of a single byte to a Shift Register. 
+    * 
+    * The method's action is limited to filling the shift register's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party, when the contents of all the shift registers are set to the desired values. The usual calling of this method is done by the _sendAllSRCntnt() method, which will flush the contents of the Main Buffer to the shift registers array.  
+    * 
+    * @param data The byte to be sent to the shift register, the bits in the byte will be sent in the order from MSB to LSB (MSB First). 
+    * 
+    * @return true Allways true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
+    */
    bool _sendSnglSRCntnt(const uint8_t &data); 
 
 protected:
-   SemaphoreHandle_t _SRGXAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
-   SemaphoreHandle_t _SRGXMnBffMutex; // Mutex to protect the Main Buffer from concurrent access
+   SemaphoreHandle_t _SRGXAuxBffrMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
+   SemaphoreHandle_t _SRGXMnBffrMutex; // Mutex to protect the Main Buffer from concurrent access
 
-   uint8_t* _mainBuffArryPtr{};
-   uint8_t* _auxBuffArryPtr{nullptr};
+   uint8_t* _mainBuffrArryPtr{};
+   uint8_t* _auxBuffrArryPtr{nullptr};
    uint8_t _maxSrPin{0};
    uint8_t _srQty{};
    
-   bool _get0BasedMainBuffSgmnt(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &buffSgmnt);
+   /**
+    * @brief Returns a 16-bits value containing a zero-based segment of the Main Buffer.
+    * 
+    * The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter.  
+    * 
+    * @note The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.
+    * 
+    * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxPin().
+    * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSrPin - strtPin + 1).
+    * @param buffSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The segment was successfully retrieved and stored in the buffSgmnt variable.
+    * @retval false The parameters provided were not valid, or the operation failed for any other reason.
+    * 
+    * @attention The method is tightly related to the SRGXVPort class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The SRGXVPort class will ensure that the parameters provided are valid before calling this method.
+    */
+   bool _getZeroBasedMainBffrSgmnt(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt);
 
 public:
    /**
@@ -424,28 +469,44 @@ public:
 /**
  * @brief A class that models **Virtual Ports** from  the resources provided by a ShiftRegGPIOXpander object.  
  * 
- * The **Virtual Ports** are a set of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the ShiftRegGPIOXpander object. The **Virtual Ports** main advantage is to provide a means to focus on a group of pins that are somehow associated, as are meant to manage the communications with a specific device or group of devices, manage different related signals, etc.
+ * The **Virtual Ports** are  sets of pins that can be used as a group, and are defined by the user. The pins are a contiguous subset of the pins available in the ShiftRegGPIOXpander object. The **Virtual Ports** main advantage is to provide a means to focus on a group of pins that are somehow associated: are meant to manage the communications with a specific device or group of devices, manage different related signals, etc.  
  * 
- * The class objects provide the means to translate the pin numbers from the **Virtual Port** to the real pins in the ShiftRegGPIOXpander object.
+ * The class objects provide the means to translate the pin numbers from the **Virtual Port** to the real pins in the ShiftRegGPIOXpander object.  
  * 
- * A simple example of use is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, is solved by using a ShiftRegGPIOXpander object with 2 shift registers. Using the ShiftRegGPIOXpander object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a SRGXVPort object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to remember the real pin numbers in the ShiftRegGPIOXpander object.
+ * A simple example use case is a crossroads traffic light controller, four different traffic lights, one for each direction, totalling 12 pins, might be solved by using a ShiftRegGPIOXpander object with 2 shift registers. Using the ShiftRegGPIOXpander object directly would require the user to remember that the first pin of the first traffic light is pin 0, the second traffic light starts at pin 3, and so on. Using a SRGXVPort object for each traffic light would allow the user to create a virtual port for each traffic light. Pin 0 of each virtual port would be the red light, pin 1 would be the yellow light, and pin 2 would be the green light. The user would then be able to use the virtual port objects to manipulate the traffic lights without having to convert each light to the real pin numbers in the ShiftRegGPIOXpander object, and make the addition of new traffic lights easier, as the managing methods would be the same for each virtual port.  
  * 
- * @note The open possibility of creating virtual ports that overlap pins in the ShiftRegGPIOXpander object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the  32-bits registers, and the 32-bits registers are a superset of the 16-bits registers. The user can use the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports.
+ * @note The SRGXVPort class has set a maximum of 16 pins that can be used in each virtual port. The number of pins assigned will be checked against the maximum number of pins available in the ShiftRegGPIOXpander object.  
+ * 
+ * @note The open possibility of creating virtual ports that overlap pins in the ShiftRegGPIOXpander object is not considered a problem, even if one virtual port includes all the pins of another virtual port. Take as an example the case of the x86 Intel processors, where the 64-bits registers are a superset of the 32-bits registers, the 32-bits registers are a superset of the 16-bits registers and the 16-bits are superset of 8-bits registers, with the possibility of managing the 64 bits at once or subsets by using the corresponding designations provided. The user can manage the virtual ports as they see fit, but the library will not provide any mechanism to prevent overlapping virtual ports.  
+ * 
+ * @warning The SRGXVPort class uses the buffer memory provided by the ShiftRegGPIOXpander object to handle the pins state. The user might decide to use the SRGXVPort objects to manipulate the pins state, or use the ShiftRegGPIOXpander object directly. The classes are designed to allow the user to use both methods, but the user must be aware that the state of a pin might be modified by the shiftRegGPIOXpander object directly, and by any and all the SRGXPVPort objects that same pin is part of.  
  * 
  * @class SRGXVPort
  */
 class SRGXVPort: public ShiftRegGPIOXpander{
-   friend class ShiftRegGPIOXpander; // Allow the ShiftRegGPIOXpander class to access the private members of the SRGXVPort class. In this case the ShiftRegGPIOXpander class will be able instantiate SRGXVPort objects, as the SRGXVPort class constructor is protected!
-   const static uint8_t _maxPortPinsQty{16}; // Maximum number of pins that can be used in a virtual port, as the shift register is an 8-bits SIPO device, the maximum number of pins that can be used in a virtual port is 16.
+   /*Allows the ShiftRegGPIOXpander class to access the private members of the SRGXVPort
+    class. In this case the ShiftRegGPIOXpander class will be able instantiate SRGXVPort
+     objects, as the SRGXVPort class constructor is protected to avoid direct
+     instantiation by the user. The user should use the ShiftRegGPIOXpander::createSRGXVPort
+     (uint8_t&, uint8_t&) method to create a SRGXVPort object.*/
+   friend class ShiftRegGPIOXpander;
+   /*_maxPortPinsQty: Maximum number of pins that can be used in a virtual port, the 
+   maximum number of pins that can be used in a virtual port is defined as 16, library
+   developers choice.*/
+   const static uint8_t _maxPortPinsQty{16}; 
+
 private:
    ShiftRegGPIOXpander* _SRGXPtr{nullptr};   //!< Pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port.   
    uint8_t _strtPin{0};
    uint8_t _pinsQty{0};
 
-   uint16_t _vportMaxVal{0}; // Maximum value that can be set in the virtual port, calculated as (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. The value is used to enforce the range of valid values. 
+   uint8_t* _srgxStampMskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer of the ShiftRegGPIOXpander object.
    uint16_t _vportBuffer{0};
-   uint8_t* _srgxStampMskPtr{nullptr}; // Pointer to the mask used to stamp the virtual port over the Main Buffer.
-
+   /*_vportMaxVal: Maximum value that can be set in the virtual port, calculated as 
+   (2^pinsQty) - 1, where pinsQty is the number of pins that compose the virtual port. 
+   The value is used to enforce the range of valid values. */
+   uint16_t _vportMaxVal{0};
+   bool _begun{false}; // Flag to indicate if the virtual port has been begun, i.e. if the begin() method has been called and the initial state of the virtual port has been set.
    bool _buildSRGXVPortMsk(uint8_t* &maskPtr);
 
 protected:
@@ -456,13 +517,13 @@ protected:
    /**
     * @brief Class constructor
     * 
-    * This constructor will instantiate a virtual port object that will allow the user to manipulate a subset of the pins available in the ShiftRegGPIOXpander object as a unit. The main driving concept is that the contiguous subset of pins are logically related, and thus can be manipulated as a single entity. The pins are numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.
+    * This constructor will instantiate a virtual port object that will allow the user to manipulate a subset of the pins available in the ShiftRegGPIOXpander object as a unit. The main driving concept is that the contiguous subset of pins are logically related, and thus might benefit of the chance to be manipulated as a single entity. The pins are numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.
     * 
     * @param SRGXPtr A pointer to the ShiftRegGPIOXpander object that will provide the resources (pins) for the virtual port.  
     * @param strtPin The pin number from the ShiftRegGPIOXpander to be used as the first pin (pin 0) of the virtual port. 
     * @param pinsQty The number of pins that will compose the virtual port. 
     * 
-    * @attention This constructor is not accesible but through the ShiftRegGPIOXpander class, as it is a private constructor. The user should use the createSRGXVPort(uint8_t&, uint8_t&) method to create a SRGXVPort object.
+    * @attention This constructor is not accesible but through the ShiftRegGPIOXpander class, as it is a protected constructor. The user should use the createSRGXVPort(uint8_t&, uint8_t&) method to create a SRGXVPort object.
     */
    SRGXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
 
@@ -472,11 +533,11 @@ public:
     */
    ~SRGXVPort();
    /**
-    * @brief Begins the virtual port, setting the initial state of the pins.
+    * @brief Begins the virtual port, setting the initial state of the VPort pins.
     * 
     * @param initCntnt Initial value to be loaded into the virtual port. 
     */
-   void begin(uint8_t* initCntnt);
+   bool begin(uint16_t initCntnt);
    /**
     * @brief Reads the state of a specific pin in the virtual port.  
     * 

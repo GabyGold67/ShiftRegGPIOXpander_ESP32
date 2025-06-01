@@ -2,9 +2,8 @@
     "name": "ShiftRegGPIOXpander_ESP32",
     "version": "3.0.0",
     
-    "description": "",
-    "keywords": "GPIO, Expansion, 74HC595, shift register, outputs",
-    
+    "description": "Simplifies extending GPIO outputs by usage of simple and economic shift registers, designed for the 74HCx595. The library takes care of keeping the shift register output pins updated transparently to the user by implementing methods analog to the Arduino digitalRead() and digitalWrite() functions (and adding a digitalToggle()-kind method as present in other platforms). In addition adds methods to manipulate one or several pins outputs simultaneously: set or reset all the pins in a single call, set or reset pins through a bitmask, etc. The library provides a mechanism to create 'virtual ports' that can handle a subset of contiguous pins, allowing the user to treat them as a single port, for 1 to 16 pins segments. This ESP32 version includes race conditions protection, so it can be used in multi-threaded environments, such as the ESP32 FreeRTOS tasks.",
+    "keywords": "GPIO, Expansion, 74HC595, shift register, outputs, output pins, virtual ports, ESP32, Arduino, out of pins",    
     
     "repository":
     {

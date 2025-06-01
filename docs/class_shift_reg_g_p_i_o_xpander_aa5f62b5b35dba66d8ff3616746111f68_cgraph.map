@@ -1,12 +1,5 @@
 <map id="ShiftRegGPIOXpander::flipBit" name="ShiftRegGPIOXpander::flipBit">
-<area shape="rect" id="Node000001" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,43,159,85"/>
-<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="207,43,360,85"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,61,191,61,191,67,159,67"/>
-<area shape="rect" id="Node000003" href="$class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,50,392,45,393,51,361,55"/>
-<area shape="rect" id="Node000005" href="$class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="609,72,763,115"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="361,67,594,84,594,89,360,72"/>
-<area shape="rect" id="Node000004" href="$class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="609,5,763,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="562,29,594,28,594,33,562,34"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="561,54,597,65,595,70,559,59"/>
+<area shape="rect" id="Node000001" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>

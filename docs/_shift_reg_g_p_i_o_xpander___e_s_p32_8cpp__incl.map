@@ -1,12 +1,16 @@
 <map id="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/src/ShiftRegGPIOXpander_ESP32.cpp" name="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/src/ShiftRegGPIOXpander_ESP32.cpp">
-<area shape="rect" id="Node000001" title="Code file for the ShiftRegGPIOXtender_ESP32 library." alt="" coords="5,5,233,112"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="33,251,109,277"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,113,91,161,77,236,72,235,86,159,99,112"/>
-<area shape="rect" id="Node000003" href="$_shift_reg_g_p_i_o_xpander___e_s_p32_8h.html" title="Header file for the ShiftRegGPIOXtender_ESP32 library." alt="" coords="100,160,253,203"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="147,111,162,145,158,147,142,114"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="151,205,101,243,98,239,148,201"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="139,251,203,277"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="178,203,176,235,170,235,172,203"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="228,251,285,277"/>
-<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="199,201,235,238,231,241,195,205"/>
+<area shape="rect" id="Node000001" title="Code file for the ShiftRegGPIOXtender_ESP32 library." alt="" coords="40,5,268,112"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,251,82,277"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,113,60,238,55,235,123,111"/>
+<area shape="rect" id="Node000003" href="$_shift_reg_g_p_i_o_xpander___e_s_p32_8h.html" title="Header file for the ShiftRegGPIOXtender_ESP32 library." alt="" coords="162,160,315,203"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,111,217,145,213,149,189,114"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="189,206,89,247,87,242,187,201"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="106,251,170,277"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="214,205,167,243,164,239,211,201"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="195,251,337,277"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="248,202,259,235,254,237,243,204"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="362,251,467,277"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="285,201,374,241,372,246,282,206"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="491,251,614,277"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="316,200,490,244,488,249,314,205"/>
 </map>

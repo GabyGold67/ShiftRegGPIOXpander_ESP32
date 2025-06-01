@@ -99,6 +99,7 @@ $(function(){initNavTree('class_shift_reg_g_p_i_o_xpander.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_shift_reg_g_p_i_o_xpander-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ShiftRegGPIOXpander Class Reference</div></div>
 </div><!--header-->
@@ -200,9 +201,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1589457b53bda15c73cb00b6d0c66b1c" id="r_a1589457b53bda15c73cb00b6d0c66b1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1589457b53bda15c73cb00b6d0c66b1c">resetBit</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a1589457b53bda15c73cb00b6d0c66b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a specific pin to LOW (0x00/Reset) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a1589457b53bda15c73cb00b6d0c66b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5de617c5611ad017e94a858bd5fa9c5" id="r_aa5de617c5611ad017e94a858bd5fa9c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5">sendAllSRCntnt</a> ()</td></tr>
-<tr class="memdesc:aa5de617c5611ad017e94a858bd5fa9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the contents of the Buffer to the GPIO Expander pins.  <br /></td></tr>
-<tr class="separator:aa5de617c5611ad017e94a858bd5fa9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55d9c0be46f84bf329fe930d929638bc" id="r_a55d9c0be46f84bf329fe930d929638bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55d9c0be46f84bf329fe930d929638bc">setBit</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a55d9c0be46f84bf329fe930d929638bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a specific pin to HIGH (0x01/Set) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a55d9c0be46f84bf329fe930d929638bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,6 +213,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c1c01fb3d0195358ca0c9868f9ac122" id="r_a6c1c01fb3d0195358ca0c9868f9ac122"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c1c01fb3d0195358ca0c9868f9ac122">stampSgmntOverMain</a> (uint8_t *newSgmntPtr, const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
 <tr class="memdesc:a6c1c01fb3d0195358ca0c9868f9ac122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a set of consecutive pins (the segment) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a6c1c01fb3d0195358ca0c9868f9ac122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a83b9b0f028f28df4b43825af46b29a21" id="r_a83b9b0f028f28df4b43825af46b29a21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83b9b0f028f28df4b43825af46b29a21">_getZeroBasedMainBffrSgmnt</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
+<tr class="memdesc:a83b9b0f028f28df4b43825af46b29a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
+<tr class="separator:a83b9b0f028f28df4b43825af46b29a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers. </p>
@@ -270,7 +274,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 There is no mechanism to flush the <b>Auxiliary</b> straight to the shift registers. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), <a class="el" href="#a8ea656bb9c28c671df4888d0dff533b5" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a67319a086effaab688feae45c95c5cc3" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing -see bool <a class="el" href="#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins.">sendAllSRCntnt()</a> - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See digitalReadSr(const uint8_t) for more information. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), <a class="el" href="#a8ea656bb9c28c671df4888d0dff533b5" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a67319a086effaab688feae45c95c5cc3" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See digitalReadSr(const uint8_t) for more information. </dd></dl>
 
 </div>
 </div>
@@ -305,6 +309,72 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a83b9b0f028f28df4b43825af46b29a21" name="a83b9b0f028f28df4b43825af46b29a21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83b9b0f028f28df4b43825af46b29a21">&#9670;&#160;</a></span>_getZeroBasedMainBffrSgmnt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ShiftRegGPIOXpander::_getZeroBasedMainBffrSgmnt </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>strtPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>pinsQty</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;</td>          <td class="paramname"><span class="paramname"><em>bffrSgmnt</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a 16-bits value containing a zero-based segment of the Main Buffer. </p>
+<p>The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strtPin</td><td>The first pin number from which the segment will be taken. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a>. </td></tr>
+    <tr><td class="paramname">pinsQty</td><td>The number of pins that will compose the segment. The valid range is 1 &lt;= pinsQty &lt;= (_maxSrPin - strtPin + 1). </td></tr>
+    <tr><td class="paramname">buffSgmnt</td><td>A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The segment was successfully retrieved and stored in the buffSgmnt variable. </td></tr>
+    <tr><td class="paramname">false</td><td>The parameters provided were not valid, or the operation failed for any other reason.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method is tightly related to the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class will ensure that the parameters provided are valid before calling this method. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph">
+<area shape="rect" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,406,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a95da7b2c72d85ae9ffb91c906b446836" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
+<area shape="poly" title=" " alt="" coords="187,29,155,29,155,24,187,24"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a6fd936a7f8f4547d238f9b4e79bc9c0d" name="a6fd936a7f8f4547d238f9b4e79bc9c0d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fd936a7f8f4547d238f9b4e79bc9c0d">&#9670;&#160;</a></span>begin()</h2>
 
@@ -328,16 +398,6 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a6fd936a7f8f4547d238f9b4e79bc9c0d_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a6fd936a7f8f4547d238f9b4e79bc9c0d_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a6fd936a7f8f4547d238f9b4e79bc9c0d_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a6fd936a7f8f4547d238f9b4e79bc9c0d_cgraph">
-<area shape="rect" title="GPIOXpander object setup and activation." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -384,18 +444,6 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a58b895bd50325c063a71d2ad4da1c961_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a58b895bd50325c063a71d2ad4da1c961_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a58b895bd50325c063a71d2ad4da1c961_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a58b895bd50325c063a71d2ad4da1c961_icgraph">
-<area shape="rect" title="Copies the Buffer content to the Auxiliary Buffer." alt="" coords="207,39,360,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ae25f89bca0203940410ff1afad8362cf" title="Toggles the state of a specific pin in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
-<area shape="poly" title=" " alt="" coords="191,47,158,42,159,37,192,42"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,72,159,115"/>
-<area shape="poly" title=" " alt="" coords="192,78,159,83,158,78,191,73"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -466,20 +514,6 @@ Here is the caller graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state. <br  />
  </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_cgraph">
-<area shape="rect" title="Returns the state of the requested pin." alt="" coords="5,39,159,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,39,360,81"/>
-<area shape="poly" title=" " alt="" coords="159,57,191,57,191,63,159,63"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,45,393,39,394,44,361,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="361,70,394,76,393,81,360,75"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -508,21 +542,6 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_cgraph">
-<area shape="rect" title="Toggles the state of a specific pin." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
-<area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
-<area shape="poly" title=" " alt="" coords="359,54,395,65,394,70,358,59"/>
-</map>
-</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -553,21 +572,6 @@ Here is the caller graph for this function:</div>
 
 <p>Toggles the state of all the pins. </p>
 <p>The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ac80c4970c7c4df0d66e0e89411dff2a5_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ac80c4970c7c4df0d66e0e89411dff2a5_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_ac80c4970c7c4df0d66e0e89411dff2a5_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ac80c4970c7c4df0d66e0e89411dff2a5_cgraph">
-<area shape="rect" title="Toggles the state of all the pins." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
-<area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
-<area shape="poly" title=" " alt="" coords="359,54,395,65,394,70,358,59"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -596,21 +600,6 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The method provides a mechanism for toggling various Main buffer bit positions in a single operation.</dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ab2432ca72b8d980b80a7a83df558ac64_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ab2432ca72b8d980b80a7a83df558ac64_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_ab2432ca72b8d980b80a7a83df558ac64_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ab2432ca72b8d980b80a7a83df558ac64_cgraph">
-<area shape="rect" title="Toggles the state of the pins in the Main Buffer according to the provided mask." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
-<area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
-<area shape="poly" title=" " alt="" coords="359,54,395,65,394,70,358,59"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -639,16 +628,6 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#ae25f89bca0203940410ff1afad8362cf" title="Toggles the state of a specific pin in the Auxiliary Buffer.">digitalToggleSrToAux()</a> methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ae25f89bca0203940410ff1afad8362cf_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ae25f89bca0203940410ff1afad8362cf_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_ae25f89bca0203940410ff1afad8362cf_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ae25f89bca0203940410ff1afad8362cf_cgraph">
-<area shape="rect" title="Toggles the state of a specific pin in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a58b895bd50325c063a71d2ad4da1c961" title="Copies the Buffer content to the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -685,21 +664,6 @@ Here is the call graph for this function:</div>
  </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
 <div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_cgraph">
-<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
-<area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
-<area shape="poly" title=" " alt="" coords="359,54,395,65,394,70,358,59"/>
-</map>
-</div>
-<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph" alt=""/></div>
@@ -733,18 +697,6 @@ Here is the caller graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
  </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> has to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a8ea656bb9c28c671df4888d0dff533b5_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a8ea656bb9c28c671df4888d0dff533b5_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a8ea656bb9c28c671df4888d0dff533b5_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a8ea656bb9c28c671df4888d0dff533b5_cgraph">
-<area shape="rect" title="Sets all the pins to LOW (0x00/Reset)." alt="" coords="5,39,162,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="210,5,363,48"/>
-<area shape="poly" title=" " alt="" coords="162,44,194,39,195,44,163,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="210,72,363,115"/>
-<area shape="poly" title=" " alt="" coords="163,70,195,76,194,81,162,76"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -767,18 +719,6 @@ Here is the call graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
  </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a67319a086effaab688feae45c95c5cc3_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a67319a086effaab688feae45c95c5cc3_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a67319a086effaab688feae45c95c5cc3_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a67319a086effaab688feae45c95c5cc3_cgraph">
-<area shape="rect" title="Sets all the pins to HIGH (0x01)." alt="" coords="5,39,159,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,45,191,39,192,44,159,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,72,360,115"/>
-<area shape="poly" title=" " alt="" coords="159,70,192,76,191,81,159,75"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -810,21 +750,6 @@ Here is the call graph for this function:</div>
 </dd>
 <dd>
 The Main Buffer will be flushed after the mask modificatons are applied. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aae8ef355c8546528010f16ce74850a6d_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aae8ef355c8546528010f16ce74850a6d_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_aae8ef355c8546528010f16ce74850a6d_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aae8ef355c8546528010f16ce74850a6d_cgraph">
-<area shape="rect" title="Modifies the Main buffer contents by resetting simultaneously certain pins." alt="" coords="5,43,179,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="227,13,380,56"/>
-<area shape="poly" title=" " alt="" coords="178,49,211,45,212,50,179,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="428,72,581,115"/>
-<area shape="poly" title=" " alt="" coords="179,67,413,84,412,90,179,73"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="428,5,581,48"/>
-<area shape="poly" title=" " alt="" coords="380,29,413,28,413,33,380,34"/>
-<area shape="poly" title=" " alt="" coords="379,54,415,65,414,70,378,59"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -857,21 +782,6 @@ Here is the call graph for this function:</div>
 </dd>
 <dd>
 The Main Buffer will be flushed after the mask modificatons are applied. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ae90cac6dd6d5f9d14c3a27134c1ccb1b_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ae90cac6dd6d5f9d14c3a27134c1ccb1b_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_ae90cac6dd6d5f9d14c3a27134c1ccb1b_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ae90cac6dd6d5f9d14c3a27134c1ccb1b_cgraph">
-<area shape="rect" title="Modifies the Main buffer contents by setting simultaneously certain pins." alt="" coords="5,43,164,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="212,13,365,56"/>
-<area shape="poly" title=" " alt="" coords="164,50,196,45,197,51,165,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="413,72,566,115"/>
-<area shape="poly" title=" " alt="" coords="164,67,398,84,397,89,164,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="413,5,566,48"/>
-<area shape="poly" title=" " alt="" coords="365,29,398,28,398,33,365,34"/>
-<area shape="poly" title=" " alt="" coords="364,54,400,65,399,70,363,59"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -906,16 +816,6 @@ Here is the call graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool). <br  />
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.">digitalWriteSrToAux()</a> methods needed but the last, and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a6a41a23fec35a378644308504320b12c_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a6a41a23fec35a378644308504320b12c_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a6a41a23fec35a378644308504320b12c_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a6a41a23fec35a378644308504320b12c_cgraph">
-<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a58b895bd50325c063a71d2ad4da1c961" title="Copies the Buffer content to the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -936,46 +836,6 @@ Here is the call graph for this function:</div>
 
 <p>Deletes the Auxiliary Buffer. </p>
 <p>Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer. If the Auxiliary Buffer was not created, the method will do nothing. If the Auxiliary is not transfered to the Main Buffer before invoking this method, the modified contents of the Auxiliary will be lost. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a93ebd10e70b71ff3c67fd2ed5262737d_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a93ebd10e70b71ff3c67fd2ed5262737d_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a93ebd10e70b71ff3c67fd2ed5262737d_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a93ebd10e70b71ff3c67fd2ed5262737d_icgraph">
-<area shape="rect" title="Deletes the Auxiliary Buffer." alt="" coords="632,239,786,281"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a8ea656bb9c28c671df4888d0dff533b5" title="Sets all the pins to LOW (0x00/Reset)." alt="" coords="428,139,584,181"/>
-<area shape="poly" title=" " alt="" coords="655,233,583,196,559,184,561,180,586,191,657,229"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a67319a086effaab688feae45c95c5cc3" title="Sets all the pins to HIGH (0x01)." alt="" coords="430,205,583,248"/>
-<area shape="poly" title=" " alt="" coords="617,248,583,242,584,237,618,242"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="430,272,583,315"/>
-<area shape="poly" title=" " alt="" coords="618,278,584,283,583,278,617,272"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf" title="Sets all of the output pins of the shift register to new provided values at once." alt="" coords="430,339,583,381"/>
-<area shape="poly" title=" " alt="" coords="657,291,586,329,561,340,559,336,583,324,655,287"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb" title="Returns the state of the requested pin." alt="" coords="217,5,370,48"/>
-<area shape="poly" title=" " alt="" coords="427,263,426,262,409,235,402,209,400,184,402,159,403,135,402,111,394,87,378,62,365,51,369,47,382,58,399,84,407,110,409,135,407,160,405,184,407,208,414,233,430,258,431,260"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="217,72,370,115"/>
-<area shape="poly" title=" " alt="" coords="428,264,426,262,413,244,406,227,402,193,397,161,391,145,378,129,364,117,367,113,382,125,395,142,403,159,407,193,411,225,418,242,430,258,432,260"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ac80c4970c7c4df0d66e0e89411dff2a5" title="Toggles the state of all the pins." alt="" coords="217,139,370,181"/>
-<area shape="poly" title=" " alt="" coords="431,266,426,262,410,245,402,228,393,212,378,195,361,184,363,180,382,191,398,208,407,225,415,242,430,258,434,261"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ab2432ca72b8d980b80a7a83df558ac64" title="Toggles the state of the pins in the Main Buffer according to the provided mask." alt="" coords="217,205,370,248"/>
-<area shape="poly" title=" " alt="" coords="421,269,363,251,365,246,422,264"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="217,272,370,315"/>
-<area shape="poly" title=" " alt="" coords="414,296,370,296,370,291,414,291"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins." alt="" coords="207,339,380,381"/>
-<area shape="poly" title=" " alt="" coords="422,322,365,341,363,335,421,317"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins." alt="" coords="214,405,372,448"/>
-<area shape="poly" title=" " alt="" coords="434,325,430,329,415,345,407,361,398,378,382,395,363,407,361,403,378,391,393,375,402,359,410,342,426,325,431,321"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a80480ab756fbeaa76658aadb7e9d9dee" title="Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask ..." alt="" coords="217,472,370,515"/>
-<area shape="poly" title=" " alt="" coords="432,327,430,328,418,345,411,361,407,394,403,427,395,445,382,462,367,473,364,469,378,458,391,442,397,426,402,393,406,360,413,342,426,325,428,323"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="214,539,373,581"/>
-<area shape="poly" title=" " alt="" coords="431,327,430,328,414,354,407,378,405,403,407,427,409,452,407,477,399,502,382,528,369,540,365,536,378,525,394,500,402,476,403,452,402,427,400,403,402,377,409,351,426,325,427,323"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,72,159,115"/>
-<area shape="poly" title=" " alt="" coords="201,96,159,96,159,91,201,91"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,239,159,281"/>
-<area shape="poly" title=" " alt="" coords="201,281,159,275,160,269,202,276"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,305,159,348"/>
-<area shape="poly" title=" " alt="" coords="202,310,160,317,159,312,201,305"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -1045,16 +905,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph">
-<area shape="rect" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="207,43,360,85"/>
-<area shape="poly" title=" " alt="" coords="159,61,191,61,191,67,159,67"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
-<area shape="poly" title=" " alt="" coords="360,50,392,45,393,51,361,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="609,72,763,115"/>
-<area shape="poly" title=" " alt="" coords="361,67,594,84,594,89,360,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="609,5,763,48"/>
-<area shape="poly" title=" " alt="" coords="562,29,594,28,594,33,562,34"/>
-<area shape="poly" title=" " alt="" coords="561,54,597,65,595,70,559,59"/>
+<area shape="rect" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
 
@@ -1201,50 +1054,6 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_cgraph">
-<area shape="rect" title="Moves the data in the Auxiliary to the Main." alt="" coords="5,39,159,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,45,191,39,192,44,159,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,72,360,115"/>
-<area shape="poly" title=" " alt="" coords="159,70,192,76,191,81,159,75"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph">
-<area shape="rect" title="Moves the data in the Auxiliary to the Main." alt="" coords="428,272,581,315"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb" title="Returns the state of the requested pin." alt="" coords="217,5,370,48"/>
-<area shape="poly" title=" " alt="" coords="491,258,475,214,451,161,419,108,378,62,362,51,365,46,382,58,423,105,456,159,480,212,496,256"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="217,72,370,115"/>
-<area shape="poly" title=" " alt="" coords="483,260,441,194,412,159,378,129,360,118,363,113,382,125,415,155,445,191,488,257"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ac80c4970c7c4df0d66e0e89411dff2a5" title="Toggles the state of all the pins." alt="" coords="217,139,370,181"/>
-<area shape="poly" title=" " alt="" coords="468,264,427,229,379,196,356,184,358,179,381,191,430,224,472,259"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ab2432ca72b8d980b80a7a83df558ac64" title="Toggles the state of the pins in the Main Buffer according to the provided mask." alt="" coords="217,205,370,248"/>
-<area shape="poly" title=" " alt="" coords="420,269,363,251,364,246,422,264"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="217,272,370,315"/>
-<area shape="poly" title=" " alt="" coords="412,296,371,296,371,291,412,291"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins." alt="" coords="207,339,380,381"/>
-<area shape="poly" title=" " alt="" coords="422,322,364,341,363,335,420,317"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins." alt="" coords="214,405,372,448"/>
-<area shape="poly" title=" " alt="" coords="472,327,430,362,381,396,358,407,356,402,379,391,427,358,468,323"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a80480ab756fbeaa76658aadb7e9d9dee" title="Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask ..." alt="" coords="217,472,370,515"/>
-<area shape="poly" title=" " alt="" coords="488,329,445,396,415,431,382,462,363,474,360,469,378,458,412,428,441,393,483,326"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="214,539,373,581"/>
-<area shape="poly" title=" " alt="" coords="496,330,480,375,456,428,423,482,382,529,365,540,362,536,378,525,419,478,451,425,475,373,491,329"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,72,159,115"/>
-<area shape="poly" title=" " alt="" coords="201,96,159,96,159,91,201,91"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,239,159,281"/>
-<area shape="poly" title=" " alt="" coords="201,281,159,275,160,269,202,276"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,305,159,348"/>
-<area shape="poly" title=" " alt="" coords="202,310,160,317,159,312,201,305"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -1283,92 +1092,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph">
-<area shape="rect" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,43,360,85"/>
-<area shape="poly" title=" " alt="" coords="159,61,191,61,191,67,159,67"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
-<area shape="poly" title=" " alt="" coords="360,50,392,45,393,51,361,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="609,72,763,115"/>
-<area shape="poly" title=" " alt="" coords="361,67,594,84,594,89,360,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="609,5,763,48"/>
-<area shape="poly" title=" " alt="" coords="562,29,594,28,594,33,562,34"/>
-<area shape="poly" title=" " alt="" coords="561,54,597,65,595,70,559,59"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="aa5de617c5611ad017e94a858bd5fa9c5" name="aa5de617c5611ad017e94a858bd5fa9c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5de617c5611ad017e94a858bd5fa9c5">&#9670;&#160;</a></span>sendAllSRCntnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ShiftRegGPIOXpander::sendAllSRCntnt </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Flushes the contents of the Buffer to the GPIO Expander pins. </p>
-<p>The method will ensure the object buffer is updated -if there are modifications pending in the Auxiliary Buffer- enable the hardware to receive the information, invoke the needed methods to send the information required to each physical shift register and activate the shift registers latching function, that sets the output pins levels to the internal buffer values. <br  />
-</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the operation succeeds. <br  />
-</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The adoption of a boolean type return value is a consideration for future development that may consider the method operation to fail. At the time of this writing there's no conditions that would produce such outcome. <br  />
-</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The Auxiliary buffer is a non permanent memory array, it will be deleted after moving it's contents to the Main Buffer </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa5de617c5611ad017e94a858bd5fa9c5_icgraph">
-<area shape="rect" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="632,333,786,376"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6fd936a7f8f4547d238f9b4e79bc9c0d" title="GPIOXpander object setup and activation." alt="" coords="430,5,583,48"/>
-<area shape="poly" title=" " alt="" coords="698,319,684,265,661,199,627,130,606,98,582,69,560,51,563,46,586,65,611,95,632,127,665,197,689,263,703,317"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="217,8,370,51"/>
-<area shape="poly" title=" " alt="" coords="694,319,678,277,654,228,622,178,583,135,546,114,492,92,370,53,371,47,494,87,549,109,586,131,627,175,659,225,683,275,699,317"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ac80c4970c7c4df0d66e0e89411dff2a5" title="Toggles the state of all the pins." alt="" coords="217,75,370,117"/>
-<area shape="poly" title=" " alt="" coords="689,321,646,252,617,216,583,186,531,156,476,134,420,118,370,108,371,103,421,113,477,129,534,152,586,182,621,213,651,249,693,318"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ab2432ca72b8d980b80a7a83df558ac64" title="Toggles the state of the pins in the Main Buffer according to the provided mask." alt="" coords="217,141,370,184"/>
-<area shape="poly" title=" " alt="" coords="682,323,639,274,612,250,583,230,530,206,475,189,420,178,370,170,371,165,421,172,476,184,532,201,586,226,616,246,643,270,686,319"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="217,208,370,251"/>
-<area shape="poly" title=" " alt="" coords="673,325,632,292,583,265,530,248,474,238,370,230,371,225,474,232,531,243,585,260,635,288,677,321"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a8ea656bb9c28c671df4888d0dff533b5" title="Sets all the pins to LOW (0x00/Reset)." alt="" coords="428,544,584,587"/>
-<area shape="poly" title=" " alt="" coords="691,391,648,458,619,495,586,527,560,546,557,541,583,523,615,491,643,455,687,388"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a67319a086effaab688feae45c95c5cc3" title="Sets all the pins to HIGH (0x01)." alt="" coords="430,611,583,653"/>
-<area shape="poly" title=" " alt="" coords="700,392,685,438,661,494,628,550,586,601,571,612,568,608,582,597,624,547,656,491,680,436,695,390"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins." alt="" coords="207,341,380,384"/>
-<area shape="poly" title=" " alt="" coords="617,359,381,364,381,358,617,354"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins." alt="" coords="214,408,372,451"/>
-<area shape="poly" title=" " alt="" coords="618,374,374,418,373,413,617,368"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="430,275,583,317"/>
-<area shape="poly" title=" " alt="" coords="618,331,582,321,583,315,619,326"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a80480ab756fbeaa76658aadb7e9d9dee" title="Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask ..." alt="" coords="217,475,370,517"/>
-<area shape="poly" title=" " alt="" coords="651,385,585,413,474,450,371,479,370,474,472,445,583,408,649,380"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="214,541,373,584"/>
-<area shape="poly" title=" " alt="" coords="681,390,638,431,586,469,533,496,478,518,374,549,373,543,476,513,531,491,583,464,635,426,677,386"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf" title="Sets all of the output pins of the shift register to new provided values at once." alt="" coords="430,677,583,720"/>
-<area shape="poly" title=" " alt="" coords="705,392,693,451,670,524,636,600,613,635,586,667,572,679,569,675,582,663,609,632,631,597,665,522,687,450,700,391"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,8,159,51"/>
-<area shape="poly" title=" " alt="" coords="201,32,159,32,159,27,201,27"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,241,159,284"/>
-<area shape="poly" title=" " alt="" coords="202,246,160,253,159,248,201,241"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,175,159,217"/>
-<area shape="poly" title=" " alt="" coords="201,217,159,211,160,205,202,212"/>
-<area shape="poly" title=" " alt="" coords="492,261,476,216,452,164,419,111,378,65,362,53,365,49,382,61,424,108,456,161,481,214,497,259"/>
-<area shape="poly" title=" " alt="" coords="484,263,441,197,412,162,378,131,360,120,363,116,382,127,416,158,445,193,489,260"/>
-<area shape="poly" title=" " alt="" coords="469,266,427,231,379,198,356,187,358,182,381,194,431,227,473,262"/>
-<area shape="poly" title=" " alt="" coords="421,272,363,254,365,249,422,267"/>
-<area shape="poly" title=" " alt="" coords="422,325,365,343,363,338,421,320"/>
-<area shape="poly" title=" " alt="" coords="473,330,431,365,381,398,358,410,356,405,379,394,427,361,469,326"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb" title="Returns the state of the requested pin." alt="" coords="217,275,370,317"/>
-<area shape="poly" title=" " alt="" coords="414,299,370,299,370,293,414,293"/>
-<area shape="poly" title=" " alt="" coords="489,332,445,399,416,434,382,465,363,476,360,472,378,461,412,430,441,395,484,329"/>
-<area shape="poly" title=" " alt="" coords="497,333,481,378,456,431,424,484,382,531,365,543,362,539,378,527,419,481,452,428,476,376,492,331"/>
+<area shape="rect" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
 
@@ -1409,16 +1135,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph">
-<area shape="rect" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,43,360,85"/>
-<area shape="poly" title=" " alt="" coords="159,61,191,61,191,67,159,67"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="408,13,561,56"/>
-<area shape="poly" title=" " alt="" coords="360,50,392,45,393,51,361,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="609,72,763,115"/>
-<area shape="poly" title=" " alt="" coords="361,67,594,84,594,89,360,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="609,5,763,48"/>
-<area shape="poly" title=" " alt="" coords="562,29,594,28,594,33,562,34"/>
-<area shape="poly" title=" " alt="" coords="561,54,597,65,595,70,559,59"/>
+<area shape="rect" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
 
@@ -1458,21 +1177,6 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a80480ab756fbeaa76658aadb7e9d9dee_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a80480ab756fbeaa76658aadb7e9d9dee_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a80480ab756fbeaa76658aadb7e9d9dee_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a80480ab756fbeaa76658aadb7e9d9dee_cgraph">
-<area shape="rect" title="Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask ..." alt="" coords="5,43,159,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="207,13,360,56"/>
-<area shape="poly" title=" " alt="" coords="159,50,191,45,192,51,159,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="408,72,561,115"/>
-<area shape="poly" title=" " alt="" coords="159,67,393,84,392,89,159,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="408,5,561,48"/>
-<area shape="poly" title=" " alt="" coords="360,29,393,28,393,33,360,34"/>
-<area shape="poly" title=" " alt="" coords="359,54,395,65,394,70,358,59"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -1515,18 +1219,6 @@ Here is the call graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>If there was an ongoing set of deferred pin modifications through the use of writes to the Auxiliary they will be all lost, as the first data consistency prevention of the method is to discard the Auxiliary. <br  />
 </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>As soon as the Main is overwritten with the new values, the Buffer will be flushed. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a07e5c7279e11044eec16e9d9020a77cf_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a07e5c7279e11044eec16e9d9020a77cf_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a07e5c7279e11044eec16e9d9020a77cf_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a07e5c7279e11044eec16e9d9020a77cf_cgraph">
-<area shape="rect" title="Sets all of the output pins of the shift register to new provided values at once." alt="" coords="5,39,159,81"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="207,5,360,48"/>
-<area shape="poly" title=" " alt="" coords="159,45,191,39,192,44,159,50"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="207,72,360,115"/>
-<area shape="poly" title=" " alt="" coords="159,70,192,76,191,81,159,75"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -1582,18 +1274,13 @@ Here is the call graph for this function:</div>
 <dl class="section warning"><dt>Warning</dt><dd>The method expects newSgmntPtr to point to a valid memory area containing the data to be set in the segment. If the pointer is nullptr/NULL, the method will return false and no operation will be performed.</dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Altough the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same lenght as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. </dd></dl>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_cgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_cgraph">
-<area shape="rect" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="5,43,165,85"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="213,13,366,56"/>
-<area shape="poly" title=" " alt="" coords="164,50,197,45,198,50,165,55"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5" title="Flushes the contents of the Buffer to the GPIO Expander pins." alt="" coords="414,72,567,115"/>
-<area shape="poly" title=" " alt="" coords="165,67,399,84,398,89,165,72"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer." alt="" coords="414,5,567,48"/>
-<area shape="poly" title=" " alt="" coords="366,29,399,28,399,33,366,34"/>
-<area shape="poly" title=" " alt="" coords="365,54,401,65,400,70,364,59"/>
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph">
+<area shape="rect" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="185,5,344,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a2e5eb06f7d026f5eb17545a78b3f80a4" title="Begins the virtual port, setting the initial state of the VPort pins." alt="" coords="5,13,137,40"/>
+<area shape="poly" title=" " alt="" coords="169,29,137,29,137,24,169,24"/>
 </map>
 </div>
 

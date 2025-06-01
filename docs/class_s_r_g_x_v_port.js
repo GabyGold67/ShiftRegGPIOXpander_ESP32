@@ -3,7 +3,7 @@ var class_s_r_g_x_v_port =
     [ "SRGXVPort", "class_s_r_g_x_v_port.html#aaabc03e2f99a9cc58767cc4a09044600", null ],
     [ "SRGXVPort", "class_s_r_g_x_v_port.html#a0419134f57ef63fe35c3c530b7852bb4", null ],
     [ "~SRGXVPort", "class_s_r_g_x_v_port.html#ae058de4139c2756336c0517c4eab36ce", null ],
-    [ "begin", "class_s_r_g_x_v_port.html#a2405dfa1db47eda689e50fcda4407ce9", null ],
+    [ "begin", "class_s_r_g_x_v_port.html#a2e5eb06f7d026f5eb17545a78b3f80a4", null ],
     [ "digitalReadSr", "class_s_r_g_x_v_port.html#a025a8760411de0966ee40d246bbb164c", null ],
     [ "digitalWriteSr", "class_s_r_g_x_v_port.html#a82347b36a76149fe98b0530565337ff7", null ],
     [ "flipBit", "class_s_r_g_x_v_port.html#a57373de85b3d808601706f111a8df49c", null ],
