@@ -47,7 +47,7 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander()
 ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty)
 :_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _mainBuffrArryPtr {new uint8_t [srQty]}
 {
-   _maxSrPin = (_srQty * 8) - 1;
+   _maxSRGXPin = (_srQty * 8) - 1;
 }
 
 ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
@@ -125,7 +125,7 @@ bool ShiftRegGPIOXpander::copyMainToAux(const bool &overWriteIfExists){
 }
 
 SRGXVPort ShiftRegGPIOXpander::createSRGXVPort(const uint8_t &strtPin, const uint8_t &pinsQty){
-   if((pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSrPin) && (pinsQty <= SRGXVPort::_maxPortPinsQty))
+   if((pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSRGXPin) && (pinsQty <= SRGXVPort::_maxPortPinsQty))
       return SRGXVPort(this, strtPin, pinsQty);
    else
       return SRGXVPort();
@@ -134,7 +134,7 @@ SRGXVPort ShiftRegGPIOXpander::createSRGXVPort(const uint8_t &strtPin, const uin
 uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    uint8_t result{0xFF};
 
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){         
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr != nullptr)
@@ -150,7 +150,7 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
 }
 
 void ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){         
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr != nullptr)
@@ -209,7 +209,7 @@ void ShiftRegGPIOXpander::digitalToggleSrMask(uint8_t *toggleMask){
 
 void ShiftRegGPIOXpander::digitalToggleSrToAux(const uint8_t &srPin){
 
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr == nullptr)
@@ -225,7 +225,7 @@ void ShiftRegGPIOXpander::digitalToggleSrToAux(const uint8_t &srPin){
 }
 
 void ShiftRegGPIOXpander::digitalWriteSr(const uint8_t &srPin, const uint8_t &value){
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){         
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr != nullptr)
@@ -327,7 +327,7 @@ void ShiftRegGPIOXpander::digitalWriteSrMaskSet(uint8_t* setMask){
 }
 
 void ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t value){
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr == nullptr)
@@ -374,7 +374,7 @@ void ShiftRegGPIOXpander::end(){
 bool ShiftRegGPIOXpander::flipBit(const uint8_t &srPin){
    bool result{false};
 
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       digitalToggleSr(srPin); // Toggle the pin state at position srPin
       result = true;
    }
@@ -385,7 +385,7 @@ bool ShiftRegGPIOXpander::flipBit(const uint8_t &srPin){
 bool ShiftRegGPIOXpander::_getZeroBasedMainBffrSgmnt(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt){
    bool result{false};
 
-   if((pinsQty > 0) && (pinsQty <= 16 ) && ((strtPin + pinsQty - 1) <= _maxSrPin)){
+   if((pinsQty > 0) && (pinsQty <= 16 ) && ((strtPin + pinsQty - 1) <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){
             if(_auxBuffrArryPtr != nullptr)
@@ -410,9 +410,9 @@ uint8_t* ShiftRegGPIOXpander::getMainBuffPtr(){
    return _mainBuffrArryPtr;
 }
 
-uint8_t ShiftRegGPIOXpander::getMaxPin(){
+uint8_t ShiftRegGPIOXpander::getMaxSRGXPin(){
 
-   return _maxSrPin;
+   return _maxSRGXPin;
 }
 
 uint8_t ShiftRegGPIOXpander::getSrQty(){
@@ -459,7 +459,7 @@ bool ShiftRegGPIOXpander::moveAuxToMain(){
 bool ShiftRegGPIOXpander::resetBit(const uint8_t &srPin){
    bool result{false};
 
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       digitalWriteSr(srPin, LOW); // Set the pin to LOW
       result = true;
    }
@@ -507,7 +507,7 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
 bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
    bool result{false};
 
-   if(srPin <= _maxSrPin){
+   if(srPin <= _maxSRGXPin){
       digitalWriteSr(srPin, HIGH); // Set the pin to HIGH
       result = true;
    }
@@ -532,7 +532,7 @@ bool ShiftRegGPIOXpander::stampMaskOverMain(uint8_t* maskPtr, uint8_t* valsPtr){
             if(_auxBuffrArryPtr != nullptr)
                _moveAuxToMain(); // Move the Auxiliary Buffer to the Main Buffer, if it exists      
             xSemaphoreGive(_SRGXAuxBffrMutex);
-            for (int ptrInc{0}; ptrInc < _maxSrPin; ptrInc++){
+            for (int ptrInc{0}; ptrInc < _maxSRGXPin; ptrInc++){
                if(*(localMaskPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))){  // If the bit is set in the mask check if the bit state in the Main needs to be changed
                   if((*(_mainBuffrArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))) != (*(localValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8))))
                      *(_mainBuffrArryPtr + (ptrInc / 8)) ^= (static_cast<uint8_t>(0x01) << (ptrInc % 8));
@@ -580,7 +580,7 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
 bool ShiftRegGPIOXpander::stampSgmntOverMain(uint8_t *newSgmntPtr, const uint8_t &strtPin, const uint8_t &pinsQty){
    bool result{false};  
 
-   if((newSgmntPtr != nullptr) && (pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSrPin)){
+   if((newSgmntPtr != nullptr) && (pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXAuxBffrMutex, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXMnBffrMutex, portMAX_DELAY) == pdTRUE){            
             if(_auxBuffrArryPtr != nullptr)
@@ -609,13 +609,14 @@ SRGXVPort::SRGXVPort()
 SRGXVPort::SRGXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty) 
 :_SRGXPtr{SRGXPtr}, _strtPin{strtPin}, _pinsQty{pinsQty}
 {
-   if(!((strtPin <= _maxSrPin) && ((strtPin + pinsQty - 1) <= _maxSrPin) && (pinsQty <= _maxPortPinsQty))){ //!< Failed conditions
+   if(!((_strtPin <= _SRGXPtr->getMaxSRGXPin()) && ((_strtPin + _pinsQty - 1) <= _SRGXPtr->getMaxSRGXPin()) && (_pinsQty <= _maxPortPinsQty)) || (!_SRGXPtr)){
       _SRGXPtr = nullptr;
       _strtPin = 0;
       _pinsQty = 0;
    }
-   else
+   else{
       _vportMaxVal = static_cast<int16_t>((1UL << _pinsQty) - 1); // Calculate the maximum value that can be set in the virtual port, as (2^pinsQty) - 1   
+   }
 }
 
 SRGXVPort::~SRGXVPort(){
@@ -632,15 +633,18 @@ bool SRGXVPort::begin(uint16_t initCntnt){
    if(!_begun){
       if(_SRGXPtr != nullptr){
          if(initCntnt <= _vportMaxVal){ 
-            // uint8_t* initCntntPtr = reinterpret_cast<uint8_t*>(&initCntnt); // Cast the initCntnt to a pointer to uint8_t, this is safe for the ESP32 as it uses little-endian byte order            
+            /*Alternate coding: Cast the initCntnt to a pointer to uint8_t, this is safe for the ESP32 as it uses little-endian byte order*/
+            // uint8_t* initCntntPtr = reinterpret_cast<uint8_t*>(&initCntnt); 
             uint8_t* initCntntPtr = new uint8_t[2];
-            initCntntPtr[0] = static_cast<uint8_t>(initCntnt & 0x00FF); // Get the least significant byte
-            initCntntPtr[1] = static_cast<uint8_t>((initCntnt >> 8) & 0x00FF); // Get the most significant byte            
-            _buildSRGXVPortMsk(_srgxStampMskPtr);
-            stampSgmntOverMain(initCntntPtr, _strtPin, _pinsQty);
+            initCntntPtr[0] = static_cast<uint8_t>(initCntnt & 0x00FF); // Set in the first array slot the least significant byte
+            initCntntPtr[1] = static_cast<uint8_t>((initCntnt >> 8) & 0x00FF); // Set in the second array slot the most significant byte            
+            result = _buildSRGXVPortMsk(_srgxStampMskPtr);
+            if(result){
+               result = _SRGXPtr->stampSgmntOverMain(initCntntPtr, _strtPin, _pinsQty);
+               if(result)
+                  _begun = true;
+            }
             delete [] initCntntPtr; // Free the memory allocated for the initCntnt pointer
-            _begun = true; 
-            result = true; // If the SRGXPtr is not null, the port was successfully initialized
          }
       }
    }
@@ -648,6 +652,7 @@ bool SRGXVPort::begin(uint16_t initCntnt){
    return result;
 }
 
+//todo Testing pending
 bool SRGXVPort::_buildSRGXVPortMsk(uint8_t* &maskPtr){
    bool result{false};
    
@@ -662,6 +667,7 @@ bool SRGXVPort::_buildSRGXVPortMsk(uint8_t* &maskPtr){
    return result;    
 }
 
+//todo Testing pending
 uint8_t SRGXVPort::digitalReadSr(const uint8_t &srPin){
    uint8_t result{0xFF};
 
@@ -699,6 +705,7 @@ ShiftRegGPIOXpander* SRGXVPort::getSRGXPtr(){
    return _SRGXPtr;
 }
 
+//todo Testing pending
 uint16_t SRGXVPort::getVPortMaxVal(){
 
    return _vportMaxVal;
@@ -708,12 +715,10 @@ uint16_t SRGXVPort::readPort(){
    uint16_t portVal{0};
    bool result{false};
 
-   if(_SRGXPtr != nullptr){
-      portVal = _getZeroBasedMainBffrSgmnt(_strtPin, _pinsQty, portVal);
-      result = true;
-   }
+   if(_SRGXPtr != nullptr)
+      result = _getZeroBasedMainBffrSgmnt(_strtPin, _pinsQty, portVal);
 
-   return result;
+   return portVal;
 }
 
 bool SRGXVPort::resetBit(const uint8_t &srPin){

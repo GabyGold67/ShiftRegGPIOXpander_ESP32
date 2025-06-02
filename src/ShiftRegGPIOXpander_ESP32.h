@@ -119,7 +119,7 @@ protected:
 
    uint8_t* _mainBuffrArryPtr{};
    uint8_t* _auxBuffrArryPtr{nullptr};
-   uint8_t _maxSrPin{0};
+   uint8_t _maxSRGXPin{0};
    uint8_t _srQty{};
    
    /**
@@ -129,8 +129,8 @@ protected:
     * 
     * @note The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.
     * 
-    * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxPin().
-    * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSrPin - strtPin + 1).
+    * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxSRGXPin().
+    * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSRGXPin - strtPin + 1).
     * @param buffSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
     * 
     * @return A boolean value indicating the success of the operation.
@@ -199,8 +199,8 @@ public:
     * 
     * The method will create a SRGXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port. 
     * 
-    * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. The valid range is 0 <= strtPin <= getMaxPin().
-    * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxPin() - strtPin + 1).
+    * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. The valid range is 0 <= strtPin <= getMaxSRGXPin().
+    * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxSRGXPin() - strtPin + 1).
     * @return SRGXVPort The SRGXVPort object created, or an empty SRGXVPort object if the parameters provided were not valid.
     * 
     * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
@@ -225,7 +225,7 @@ public:
      * 
      * @details The method will set the pin to LOW (0x00) if it was HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on the GPIO pin.
      * 
-     * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()
+     * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxSRGXPin()
      * 
      * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.
      * 
@@ -253,7 +253,7 @@ public:
    /**
     * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
     * 
-    * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxPin()  
+    * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxSRGXPin()  
     * 
     * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
     * 
@@ -263,7 +263,7 @@ public:
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
-   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxPin()  
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxSRGXPin()  
    * @param value Value to set the indicated Pin.  
    * 
    * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.  
@@ -315,7 +315,7 @@ public:
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
-   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxPin()
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxSRGXPin()
    * @param value Value to set for the indicated Pin.  
    * 
    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).  
@@ -338,7 +338,7 @@ public:
    /**
     * @brief Toggles the state of a specific pin in the Main Buffer.  
     * 
-    * @param srPin Pin whose state is to be toggled. The valid range is 0 <= srPin <= getMaxPin()  
+    * @param srPin Pin whose state is to be toggled. The valid range is 0 <= srPin <= getMaxSRGXPin()  
     * @retval true The pin was in the valid range and was toggled in the Main Buffer.
     * @retval false The pin was not in the valid range, and no action was taken.
     * 
@@ -362,7 +362,7 @@ public:
      * 
      * @note The value will be used as a limit for the pin numbers to be used in the digitalWriteSr(const uint8_t, const uint8_t) and digitalReadSr(const uint8_t) methods.  
      */
-   uint8_t getMaxPin();
+   uint8_t getMaxSRGXPin();
    /**
      * @brief Return the quantity of shift registers composing the GPIOXtender object.  
      * 
@@ -399,7 +399,7 @@ public:
    /**
     * @brief Sets a specific pin to LOW (0x00/Reset) in the Main Buffer.
     * 
-    * @param srPin Pin whose state is to be reset. The valid range is 0 <= srPin <= getMaxPin()
+    * @param srPin Pin whose state is to be reset. The valid range is 0 <= srPin <= getMaxSRGXPin()
     * @retval true The pin was in the valid range and was reset to LOW (0x00/Reset) in the Main Buffer.
     * @retval false The pin was not in the valid range, and no action was taken.
     * 
@@ -409,7 +409,7 @@ public:
    /**
     * @brief Sets a specific pin to HIGH (0x01/Set) in the Main Buffer.
     * 
-    * @param srPin Pin whose state is to be set. The valid range is 0 <= srPin <= getMaxPin()
+    * @param srPin Pin whose state is to be set. The valid range is 0 <= srPin <= getMaxSRGXPin()
     * @retval true The pin was in the valid range and was set to HIGH (0x01/Set) in the Main Buffer.
     * @retval false The pin was not in the valid range, and no action was taken.
     * 
@@ -447,8 +447,8 @@ public:
     * Each pin value is set or reset according to the value provided in the data array pointed by the newSgmntPtr parameter as source.  
     * 
     * @param newSgmntPtr Pointer to the memory area containing the new values to be set to the segment of pins in the Main Buffer. The value to be set in each pin is provided as a bit in the data pointed by the newSgmntPtr parameter, where the first bit in the data pointed by newSgmntPtr will be set to the first pin in the segment, and so on. For that logic to work the data must be right aligned (LSb of the segment placed in position 0) in the data pointed by newSgmntPtr.  
-    * @param strtPin First pin number in the Main buffer to be overwritten. The valid range is 0 <= strtPin <= getMaxPin().
-    * @param pinsQty The number of pins to be set in the segment. The valid range is 1 <= pinsQty <= (getMaxPin() - strtPin + 1).
+    * @param strtPin First pin number in the Main buffer to be overwritten. The valid range is 0 <= strtPin <= getMaxSRGXPin().
+    * @param pinsQty The number of pins to be set in the segment. The valid range is 1 <= pinsQty <= (getMaxSRGXPin() - strtPin + 1).
     * 
     * @return A boolean indicating the success of the operation.  
     * @retval true The segment was set in the Main Buffer and the Buffer was flushed.  
