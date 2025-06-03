@@ -1,5 +1,5 @@
 <map id="SRGXVPort::readPort" name="SRGXVPort::readPort">
 <area shape="rect" id="Node000001" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
-<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a83b9b0f028f28df4b43825af46b29a21" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,406,48"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a184e452056ea5b1fb11afacb8acfc23b" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,356,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,24,187,24,187,29,155,29"/>
 </map>

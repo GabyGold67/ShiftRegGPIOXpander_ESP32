@@ -99,7 +99,6 @@ $(function(){initNavTree('class_shift_reg_g_p_i_o_xpander.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_shift_reg_g_p_i_o_xpander-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ShiftRegGPIOXpander Class Reference</div></div>
 </div><!--header-->
@@ -132,53 +131,56 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a68fe6cf0609e80ec31a622b8e1265a20" id="r_a68fe6cf0609e80ec31a622b8e1265a20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68fe6cf0609e80ec31a622b8e1265a20">~ShiftRegGPIOXpander</a> ()</td></tr>
 <tr class="memdesc:a68fe6cf0609e80ec31a622b8e1265a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor.  <br /></td></tr>
 <tr class="separator:a68fe6cf0609e80ec31a622b8e1265a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd936a7f8f4547d238f9b4e79bc9c0d" id="r_a6fd936a7f8f4547d238f9b4e79bc9c0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fd936a7f8f4547d238f9b4e79bc9c0d">begin</a> (uint8_t *initCntnt=nullptr)</td></tr>
-<tr class="memdesc:a6fd936a7f8f4547d238f9b4e79bc9c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIOXpander object setup and activation.  <br /></td></tr>
-<tr class="separator:a6fd936a7f8f4547d238f9b4e79bc9c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05bc7963b4c95d6b04afc44aa4a9a572" id="r_a05bc7963b4c95d6b04afc44aa4a9a572"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05bc7963b4c95d6b04afc44aa4a9a572">begin</a> (uint8_t *initCntnt=nullptr)</td></tr>
+<tr class="memdesc:a05bc7963b4c95d6b04afc44aa4a9a572"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIOXpander object setup and activation.  <br /></td></tr>
+<tr class="separator:a05bc7963b4c95d6b04afc44aa4a9a572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58b895bd50325c063a71d2ad4da1c961" id="r_a58b895bd50325c063a71d2ad4da1c961"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58b895bd50325c063a71d2ad4da1c961">copyMainToAux</a> (const bool &amp;overWriteIfExists=true)</td></tr>
 <tr class="memdesc:a58b895bd50325c063a71d2ad4da1c961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the Buffer content to the Auxiliary Buffer.  <br /></td></tr>
 <tr class="separator:a58b895bd50325c063a71d2ad4da1c961"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac36a36a34fbcf6b9761e201599f3bacc" id="r_ac36a36a34fbcf6b9761e201599f3bacc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_r_g_x_v_port.html">SRGXVPort</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac36a36a34fbcf6b9761e201599f3bacc">createSRGXVPort</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
 <tr class="memdesc:ac36a36a34fbcf6b9761e201599f3bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object.  <br /></td></tr>
 <tr class="separator:ac36a36a34fbcf6b9761e201599f3bacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a184e452056ea5b1fb11afacb8acfc23b" id="r_a184e452056ea5b1fb11afacb8acfc23b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a184e452056ea5b1fb11afacb8acfc23b">digitalReadSgmntSr</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
+<tr class="memdesc:a184e452056ea5b1fb11afacb8acfc23b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
+<tr class="separator:a184e452056ea5b1fb11afacb8acfc23b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0a3e91286d39a4c9622b1382febf4cb" id="r_ad0a3e91286d39a4c9622b1382febf4cb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0a3e91286d39a4c9622b1382febf4cb">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:ad0a3e91286d39a4c9622b1382febf4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin.  <br /></td></tr>
 <tr class="separator:ad0a3e91286d39a4c9622b1382febf4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1969e6e1dc13d674f6d051fe247e1b3" id="r_af1969e6e1dc13d674f6d051fe247e1b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1969e6e1dc13d674f6d051fe247e1b3">digitalToggleSr</a> (const uint8_t &amp;srPin)</td></tr>
-<tr class="memdesc:af1969e6e1dc13d674f6d051fe247e1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin.  <br /></td></tr>
-<tr class="separator:af1969e6e1dc13d674f6d051fe247e1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac80c4970c7c4df0d66e0e89411dff2a5" id="r_ac80c4970c7c4df0d66e0e89411dff2a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac80c4970c7c4df0d66e0e89411dff2a5">digitalToggleSrAll</a> ()</td></tr>
-<tr class="memdesc:ac80c4970c7c4df0d66e0e89411dff2a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of all the pins.  <br /></td></tr>
-<tr class="separator:ac80c4970c7c4df0d66e0e89411dff2a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2432ca72b8d980b80a7a83df558ac64" id="r_ab2432ca72b8d980b80a7a83df558ac64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2432ca72b8d980b80a7a83df558ac64">digitalToggleSrMask</a> (uint8_t *toggleMask)</td></tr>
-<tr class="memdesc:ab2432ca72b8d980b80a7a83df558ac64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of the pins in the Main Buffer according to the provided mask.  <br /></td></tr>
-<tr class="separator:ab2432ca72b8d980b80a7a83df558ac64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae25f89bca0203940410ff1afad8362cf" id="r_ae25f89bca0203940410ff1afad8362cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae25f89bca0203940410ff1afad8362cf">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
-<tr class="memdesc:ae25f89bca0203940410ff1afad8362cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Auxiliary Buffer.  <br /></td></tr>
-<tr class="separator:ae25f89bca0203940410ff1afad8362cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfd96750d7fa23aa9195db016608b2a1" id="r_acfd96750d7fa23aa9195db016608b2a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfd96750d7fa23aa9195db016608b2a1">digitalWriteSr</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
-<tr class="memdesc:acfd96750d7fa23aa9195db016608b2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
-<tr class="separator:acfd96750d7fa23aa9195db016608b2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ea656bb9c28c671df4888d0dff533b5" id="r_a8ea656bb9c28c671df4888d0dff533b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ea656bb9c28c671df4888d0dff533b5">digitalWriteSrAllReset</a> ()</td></tr>
-<tr class="memdesc:a8ea656bb9c28c671df4888d0dff533b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all the pins to LOW (0x00/Reset).  <br /></td></tr>
-<tr class="separator:a8ea656bb9c28c671df4888d0dff533b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67319a086effaab688feae45c95c5cc3" id="r_a67319a086effaab688feae45c95c5cc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67319a086effaab688feae45c95c5cc3">digitalWriteSrAllSet</a> ()</td></tr>
-<tr class="memdesc:a67319a086effaab688feae45c95c5cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all the pins to HIGH (0x01).  <br /></td></tr>
-<tr class="separator:a67319a086effaab688feae45c95c5cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae8ef355c8546528010f16ce74850a6d" id="r_aae8ef355c8546528010f16ce74850a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae8ef355c8546528010f16ce74850a6d">digitalWriteSrMaskReset</a> (uint8_t *resetMask)</td></tr>
-<tr class="memdesc:aae8ef355c8546528010f16ce74850a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by resetting simultaneously certain pins.  <br /></td></tr>
-<tr class="separator:aae8ef355c8546528010f16ce74850a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae90cac6dd6d5f9d14c3a27134c1ccb1b" id="r_ae90cac6dd6d5f9d14c3a27134c1ccb1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae90cac6dd6d5f9d14c3a27134c1ccb1b">digitalWriteSrMaskSet</a> (uint8_t *setMask)</td></tr>
-<tr class="memdesc:ae90cac6dd6d5f9d14c3a27134c1ccb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting simultaneously certain pins.  <br /></td></tr>
-<tr class="separator:ae90cac6dd6d5f9d14c3a27134c1ccb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a41a23fec35a378644308504320b12c" id="r_a6a41a23fec35a378644308504320b12c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a41a23fec35a378644308504320b12c">digitalWriteSrToAux</a> (const uint8_t srPin, const uint8_t value)</td></tr>
-<tr class="memdesc:a6a41a23fec35a378644308504320b12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.  <br /></td></tr>
-<tr class="separator:a6a41a23fec35a378644308504320b12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93ebd10e70b71ff3c67fd2ed5262737d" id="r_a93ebd10e70b71ff3c67fd2ed5262737d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d">discardAux</a> ()</td></tr>
-<tr class="memdesc:a93ebd10e70b71ff3c67fd2ed5262737d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the Auxiliary Buffer.  <br /></td></tr>
-<tr class="separator:a93ebd10e70b71ff3c67fd2ed5262737d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a517bdf7225c90b2cb03ee8411d89d4" id="r_a4a517bdf7225c90b2cb03ee8411d89d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a517bdf7225c90b2cb03ee8411d89d4">digitalToggleSr</a> (const uint8_t &amp;srPin)</td></tr>
+<tr class="memdesc:a4a517bdf7225c90b2cb03ee8411d89d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin.  <br /></td></tr>
+<tr class="separator:a4a517bdf7225c90b2cb03ee8411d89d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f8d20d721798dd2fbf8ca6bcd9b72f" id="r_aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0f8d20d721798dd2fbf8ca6bcd9b72f">digitalToggleSrAll</a> ()</td></tr>
+<tr class="memdesc:aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of all the pins.  <br /></td></tr>
+<tr class="separator:aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fa463061fbfe427c32989d1de5f223e" id="r_a8fa463061fbfe427c32989d1de5f223e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fa463061fbfe427c32989d1de5f223e">digitalToggleSrMask</a> (uint8_t *toggleMask)</td></tr>
+<tr class="memdesc:a8fa463061fbfe427c32989d1de5f223e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of the pins in the Main Buffer according to the provided mask.  <br /></td></tr>
+<tr class="separator:a8fa463061fbfe427c32989d1de5f223e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac146784b47a23b82c7b883a18c7d7d17" id="r_ac146784b47a23b82c7b883a18c7d7d17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac146784b47a23b82c7b883a18c7d7d17">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
+<tr class="memdesc:ac146784b47a23b82c7b883a18c7d7d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Auxiliary Buffer.  <br /></td></tr>
+<tr class="separator:ac146784b47a23b82c7b883a18c7d7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a650d0f6589b37aefb2f7fb009619da2f" id="r_a650d0f6589b37aefb2f7fb009619da2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a650d0f6589b37aefb2f7fb009619da2f">digitalWriteSr</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
+<tr class="memdesc:a650d0f6589b37aefb2f7fb009619da2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
+<tr class="separator:a650d0f6589b37aefb2f7fb009619da2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa62e8f2011a07ecddd83d5f72df4c291" id="r_aa62e8f2011a07ecddd83d5f72df4c291"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291">digitalWriteSrAllReset</a> ()</td></tr>
+<tr class="memdesc:aa62e8f2011a07ecddd83d5f72df4c291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all the pins to LOW (0x00/Reset).  <br /></td></tr>
+<tr class="separator:aa62e8f2011a07ecddd83d5f72df4c291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72de570d1e6827c9f1dfb671c5d946be" id="r_a72de570d1e6827c9f1dfb671c5d946be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be">digitalWriteSrAllSet</a> ()</td></tr>
+<tr class="memdesc:a72de570d1e6827c9f1dfb671c5d946be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all the pins to HIGH (0x01).  <br /></td></tr>
+<tr class="separator:a72de570d1e6827c9f1dfb671c5d946be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1bb2e62d05b98d61dc7656ceefc8d63" id="r_ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63">digitalWriteSrMaskReset</a> (uint8_t *resetMask)</td></tr>
+<tr class="memdesc:ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by resetting simultaneously certain pins.  <br /></td></tr>
+<tr class="separator:ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f08f74efdbbff4495bb358d5c6fba4" id="r_a08f08f74efdbbff4495bb358d5c6fba4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4">digitalWriteSrMaskSet</a> (uint8_t *setMask)</td></tr>
+<tr class="memdesc:a08f08f74efdbbff4495bb358d5c6fba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting simultaneously certain pins.  <br /></td></tr>
+<tr class="separator:a08f08f74efdbbff4495bb358d5c6fba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a220f5165290249e021a0876559042824" id="r_a220f5165290249e021a0876559042824"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a220f5165290249e021a0876559042824">digitalWriteSrToAux</a> (const uint8_t srPin, const uint8_t value)</td></tr>
+<tr class="memdesc:a220f5165290249e021a0876559042824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.  <br /></td></tr>
+<tr class="separator:a220f5165290249e021a0876559042824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add3b6fc39542cec1b278cdad9222d3aa" id="r_add3b6fc39542cec1b278cdad9222d3aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa">discardAux</a> ()</td></tr>
+<tr class="memdesc:add3b6fc39542cec1b278cdad9222d3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the Auxiliary Buffer.  <br /></td></tr>
+<tr class="separator:add3b6fc39542cec1b278cdad9222d3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad59357b65580f123685eff4ce6c6b049" id="r_ad59357b65580f123685eff4ce6c6b049"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad59357b65580f123685eff4ce6c6b049">end</a> ()</td></tr>
-<tr class="memdesc:ad59357b65580f123685eff4ce6c6b049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method provided for ending any relevant activation procedures made by the <a class="el" href="#a6fd936a7f8f4547d238f9b4e79bc9c0d" title="GPIOXpander object setup and activation.">begin(uint8_t*)</a> method.  <br /></td></tr>
+<tr class="memdesc:ad59357b65580f123685eff4ce6c6b049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method provided for ending any relevant activation procedures made by the <a class="el" href="#a05bc7963b4c95d6b04afc44aa4a9a572" title="GPIOXpander object setup and activation.">begin(uint8_t*)</a> method.  <br /></td></tr>
 <tr class="separator:ad59357b65580f123685eff4ce6c6b049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5f62b5b35dba66d8ff3616746111f68" id="r_aa5f62b5b35dba66d8ff3616746111f68"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5f62b5b35dba66d8ff3616746111f68">flipBit</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:aa5f62b5b35dba66d8ff3616746111f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Main Buffer.  <br /></td></tr>
@@ -186,9 +188,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ca688abf5eab3f4984320b90956e1f2" id="r_a7ca688abf5eab3f4984320b90956e1f2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ca688abf5eab3f4984320b90956e1f2">getMainBuffPtr</a> ()</td></tr>
 <tr class="memdesc:a7ca688abf5eab3f4984320b90956e1f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the pointer to the Main Buffer.  <br /></td></tr>
 <tr class="separator:a7ca688abf5eab3f4984320b90956e1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d26546d401570b73507325f2ffb9add" id="r_a5d26546d401570b73507325f2ffb9add"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d26546d401570b73507325f2ffb9add">getMaxPin</a> ()</td></tr>
-<tr class="memdesc:a5d26546d401570b73507325f2ffb9add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the greatest valid pin number.  <br /></td></tr>
-<tr class="separator:a5d26546d401570b73507325f2ffb9add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a0ba6144b5760e7d6ddc0051226b4f" id="r_a54a0ba6144b5760e7d6ddc0051226b4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f">getMaxSRGXPin</a> ()</td></tr>
+<tr class="memdesc:a54a0ba6144b5760e7d6ddc0051226b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the greatest valid pin number.  <br /></td></tr>
+<tr class="separator:a54a0ba6144b5760e7d6ddc0051226b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1857b10f93cd3adadf73da5907891152" id="r_a1857b10f93cd3adadf73da5907891152"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1857b10f93cd3adadf73da5907891152">getSrQty</a> ()</td></tr>
 <tr class="memdesc:a1857b10f93cd3adadf73da5907891152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the quantity of shift registers composing the GPIOXtender object.  <br /></td></tr>
 <tr class="separator:a1857b10f93cd3adadf73da5907891152"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,12 +215,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c1c01fb3d0195358ca0c9868f9ac122" id="r_a6c1c01fb3d0195358ca0c9868f9ac122"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c1c01fb3d0195358ca0c9868f9ac122">stampSgmntOverMain</a> (uint8_t *newSgmntPtr, const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
 <tr class="memdesc:a6c1c01fb3d0195358ca0c9868f9ac122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a set of consecutive pins (the segment) in the Main Buffer.  <br /></td></tr>
 <tr class="separator:a6c1c01fb3d0195358ca0c9868f9ac122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a83b9b0f028f28df4b43825af46b29a21" id="r_a83b9b0f028f28df4b43825af46b29a21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83b9b0f028f28df4b43825af46b29a21">_getZeroBasedMainBffrSgmnt</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
-<tr class="memdesc:a83b9b0f028f28df4b43825af46b29a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
-<tr class="separator:a83b9b0f028f28df4b43825af46b29a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers. </p>
@@ -269,12 +265,12 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the <b>Main Buffer</b>, <b>the Buffer</b> or <b>the Main</b>. <br  />
  The action of sending the Buffer contents to the shift registers array will be reffered as <b>Flushing</b>. Every time the Buffer is <b>flushed</b> to the shift registers array the whole contents of that array will be sent. <br  />
- A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the <b>Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
+ A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the <b>Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
 </dd>
 <dd>
 There is no mechanism to flush the <b>Auxiliary</b> straight to the shift registers. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), <a class="el" href="#a8ea656bb9c28c671df4888d0dff533b5" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a67319a086effaab688feae45c95c5cc3" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#aae8ef355c8546528010f16ce74850a6d" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#ae90cac6dd6d5f9d14c3a27134c1ccb1b" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See digitalReadSr(const uint8_t) for more information. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See digitalReadSr(const uint8_t) for more information. </dd></dl>
 
 </div>
 </div>
@@ -309,80 +305,14 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a83b9b0f028f28df4b43825af46b29a21" name="a83b9b0f028f28df4b43825af46b29a21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83b9b0f028f28df4b43825af46b29a21">&#9670;&#160;</a></span>_getZeroBasedMainBffrSgmnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ShiftRegGPIOXpander::_getZeroBasedMainBffrSgmnt </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>strtPin</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>pinsQty</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t &amp;</td>          <td class="paramname"><span class="paramname"><em>bffrSgmnt</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns a 16-bits value containing a zero-based segment of the Main Buffer. </p>
-<p>The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter. <br  />
-</p>
-<dl class="section note"><dt>Note</dt><dd>The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">strtPin</td><td>The first pin number from which the segment will be taken. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a>. </td></tr>
-    <tr><td class="paramname">pinsQty</td><td>The number of pins that will compose the segment. The valid range is 1 &lt;= pinsQty &lt;= (_maxSrPin - strtPin + 1). </td></tr>
-    <tr><td class="paramname">buffSgmnt</td><td>A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>The segment was successfully retrieved and stored in the buffSgmnt variable. </td></tr>
-    <tr><td class="paramname">false</td><td>The parameters provided were not valid, or the operation failed for any other reason.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section attention"><dt>Attention</dt><dd>The method is tightly related to the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class will ensure that the parameters provided are valid before calling this method. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a83b9b0f028f28df4b43825af46b29a21_icgraph">
-<area shape="rect" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,406,48"/>
-<area shape="rect" href="class_s_r_g_x_v_port.html#a95da7b2c72d85ae9ffb91c906b446836" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
-<area shape="poly" title=" " alt="" coords="187,29,155,29,155,24,187,24"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a6fd936a7f8f4547d238f9b4e79bc9c0d" name="a6fd936a7f8f4547d238f9b4e79bc9c0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fd936a7f8f4547d238f9b4e79bc9c0d">&#9670;&#160;</a></span>begin()</h2>
+<a id="a05bc7963b4c95d6b04afc44aa4a9a572" name="a05bc7963b4c95d6b04afc44aa4a9a572"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05bc7963b4c95d6b04afc44aa4a9a572">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::begin </td>
+          <td class="memname">bool ShiftRegGPIOXpander::begin </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>initCntnt</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></td><td>)</td>
           <td></td>
@@ -394,7 +324,16 @@ Here is the caller graph for this function:</div>
 <p>This method sets the controller pins configuration, and optionally sets the initial pin values for the GPIOXpander pins.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">initCntnt</td><td>Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions, making all pins' output 0/LOW/RESET. </td></tr>
+    <tr><td class="paramname">initCntnt</td><td>Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions, making all pins' output 0/LOW/RESET. <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the GPIOXpander object is ready to be used. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the pins could not be set, or the mutexes could not be created. </td></tr>
   </table>
   </dd>
 </dl>
@@ -420,7 +359,7 @@ Here is the caller graph for this function:</div>
 <ul>
 <li>If there's no existent Auxiliary the method creates it and copies the content of the Main. <br  />
 </li>
-<li>If there's an Auxiliary, the method will proceed acording to the value passed in the parameter: <br  />
+<li>If there's an Auxiliary, the method will proceed according to the value passed in the parameter: <br  />
 </li>
 <li>If the parameter passed is true the Auxiliary contents will be overwritten with the Main contents. <br  />
 </li>
@@ -438,9 +377,9 @@ Here is the caller graph for this function:</div>
  </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The Auxiliary was non-existent, or existed and the parameter allowing overwritting was true. <br  />
+    <tr><td class="paramname">true</td><td>The Auxiliary was non-existent, or existed and the parameter allowing overwriting was true. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>The Auxiliary was existent and the parameter allowing overwritting was false, generating a failure in the operation. </td></tr>
+    <tr><td class="paramname">false</td><td>The Auxiliary was existent and the parameter allowing overwriting was false, generating a failure in the operation. </td></tr>
   </table>
   </dd>
 </dl>
@@ -470,13 +409,71 @@ Here is the caller graph for this function:</div>
 <p>The method will create a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">strtPin</td><td><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> pin number from which the virtual port will start. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a>. </td></tr>
-    <tr><td class="paramname">pinsQty</td><td>Number of pins that will compose the virtual port. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> - strtPin + 1). </td></tr>
+    <tr><td class="paramname">strtPin</td><td><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> pin number from which the virtual port will start. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
+    <tr><td class="paramname">pinsQty</td><td>Number of pins that will compose the virtual port. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> - strtPin + 1). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object created, or an empty <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object if the parameters provided were not valid.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, although using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object. </dd></dl>
+
+</div>
+</div>
+<a id="a184e452056ea5b1fb11afacb8acfc23b" name="a184e452056ea5b1fb11afacb8acfc23b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a184e452056ea5b1fb11afacb8acfc23b">&#9670;&#160;</a></span>digitalReadSgmntSr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalReadSgmntSr </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>strtPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>pinsQty</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;</td>          <td class="paramname"><span class="paramname"><em>bffrSgmnt</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a 16-bits value containing a zero-based segment of the Main Buffer. </p>
+<p>The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strtPin</td><td>The first pin number from which the segment will be taken. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
+    <tr><td class="paramname">pinsQty</td><td>The number of pins that will compose the segment. The valid range is 1 &lt;= pinsQty &lt;= (_maxSRGXPin - strtPin + 1). </td></tr>
+    <tr><td class="paramname">buffSgmnt</td><td>A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The segment was successfully retrieved and stored in the buffSgmnt variable. </td></tr>
+    <tr><td class="paramname">false</td><td>The parameters provided were not valid, or the operation failed for any other reason.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method is tightly related to the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> class will ensure that the parameters provided are valid before calling this method. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph">
+<area shape="rect" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,356,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a95da7b2c72d85ae9ffb91c906b446836" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
+<area shape="poly" title=" " alt="" coords="187,29,155,29,155,24,187,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -517,14 +514,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="af1969e6e1dc13d674f6d051fe247e1b3" name="af1969e6e1dc13d674f6d051fe247e1b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1969e6e1dc13d674f6d051fe247e1b3">&#9670;&#160;</a></span>digitalToggleSr()</h2>
+<a id="a4a517bdf7225c90b2cb03ee8411d89d4" name="a4a517bdf7225c90b2cb03ee8411d89d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a517bdf7225c90b2cb03ee8411d89d4">&#9670;&#160;</a></span>digitalToggleSr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalToggleSr </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalToggleSr </td>
           <td>(</td>
           <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span></td><td>)</td>
           <td></td>
@@ -536,17 +533,25 @@ Here is the caller graph for this function:</div>
 <p>The method will set the pin to LOW (0x00) if it was HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on the GPIO pin.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>A positive value indicating which pin to toggle. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a></td></tr>
+    <tr><td class="paramname">srPin</td><td>A positive value indicating which pin to toggle. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pin was toggled in the Main Buffer and the change was flushed to the GPIO pin. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_af1969e6e1dc13d674f6d051fe247e1b3_icgraph">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph">
 <area shape="rect" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
 <area shape="poly" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
@@ -555,14 +560,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ac80c4970c7c4df0d66e0e89411dff2a5" name="ac80c4970c7c4df0d66e0e89411dff2a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac80c4970c7c4df0d66e0e89411dff2a5">&#9670;&#160;</a></span>digitalToggleSrAll()</h2>
+<a id="aa0f8d20d721798dd2fbf8ca6bcd9b72f" name="aa0f8d20d721798dd2fbf8ca6bcd9b72f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0f8d20d721798dd2fbf8ca6bcd9b72f">&#9670;&#160;</a></span>digitalToggleSrAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalToggleSrAll </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalToggleSrAll </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -571,18 +576,27 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Toggles the state of all the pins. </p>
-<p>The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins. </p>
+<p>The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.</p>
+<dl class="section attention"><dt>Attention</dt><dd>As the values are written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the pins to be written values are different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before seting the new pin states.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, all the pins were toggled in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ab2432ca72b8d980b80a7a83df558ac64" name="ab2432ca72b8d980b80a7a83df558ac64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2432ca72b8d980b80a7a83df558ac64">&#9670;&#160;</a></span>digitalToggleSrMask()</h2>
+<a id="a8fa463061fbfe427c32989d1de5f223e" name="a8fa463061fbfe427c32989d1de5f223e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fa463061fbfe427c32989d1de5f223e">&#9670;&#160;</a></span>digitalToggleSrMask()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalToggleSrMask </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalToggleSrMask </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>toggleMask</em></span></td><td>)</td>
           <td></td>
@@ -599,18 +613,26 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The method provides a mechanism for toggling various Main buffer bit positions in a single operation.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and it will be deleted before applying the mask.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pins were toggled in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the mask was null or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ae25f89bca0203940410ff1afad8362cf" name="ae25f89bca0203940410ff1afad8362cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae25f89bca0203940410ff1afad8362cf">&#9670;&#160;</a></span>digitalToggleSrToAux()</h2>
+<a id="ac146784b47a23b82c7b883a18c7d7d17" name="ac146784b47a23b82c7b883a18c7d7d17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac146784b47a23b82c7b883a18c7d7d17">&#9670;&#160;</a></span>digitalToggleSrToAux()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalToggleSrToAux </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalToggleSrToAux </td>
           <td>(</td>
           <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span></td><td>)</td>
           <td></td>
@@ -621,24 +643,32 @@ Here is the caller graph for this function:</div>
 <p>Toggles the state of a specific pin in the Auxiliary Buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>A positive value indicating which pin to toggle. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> <br  />
+    <tr><td class="paramname">srPin</td><td>A positive value indicating which pin to toggle. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> <br  />
 </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#ae25f89bca0203940410ff1afad8362cf" title="Toggles the state of a specific pin in the Auxiliary Buffer.">digitalToggleSrToAux()</a> methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#ac146784b47a23b82c7b883a18c7d7d17" title="Toggles the state of a specific pin in the Auxiliary Buffer.">digitalToggleSrToAux()</a> methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pin was toggled in the Auxiliary Buffer. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="acfd96750d7fa23aa9195db016608b2a1" name="acfd96750d7fa23aa9195db016608b2a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfd96750d7fa23aa9195db016608b2a1">&#9670;&#160;</a></span>digitalWriteSr()</h2>
+<a id="a650d0f6589b37aefb2f7fb009619da2f" name="a650d0f6589b37aefb2f7fb009619da2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a650d0f6589b37aefb2f7fb009619da2f">&#9670;&#160;</a></span>digitalWriteSr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSr </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSr </td>
           <td>(</td>
           <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span>, </td>
         </tr>
@@ -653,7 +683,7 @@ Here is the caller graph for this function:</div>
 <p>Set a specific pin to either HIGH (0x01) or LOW (0x00). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>a positive value indicating which pin to set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> <br  />
+    <tr><td class="paramname">srPin</td><td>a positive value indicating which pin to set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> <br  />
  </td></tr>
     <tr><td class="paramname">value</td><td>Value to set the indicated Pin. <br  />
 </td></tr>
@@ -662,12 +692,21 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state. <br  />
  </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pin was set in the Main Buffer and the change was flushed to the GPIO pin. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_acfd96750d7fa23aa9195db016608b2a1_icgraph">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph">
 <area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,39,360,81"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,5,159,48"/>
 <area shape="poly" title=" " alt="" coords="191,47,158,42,159,37,192,42"/>
@@ -678,14 +717,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a8ea656bb9c28c671df4888d0dff533b5" name="a8ea656bb9c28c671df4888d0dff533b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ea656bb9c28c671df4888d0dff533b5">&#9670;&#160;</a></span>digitalWriteSrAllReset()</h2>
+<a id="aa62e8f2011a07ecddd83d5f72df4c291" name="aa62e8f2011a07ecddd83d5f72df4c291"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa62e8f2011a07ecddd83d5f72df4c291">&#9670;&#160;</a></span>digitalWriteSrAllReset()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSrAllReset </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSrAllReset </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -694,20 +733,29 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Sets all the pins to LOW (0x00/Reset). </p>
-<dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
  </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> has to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> has to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, all the pins were set to LOW in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, because the mutexes could not be taken </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a67319a086effaab688feae45c95c5cc3" name="a67319a086effaab688feae45c95c5cc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67319a086effaab688feae45c95c5cc3">&#9670;&#160;</a></span>digitalWriteSrAllSet()</h2>
+<a id="a72de570d1e6827c9f1dfb671c5d946be" name="a72de570d1e6827c9f1dfb671c5d946be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72de570d1e6827c9f1dfb671c5d946be">&#9670;&#160;</a></span>digitalWriteSrAllSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSrAllSet </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSrAllSet </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -716,20 +764,29 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Sets all the pins to HIGH (0x01). </p>
-<dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before setting the new values to the Main. <br  />
  </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a> had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, all the pins were set to HIGH in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="aae8ef355c8546528010f16ce74850a6d" name="aae8ef355c8546528010f16ce74850a6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae8ef355c8546528010f16ce74850a6d">&#9670;&#160;</a></span>digitalWriteSrMaskReset()</h2>
+<a id="ae1bb2e62d05b98d61dc7656ceefc8d63" name="ae1bb2e62d05b98d61dc7656ceefc8d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1bb2e62d05b98d61dc7656ceefc8d63">&#9670;&#160;</a></span>digitalWriteSrMaskReset()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSrMaskReset </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSrMaskReset </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>resetMask</em></span></td><td>)</td>
           <td></td>
@@ -749,18 +806,26 @@ Here is the caller graph for this function:</div>
 <dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. <br  />
 </dd>
 <dd>
-The Main Buffer will be flushed after the mask modificatons are applied. </dd></dl>
+The Main Buffer will be flushed after the mask modifications are applied.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pins were reset in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the mask was null or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ae90cac6dd6d5f9d14c3a27134c1ccb1b" name="ae90cac6dd6d5f9d14c3a27134c1ccb1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae90cac6dd6d5f9d14c3a27134c1ccb1b">&#9670;&#160;</a></span>digitalWriteSrMaskSet()</h2>
+<a id="a08f08f74efdbbff4495bb358d5c6fba4" name="a08f08f74efdbbff4495bb358d5c6fba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08f08f74efdbbff4495bb358d5c6fba4">&#9670;&#160;</a></span>digitalWriteSrMaskSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSrMaskSet </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSrMaskSet </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>setMask</em></span></td><td>)</td>
           <td></td>
@@ -781,18 +846,26 @@ The Main Buffer will be flushed after the mask modificatons are applied. </dd></
 <dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. <br  />
 </dd>
 <dd>
-The Main Buffer will be flushed after the mask modificatons are applied. </dd></dl>
+The Main Buffer will be flushed after the mask modifications are applied.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pins were set in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the mask was null or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a6a41a23fec35a378644308504320b12c" name="a6a41a23fec35a378644308504320b12c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a41a23fec35a378644308504320b12c">&#9670;&#160;</a></span>digitalWriteSrToAux()</h2>
+<a id="a220f5165290249e021a0876559042824" name="a220f5165290249e021a0876559042824"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a220f5165290249e021a0876559042824">&#9670;&#160;</a></span>digitalWriteSrToAux()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::digitalWriteSrToAux </td>
+          <td class="memname">bool ShiftRegGPIOXpander::digitalWriteSrToAux </td>
           <td>(</td>
           <td class="paramtype">const uint8_t</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span>, </td>
         </tr>
@@ -807,7 +880,7 @@ The Main Buffer will be flushed after the mask modificatons are applied. </dd></
 <p>Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>a positive value indicating which pin to set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> </td></tr>
+    <tr><td class="paramname">srPin</td><td>a positive value indicating which pin to set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> </td></tr>
     <tr><td class="paramname">value</td><td>Value to set for the indicated Pin. <br  />
 </td></tr>
   </table>
@@ -815,18 +888,27 @@ The Main Buffer will be flushed after the mask modificatons are applied. </dd></
 </dl>
 <dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool). <br  />
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#a6a41a23fec35a378644308504320b12c" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.">digitalWriteSrToAux()</a> methods needed but the last, and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#a220f5165290249e021a0876559042824" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.">digitalWriteSrToAux()</a> methods needed but the last, and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. <br  />
+ </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The operation was successful, the pin was set in the Auxiliary Buffer. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a93ebd10e70b71ff3c67fd2ed5262737d" name="a93ebd10e70b71ff3c67fd2ed5262737d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93ebd10e70b71ff3c67fd2ed5262737d">&#9670;&#160;</a></span>discardAux()</h2>
+<a id="add3b6fc39542cec1b278cdad9222d3aa" name="add3b6fc39542cec1b278cdad9222d3aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add3b6fc39542cec1b278cdad9222d3aa">&#9670;&#160;</a></span>discardAux()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ShiftRegGPIOXpander::discardAux </td>
+          <td class="memname">bool ShiftRegGPIOXpander::discardAux </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -835,7 +917,16 @@ The Main Buffer will be flushed after the mask modificatons are applied. </dd></
 </div><div class="memdoc">
 
 <p>Deletes the Auxiliary Buffer. </p>
-<p>Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer. If the Auxiliary Buffer was not created, the method will do nothing. If the Auxiliary is not transfered to the Main Buffer before invoking this method, the modified contents of the Auxiliary will be lost. </p>
+<p>Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullifies the corresponding memory pointer. If the Auxiliary Buffer was not created, the method will do nothing. If the Auxiliary is not transferred to the Main Buffer before invoking this method, the modified contents of the Auxiliary will be lost. <br  />
+</p>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The Auxiliary Buffer was successfully discarded, and the memory allocated to it was freed. </td></tr>
+    <tr><td class="paramname">false</td><td>The mutexes could not be taken. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -854,7 +945,7 @@ The Main Buffer will be flushed after the mask modificatons are applied. </dd></
       </table>
 </div><div class="memdoc">
 
-<p>Method provided for ending any relevant activation procedures made by the <a class="el" href="#a6fd936a7f8f4547d238f9b4e79bc9c0d" title="GPIOXpander object setup and activation.">begin(uint8_t*)</a> method. </p>
+<p>Method provided for ending any relevant activation procedures made by the <a class="el" href="#a05bc7963b4c95d6b04afc44aa4a9a572" title="GPIOXpander object setup and activation.">begin(uint8_t*)</a> method. </p>
 <p>The method will be invoked as part of the class destructor. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -887,7 +978,7 @@ Here is the caller graph for this function:</div>
 <p>Toggles the state of a specific pin in the Main Buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>Pin whose state is to be toggled. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> <br  />
+    <tr><td class="paramname">srPin</td><td>Pin whose state is to be toggled. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> <br  />
  </td></tr>
   </table>
   </dd>
@@ -906,7 +997,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph">
 <area shape="rect" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#af1969e6e1dc13d674f6d051fe247e1b3" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a4a517bdf7225c90b2cb03ee8411d89d4" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
@@ -935,14 +1026,14 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a5d26546d401570b73507325f2ffb9add" name="a5d26546d401570b73507325f2ffb9add"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d26546d401570b73507325f2ffb9add">&#9670;&#160;</a></span>getMaxPin()</h2>
+<a id="a54a0ba6144b5760e7d6ddc0051226b4f" name="a54a0ba6144b5760e7d6ddc0051226b4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a0ba6144b5760e7d6ddc0051226b4f">&#9670;&#160;</a></span>getMaxSRGXPin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ShiftRegGPIOXpander::getMaxPin </td>
+          <td class="memname">uint8_t ShiftRegGPIOXpander::getMaxSRGXPin </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -956,6 +1047,16 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t maxPin number value. <br  />
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The value will be used as a limit for the pin numbers to be used in the digitalWriteSr(const uint8_t, const uint8_t) and digitalReadSr(const uint8_t) methods. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph">
+<area shape="rect" title="Return the greatest valid pin number." alt="" coords="225,5,378,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a0419134f57ef63fe35c3c530b7852bb4" title="Class constructor." alt="" coords="5,13,177,40"/>
+<area shape="poly" title=" " alt="" coords="209,29,177,29,177,24,209,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -1042,9 +1143,9 @@ Here is the call graph for this function:</div>
 </p><ul>
 <li>Check the existence of the Auxiliary</li>
 <li>Copy the contents from the Auxiliary to the Main (see <a class="el" href="#a07e5c7279e11044eec16e9d9020a77cf" title="Sets all of the output pins of the shift register to new provided values at once.">stampOverMain(uint8_t*)</a>)</li>
-<li>Delete the Auxiliary (see <a class="el" href="#a93ebd10e70b71ff3c67fd2ed5262737d" title="Deletes the Auxiliary Buffer.">discardAux()</a>)</li>
+<li>Delete the Auxiliary (see <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a>)</li>
 </ul>
-<dl class="section return"><dt>Returns</dt><dd>The success of moving the data from the Auxiliar to the Main. <br  />
+<dl class="section return"><dt>Returns</dt><dd>The success of moving the data from the Auxiliary to the Main. <br  />
  </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1075,7 +1176,7 @@ Here is the call graph for this function:</div>
 <p>Sets a specific pin to LOW (0x00/Reset) in the Main Buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>Pin whose state is to be reset. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> </td></tr>
+    <tr><td class="paramname">srPin</td><td>Pin whose state is to be reset. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1093,7 +1194,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph">
 <area shape="rect" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
@@ -1118,7 +1219,7 @@ Here is the call graph for this function:</div>
 <p>Sets a specific pin to HIGH (0x01/Set) in the Main Buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">srPin</td><td>Pin whose state is to be set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> </td></tr>
+    <tr><td class="paramname">srPin</td><td>Pin whose state is to be set. The valid range is 0 &lt;= srPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1136,7 +1237,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph">
 <area shape="rect" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#acfd96750d7fa23aa9195db016608b2a1" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,24,191,24,191,29,159,29"/>
 </map>
 </div>
@@ -1205,13 +1306,13 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Success in overwritting the Buffer. <br  />
+<dl class="section return"><dt>Returns</dt><dd>Success in overwriting the Buffer. <br  />
  </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The Buffer was overwritten and the new contents flushed. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>The parameter passed was a nullptr/NULL and no overwritting was possible. <br  />
+    <tr><td class="paramname">false</td><td>The parameter passed was a nullptr/NULL and no overwriting was possible. <br  />
 </td></tr>
   </table>
   </dd>
@@ -1253,8 +1354,8 @@ Here is the call graph for this function:</div>
   <table class="params">
     <tr><td class="paramname">newSgmntPtr</td><td>Pointer to the memory area containing the new values to be set to the segment of pins in the Main Buffer. The value to be set in each pin is provided as a bit in the data pointed by the newSgmntPtr parameter, where the first bit in the data pointed by newSgmntPtr will be set to the first pin in the segment, and so on. For that logic to work the data must be right aligned (LSb of the segment placed in position 0) in the data pointed by newSgmntPtr. <br  />
  </td></tr>
-    <tr><td class="paramname">strtPin</td><td>First pin number in the Main buffer to be overwritten. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a>. </td></tr>
-    <tr><td class="paramname">pinsQty</td><td>The number of pins to be set in the segment. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a5d26546d401570b73507325f2ffb9add" title="Return the greatest valid pin number.">getMaxPin()</a> - strtPin + 1).</td></tr>
+    <tr><td class="paramname">strtPin</td><td>First pin number in the Main buffer to be overwritten. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
+    <tr><td class="paramname">pinsQty</td><td>The number of pins to be set in the segment. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> - strtPin + 1).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1272,17 +1373,7 @@ Here is the call graph for this function:</div>
 <dl class="section note"><dt>Note</dt><dd>The intended behavior of the method is to present the resulting Main in a single operation, so the method will make all the segment modifications to the Main Buffer before flushing it. If the Auxiliary Buffer contains any pending modifications, they will be moved to the Main Buffer before the segment stamping execution. <br  />
 </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The method expects newSgmntPtr to point to a valid memory area containing the data to be set in the segment. If the pointer is nullptr/NULL, the method will return false and no operation will be performed.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Altough the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same lenght as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph" alt=""/></div>
-<map name="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a6c1c01fb3d0195358ca0c9868f9ac122_icgraph">
-<area shape="rect" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="185,5,344,48"/>
-<area shape="rect" href="class_s_r_g_x_v_port.html#a2e5eb06f7d026f5eb17545a78b3f80a4" title="Begins the virtual port, setting the initial state of the VPort pins." alt="" coords="5,13,137,40"/>
-<area shape="poly" title=" " alt="" coords="169,29,137,29,137,24,169,24"/>
-</map>
-</div>
+<dl class="section attention"><dt>Attention</dt><dd>Although the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same length as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. </dd></dl>
 
 </div>
 </div>

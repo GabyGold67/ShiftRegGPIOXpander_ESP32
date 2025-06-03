@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['begin_0',['begin',['../class_shift_reg_g_p_i_o_xpander.html#a6fd936a7f8f4547d238f9b4e79bc9c0d',1,'ShiftRegGPIOXpander::begin()'],['../class_s_r_g_x_v_port.html#a2e5eb06f7d026f5eb17545a78b3f80a4',1,'SRGXVPort::begin()']]]
+  ['copymaintoaux_0',['copyMainToAux',['../class_shift_reg_g_p_i_o_xpander.html#a58b895bd50325c063a71d2ad4da1c961',1,'ShiftRegGPIOXpander']]],
+  ['createsrgxvport_1',['createSRGXVPort',['../class_shift_reg_g_p_i_o_xpander.html#ac36a36a34fbcf6b9761e201599f3bacc',1,'ShiftRegGPIOXpander']]]
 ];

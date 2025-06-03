@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 01/06/2025 
-  *       Last update:   02/06/2025 14:00 GMT+0200 DST
+  *       Last update:   03/06/2025 17:40 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -101,6 +101,9 @@ void loop() {
    srgx.begin(SRGXstrtngVal); 
 
    Serial.println("Instantiating myVPortNS while _maxSRGXPin value: " + String(srgx.getMaxSRGXPin()));
+   Serial.println("====================================");
+
+   
    SRGXVPort myVPortNS = srgx.createSRGXVPort(0, 3);
    if(!(srgx.isValid(myVPortNS)))
       Error_Handler(0x02); // Error creating the virtual port, exit the task
@@ -114,107 +117,114 @@ void loop() {
    vTaskDelay(2000);
 
    for(;;){
-      Serial.println("Set the port pins one by one using the digitalWriteSr() method on both virtual ports");
-      for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
-         Serial.println("Setting pins " + String(pinUpdtd) + " to HIGH");
-         myVPortNS.digitalWriteSr(pinUpdtd, HIGH);
-         vTaskDelay(1000);
-         myVPortEW.digitalWriteSr(pinUpdtd, HIGH);
-         vTaskDelay(2000);
-      }      
-      vTaskDelay(2000);
 
-      Serial.println("Reset the port pins one by one using the digitalWriteSr() method on both virtual ports");
-      for(int pinUpdtd{2}; pinUpdtd >= 0; pinUpdtd--){
-         Serial.println("Setting pin " + String(pinUpdtd) + " to LOW");
-         myVPortNS.digitalWriteSr(pinUpdtd, LOW);
-         vTaskDelay(1000);
-         myVPortEW.digitalWriteSr(pinUpdtd, LOW);
+      {
+         Serial.println("Set the port pins one by one using the digitalWriteSr() method on both virtual ports");
+         for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
+            Serial.println("Setting pins " + String(pinUpdtd) + " to HIGH");
+            myVPortNS.digitalWriteSr(pinUpdtd, HIGH);
+            vTaskDelay(1000);
+            myVPortEW.digitalWriteSr(pinUpdtd, HIGH);
+            vTaskDelay(2000);
+         }      
          vTaskDelay(2000);
-      }      
-      vTaskDelay(2000);
+      }
 
-      Serial.println("Set the port pins one by one using the setBit() method on both virtual ports");
-      for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
-         Serial.println("Setting pins " + String(pinUpdtd) + " to HIGH");
-         myVPortNS.setBit(pinUpdtd);
-         vTaskDelay(1000);
-         myVPortEW.setBit(pinUpdtd);
+      {
+         Serial.println("Reset the port pins one by one using the digitalWriteSr() method on both virtual ports");
+         for(int pinUpdtd{2}; pinUpdtd >= 0; pinUpdtd--){
+            Serial.println("Setting pin " + String(pinUpdtd) + " to LOW");
+            myVPortNS.digitalWriteSr(pinUpdtd, LOW);
+            vTaskDelay(1000);
+            myVPortEW.digitalWriteSr(pinUpdtd, LOW);
+            vTaskDelay(2000);
+         }      
          vTaskDelay(2000);
-      }      
-      vTaskDelay(2000);
+      }
 
-      Serial.println("Reset the port pins one by one using the resetBit() method on both virtual ports");
-      for(int pinUpdtd{2}; pinUpdtd >= 0; pinUpdtd--){
-         Serial.println("Setting pin " + String(pinUpdtd) + " to LOW");
-         myVPortNS.resetBit(pinUpdtd);
-         vTaskDelay(1000);
-         myVPortEW.resetBit(pinUpdtd);
+      {
+         Serial.println("\nSet the port pins one by one using the setBit() method on both virtual ports");
+         for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
+            Serial.println("Setting pins " + String(pinUpdtd) + " to HIGH");
+            myVPortNS.setBit(pinUpdtd);
+            vTaskDelay(1000);
+            myVPortEW.setBit(pinUpdtd);
+            vTaskDelay(2000);
+         }      
          vTaskDelay(2000);
-      }      
-      vTaskDelay(2000);
+      }
 
-      Serial.println("Set several port pins at once by using the writePort() method on both virtual ports");
-      Serial.println("Setting value 2 in the myVPortNS virtual port");
-      myVPortNS.writePort(0x02);
-      vTaskDelay(1000);
-      Serial.println("Setting value 5 in the myVPortEW virtual port");
-      myVPortEW.writePort(0x05);
-      vTaskDelay(2000);
+      {
+         Serial.println("\nReset the port pins one by one using the resetBit() method on both virtual ports");
+         for(int pinUpdtd{2}; pinUpdtd >= 0; pinUpdtd--){
+            Serial.println("Setting pin " + String(pinUpdtd) + " to LOW");
+            myVPortNS.resetBit(pinUpdtd);
+            vTaskDelay(1000);
+            myVPortEW.resetBit(pinUpdtd);
+            vTaskDelay(2000);
+         }      
+         vTaskDelay(2000);
+      }
+
+      {
+         Serial.println("\nSet several port pins at once by using the writePort() method on both virtual ports");
+         Serial.println("Setting value 2 in the myVPortNS virtual port");
+         myVPortNS.writePort(0x02);
+         vTaskDelay(1000);
+         Serial.println("Setting value 5 in the myVPortEW virtual port");
+         myVPortEW.writePort(0x05);
+         vTaskDelay(2000);
+      }
+
+      {
+         Serial.println("Toggle the port pins one by one using the flipBit() method on both virtual ports");
+         for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
+            Serial.println("Flipping pins " + String(pinUpdtd));
+            myVPortNS.flipBit(pinUpdtd);
+            vTaskDelay(1000);
+            myVPortEW.flipBit(pinUpdtd);
+            vTaskDelay(2000);
+         }      
+         vTaskDelay(2000);
+      }
       
-      Serial.println("Toggle the port pins one by one using the flipBit() method on both virtual ports");
-      for(int pinUpdtd{0}; pinUpdtd < 3; pinUpdtd++){
-         Serial.println("Flipping pins " + String(pinUpdtd));
-         myVPortNS.flipBit(pinUpdtd);
-         vTaskDelay(1000);
-         myVPortEW.flipBit(pinUpdtd);
-         vTaskDelay(2000);
-      }      
-      vTaskDelay(2000);
-
-      
-      Serial.println("\nMaximum value holdable by the vPorts: " + String(myVPortNS.getVPortMaxVal(), HEX));
+      {
+         Serial.println("\nMaximum value holdable by the vPorts: " + String(myVPortNS.getVPortMaxVal(), HEX));
+      }
             
-      Serial.println("\nRead the port pins state as a single value using the readPort() method on both virtual ports");
-      Serial.println("Value in the myVPortNS pins: " + String(myVPortNS.readPort(), HEX));
-      vTaskDelay(1000);
-      Serial.println("Value in the myVPortEW pins: " + String(myVPortEW.readPort(), HEX));
-      vTaskDelay(2000);
-      vTaskDelay(2000);
+      {
+         Serial.println("\n\n===================================");
+         Serial.println("\nRead the port pins state as a single value using the readPort() method on both virtual ports");
+         Serial.println("Value in the myVPortNS pins: " + String(myVPortNS.readPort(), HEX));
+         vTaskDelay(1000);
+         Serial.println("Value in the myVPortEW pins: " + String(myVPortEW.readPort(), HEX));
+         vTaskDelay(2000);
+      }
 
+      {
+         Serial.println("\n\n===================================");
+         Serial.println("\nRead the myVPortNS pin by pin state using the digitalReadSr() method");
+         for(int pinRd{0}; pinRd < 3; pinRd++){
+            Serial.println("Pin " + String(pinRd) + " state: " + String(myVPortNS.digitalReadSr(pinRd)));
+            vTaskDelay(1000);
+         }         
+      }
 
-      // Serial.println("Flip all the bits using the digitalToggleSrAll() method");
-      // srgx.digitalToggleSrAll();
-      // vTaskDelay(4000);
+      {
+         Serial.println("\n\n===================================");
+         Serial.println("\nThe stampMask for the myVPortNS virtual port is: ");
+         Serial.println(String(*myVPortNS.getStampMask(), BIN));
 
-      // Serial.println("Set all the bits to 0 using the digitalWriteSrAllReset() method");
-      // srgx.digitalWriteSrAllReset();
-      // vTaskDelay(1000);
+         Serial.println("\n");
 
-      // Serial.println("Copy the Main Buffer to the Auxiliary Buffer with all it's bits reset using the copyMainToAux() method");
-      // srgx.copyMainToAux();
-      // Serial.println("Flip the two rightmost and the two leftmost bits using the digitalToggleSrToAux() method");
-      // srgx.digitalToggleSrToAux(0);
-      // srgx.digitalToggleSrToAux(1);
-      // srgx.digitalToggleSrToAux(6);
-      // srgx.digitalToggleSrToAux(7);
-      // Serial.println("Move the Auxiliary Buffer to the Main Buffer and flush it using the moveAuxToMain() method");
-      // srgx.moveAuxToMain();
-      // vTaskDelay(4000);
+         Serial.println("The stampMask for the myVPortEW virtual port is: ");
+         Serial.println(String(*myVPortEW.getStampMask(), BIN));
 
-      // Serial.println("Clear al bits of the Shift Register GPIO Expander using the digitalWriteSrAllReset() method");
-      // srgx.digitalWriteSrAllReset();
-      // vTaskDelay(2000);
-   
-      // Serial.println("Stamps both ports with the 'Second traffic lights' state");
-      // // myVPortNS.writePort(red); 
-      // myVPortEW.writePort(yellow); 
-      // vTaskDelay(3000);
+         Serial.println("\n");
+         vTaskDelay(2000);
+      }
 
-      // Serial.println("Stamps both ports with the 'Third traffic lights' state");
-      // myVPortNS.writePort(green); 
-      // myVPortEW.writePort(red);
-      // vTaskDelay(3000);
+      vTaskDelay(4000);
 
    }
 }

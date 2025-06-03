@@ -3,7 +3,7 @@
  * @file ShiftRegGPIOXpander_ESP32.h
  * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
  * 
- * @details The library provides the means to extend the GPIO available pins -**for digital output only**- by providing a pin output manipulation API similar to the provided by Arduino, for it's own GPIO pins, for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins for the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheets of the selected model for references about those limits).
+ * @details The library provides the means to extend the GPIO available pins -**for digital output only**- by providing a pin output manipulation API similar to the provided by Arduino, for it's own GPIO pins, for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins for the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheet of the selected model for references about those limits).
  * 
  * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
  * 
@@ -17,7 +17,7 @@
  * @version 3.0.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   27/05/2025 22:20 (GMT+0200) DST  
+ *       Last update:   03/06/2025 18:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -119,27 +119,8 @@ protected:
 
    uint8_t* _mainBuffrArryPtr{};
    uint8_t* _auxBuffrArryPtr{nullptr};
-   uint8_t _maxSRGXPin{0};
+   uint8_t _maxSRGXPin{};
    uint8_t _srQty{};
-   
-   /**
-    * @brief Returns a 16-bits value containing a zero-based segment of the Main Buffer.
-    * 
-    * The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter.  
-    * 
-    * @note The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.
-    * 
-    * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxSRGXPin().
-    * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSRGXPin - strtPin + 1).
-    * @param buffSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
-    * 
-    * @return A boolean value indicating the success of the operation.
-    * @retval true The segment was successfully retrieved and stored in the buffSgmnt variable.
-    * @retval false The parameters provided were not valid, or the operation failed for any other reason.
-    * 
-    * @attention The method is tightly related to the SRGXVPort class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The SRGXVPort class will ensure that the parameters provided are valid before calling this method.
-    */
-   bool _getZeroBasedMainBffrSgmnt(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt);
 
 public:
    /**
@@ -158,7 +139,7 @@ public:
     * 
     * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or **the Main**.  
     * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
-    * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the **Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecesary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
+    * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the **Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
     * 
     * @note There is no mechanism to flush the **Auxiliary** straight to the shift registers.  
     * 
@@ -177,21 +158,25 @@ public:
     * This method sets the controller pins configuration, and optionally sets the initial pin values for the GPIOXpander pins.
     * 
     * @param initCntnt Optional parameter. Initial value to be loaded into the Main Buffer, and thus will be the inital state of the Shift Register output pins. The value is provided in the form of a uint8_t*, and the constructor expects the data to be set in the memory area from the pointed address to the pointed address + (srQty - 1) consecutive bytes. If the parameter is not provided, or set to nullptr the inital value to be loaded into the Main Buffer will be 0x00 to all the shift registers positions, making all pins' output 0/LOW/RESET.  
+    * 
+    * @return The success of the operation.
+    * @retval true The operation was successful, the GPIOXpander object is ready to be used.
+    * @retval false The operation failed, either because the pins could not be set, or the mutexes could not be created.
     */
-   void begin(uint8_t* initCntnt = nullptr);   
+   bool begin(uint8_t* initCntnt = nullptr);   
    /**
     * @brief Copies the Buffer content to the Auxiliary Buffer  
     * 
     * - If there's no existent Auxiliary the method creates it and copies the content of the Main.  
-    * - If there's an Auxiliary, the method will proceed acording to the value passed in the parameter:  
+    * - If there's an Auxiliary, the method will proceed according to the value passed in the parameter:  
     * - If the parameter passed is true the Auxiliary contents will be overwritten with the Main contents.  
     * - If the parameter passed is false the Auxiliary will not be modified and the method will return a false to flag the failure of the operation.  
     * 
     * @param overWriteIfExists Indicates the authorization to overwrite the Auxiliary with the contents of the Main Buffer if the Auxiliary exists at the moment of the invocation.  
     * 
     * @return The success of the overwriting operation.  
-    * @retval true The Auxiliary was non-existent, or existed and the parameter allowing overwritting was true.  
-    * @retval false The Auxiliary was existent and the parameter allowing overwritting was false, generating a failure in the operation.  
+    * @retval true The Auxiliary was non-existent, or existed and the parameter allowing overwriting was true.  
+    * @retval false The Auxiliary was existent and the parameter allowing overwriting was false, generating a failure in the operation.  
     */
    bool copyMainToAux(const bool &overWriteIfExists = true);
    /**
@@ -203,9 +188,27 @@ public:
     * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxSRGXPin() - strtPin + 1).
     * @return SRGXVPort The SRGXVPort object created, or an empty SRGXVPort object if the parameters provided were not valid.
     * 
-    * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, altough using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
+    * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, although using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
     */
    SRGXVPort createSRGXVPort(const uint8_t &strtPin, const uint8_t &pinsQty);
+   /**
+    * @brief Returns a 16-bits value containing a zero-based segment of the Main Buffer.
+    * 
+    * The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter.  
+    * 
+    * @note The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.
+    * 
+    * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxSRGXPin().
+    * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSRGXPin - strtPin + 1).
+    * @param buffSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The segment was successfully retrieved and stored in the buffSgmnt variable.
+    * @retval false The parameters provided were not valid, or the operation failed for any other reason.
+    * 
+    * @attention The method is tightly related to the SRGXVPort class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The SRGXVPort class will ensure that the parameters provided are valid before calling this method.
+    */
+   bool digitalReadSgmntSr(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt);   
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -219,8 +222,8 @@ public:
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
-   uint8_t digitalReadSr(const uint8_t &srPin);
-    /**
+   uint8_t digitalReadSr(const uint8_t &srPin);   
+   /**
      * @brief Toggles the state of a specific pin.
      * 
      * @details The method will set the pin to LOW (0x00) if it was HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on the GPIO pin.
@@ -230,14 +233,24 @@ public:
      * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.
      * 
      * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.
+     * 
+     * @return A boolean value indicating the success of the operation.
+     * @retval true The operation was successful, the pin was toggled in the Main Buffer and the change was flushed to the GPIO pin.
+     * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken.
      */
-   void digitalToggleSr(const uint8_t &srPin);
+   bool digitalToggleSr(const uint8_t &srPin);
    /**
     * @brief Toggles the state of all the pins.
     * 
     * @details The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
+    * 
+    * @attention As the values are written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the pins to be written values are different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before seting the new pin states.
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The operation was successful, all the pins were toggled in the Main Buffer and the change was flushed to the GPIO pins.
+    * @retval false The operation failed, because the mutexes could not be taken.
     */
-   void digitalToggleSrAll();
+   bool digitalToggleSrAll();
    /**
     * @brief Toggles the state of the pins in the Main Buffer according to the provided mask.
     * 
@@ -247,9 +260,13 @@ public:
     * 
     * @note The method provides a mechanism for toggling various Main buffer bit positions in a single operation.
     * 
-    * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.
+    * @attention Any modifications made in the Auxiliary will be moved to the Main and it will be deleted before applying the mask.
+    * 
+    * @result A boolean value indicating the success of the operation.
+    * @retval true The operation was successful, the pins were toggled in the Main Buffer and the change was flushed to the GPIO pins.
+    * @retval false The operation failed, either because the mask was null or because the mutexes could not be taken.
     */
-   void digitalToggleSrMask(uint8_t* toggleMask);
+   bool digitalToggleSrMask(uint8_t* toggleMask);
    /**
     * @brief Toggles the state of a specific pin in the Auxiliary Buffer.
     * 
@@ -258,8 +275,12 @@ public:
     * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
     * 
     * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The operation was successful, the pin was toggled in the Auxiliary Buffer.
+    * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken.
     */
-   void digitalToggleSrToAux(const uint8_t &srPin); 
+   bool digitalToggleSrToAux(const uint8_t &srPin); 
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -267,23 +288,34 @@ public:
    * @param value Value to set the indicated Pin.  
    * 
    * @attention As the value is written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the srPin to be written value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(false) will be performed before seting the new pin state.  
-   * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.    
+   * @warning If a moveAuxToMain(false) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
+   * 
+   * @return A boolean value indicating the success of the operation.
+   * @retval true The operation was successful, the pin was set in the Main Buffer and the change was flushed to the GPIO pin.
+   * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken.
    */
-   void digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
+   bool digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
    /**
    * @brief Sets all the pins to LOW (0x00/Reset).
    * 
    * @attention As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before setting the new values to the Main.  
    * @warning If discardAux() has to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
-   */
-   void digitalWriteSrAllReset();
+   * 
+   * @return A boolean value indicating the success of the operation.
+   * @retval true The operation was successful, all the pins were set to LOW in the Main Buffer and the change was flushed to the GPIO pins.
+   * @retval false The operation failed, because the mutexes could not be taken*/
+   bool digitalWriteSrAllReset();
    /**
    * @brief Sets all the pins to HIGH (0x01).
    * 
    * @attention As the new values are written to the object's Buffer, the existence of the Auxiliary might produce an inconsistency to appear. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before setting the new values to the Main.  
    * @warning If discardAux() had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
+   * 
+   * @return A boolean value indicating the success of the operation.
+   * @retval true The operation was successful, all the pins were set to HIGH in the Main Buffer and the change was flushed to the GPIO pins.
+   * @retval false The operation failed, because the mutexes could not be taken.
    */
-   void digitalWriteSrAllSet();
+   bool digitalWriteSrAllSet();
   /**
    * @brief Modifies the Main buffer contents by resetting simultaneously certain pins.
    * 
@@ -295,9 +327,13 @@ public:
    * 
    * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
    * 
-   * @attention The Main Buffer will be flushed after the mask modificatons are applied.
+   * @attention The Main Buffer will be flushed after the mask modifications are applied.
+   * 
+   * @return A boolean value indicating the success of the operation.
+   * @retval true The operation was successful, the pins were reset in the Main Buffer and the change was flushed to the GPIO pins.
+   * @retval false The operation failed, either because the mask was null or because the mutexes could not be taken.
    */
-   void digitalWriteSrMaskReset(uint8_t* resetMask);
+   bool digitalWriteSrMaskReset(uint8_t* resetMask);
    /**
    * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
    * 
@@ -309,9 +345,13 @@ public:
    * 
    * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
    * 
-   * @attention The Main Buffer will be flushed after the mask modificatons are applied.
+   * @attention The Main Buffer will be flushed after the mask modifications are applied.
+   * 
+   * @return A boolean value indicating the success of the operation.
+   * @retval true The operation was successful, the pins were set in the Main Buffer and the change was flushed to the GPIO pins.
+   * @retval false The operation failed, either because the mask was null or because the mutexes could not be taken.
    */
-   void digitalWriteSrMaskSet(uint8_t* setMask);  
+   bool digitalWriteSrMaskSet(uint8_t* setMask);  
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
@@ -320,15 +360,23 @@ public:
    * 
    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).  
    * 
-   * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalWriteSrToAux() methods needed but the last, and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.  
+   * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalWriteSrToAux() methods needed but the last, and then invoking a digitalWrite(const uint8_t, const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer. 
+   * 
+   * @return A boolean value indicating the success of the operation.  
+   * @retval true The operation was successful, the pin was set in the Auxiliary Buffer.
+   * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken. 
    */
-   void digitalWriteSrToAux(const uint8_t srPin, const uint8_t value);
+   bool digitalWriteSrToAux(const uint8_t srPin, const uint8_t value);
    /**
     * @brief Deletes the Auxiliary Buffer.  
     * 
-    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullyfies the corresponding memory pointer. If the Auxiliary Buffer was not created, the method will do nothing. If the Auxiliary is not transfered to the Main Buffer before invoking this method, the modified contents of the Auxiliary will be lost.  
+    * Discards the contents of the Auxiliary Buffer, frees the memory allocated to it and nullifies the corresponding memory pointer. If the Auxiliary Buffer was not created, the method will do nothing. If the Auxiliary is not transferred to the Main Buffer before invoking this method, the modified contents of the Auxiliary will be lost.  
+    * 
+    * @return A boolean value indicating the success of the operation.
+    * @retval true The Auxiliary Buffer was successfully discarded, and the memory allocated to it was freed.
+    * @retval false The mutexes could not be taken.
     */
-   void discardAux();
+   bool discardAux();
    /**
     * @brief Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method.  
     * 
@@ -391,7 +439,7 @@ public:
     * - Copy the contents from the Auxiliary to the Main (see stampOverMain(uint8_t*))
     * - Delete the Auxiliary (see discardAux())
     * 
-    * @return The success of moving the data from the Auxiliar to the Main.  
+    * @return The success of moving the data from the Auxiliary to the Main.  
     * @retval true There was an Auxiliary and it's value could be moved.  
     * @retval false There was no Auxiliary present, no data have been moved.  
     */
@@ -432,9 +480,9 @@ public:
    * The method gives a tool to change all the shift registers pins in one operation instead of pin by pin. The method uses the provided pointer as a data source to overwrite the Main Buffer with the new contents.  
    * 
    * @param newCntntPtr A uint8_t* pointing the memory area containing the new values to be set to the buffer.  
-   * @return Success in overwritting the Buffer.  
+   * @return Success in overwriting the Buffer.  
    * @retval true The Buffer was overwritten and the new contents flushed.  
-   * @retval false The parameter passed was a nullptr/NULL and no overwritting was possible.  
+   * @retval false The parameter passed was a nullptr/NULL and no overwriting was possible.  
    * 
    * @attention If there was an ongoing set of deferred pin modifications through the use of writes to the Auxiliary they will be all lost, as the first data consistency prevention of the method is to discard the Auxiliary.  
    * 
@@ -458,10 +506,9 @@ public:
     * 
     * @warning The method expects newSgmntPtr to point to a valid memory area containing the data to be set in the segment. If the pointer is nullptr/NULL, the method will return false and no operation will be performed.
     * 
-    * @attention Altough the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same lenght as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. 
+    * @attention Although the method, as all similar methods in the class, expects the data pointed by newSgmntPtr to be the same length as the Main Buffer, it will only use the first pinsQty bits of the data pointed by newSgmntPtr, so the data pointed by newSgmntPtr must be at least pinsQty bits long, that means that the data pointed by newSgmntPtr must be at least ceil(pinsQty / 8) bytes long. 
     */
    bool stampSgmntOverMain(uint8_t* newSgmntPtr, const uint8_t &strtPin, const uint8_t &pinsQty);
-
 };
 
 //==========================================================>>
@@ -485,10 +532,10 @@ public:
  */
 class SRGXVPort: public ShiftRegGPIOXpander{
    /*Allows the ShiftRegGPIOXpander class to access the private members of the SRGXVPort
-    class. In this case the ShiftRegGPIOXpander class will be able instantiate SRGXVPort
-     objects, as the SRGXVPort class constructor is protected to avoid direct
-     instantiation by the user. The user should use the ShiftRegGPIOXpander::createSRGXVPort
-     (uint8_t&, uint8_t&) method to create a SRGXVPort object.*/
+   class. In this case the ShiftRegGPIOXpander class will be able instantiate SRGXVPort
+   objects, as the SRGXVPort class constructor is protected to avoid instantiation by 
+   the user but through the use the ShiftRegGPIOXpander::createSRGXVPort 
+   (uint8_t&, uint8_t&) method to create a SRGXVPort object.*/
    friend class ShiftRegGPIOXpander;
    /*_maxPortPinsQty: Maximum number of pins that can be used in a virtual port, the 
    maximum number of pins that can be used in a virtual port is defined as 16, library
@@ -551,8 +598,12 @@ public:
     * 
     * @param srPin Pin number whose state is to be set. The valid range is 0 <= srPin < _pinsQty.
     * @param value The value to set the pin to, either HIGH (0x01/Set) or LOW (0x00/Reset).
+    * 
+    * @return The success of the operation.
+    * @retval true The pin was in the valid range and was set in the Main Buffer, the change was flushed to the GPIO pin.
+    * @retval false The pin was not in the valid range, and no action was taken. 
     */
-   void digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
+   bool digitalWriteSr(const uint8_t &srPin, const uint8_t &value);
    /**
     * @brief Toggles the state of a specific pin in the virtual port.
     * 
@@ -570,6 +621,14 @@ public:
     * @return A ShiftRegGPIOXpander* pointer to the object that provides the resources for the virtual port.
     */
    ShiftRegGPIOXpander* getSRGXPtr();
+   /**
+    * @brief Returns a pointer to the mask built to stamp the virtual port over the Main Buffer of the ShiftRegGPIOXpander object.
+    * 
+    * The mask is compatible with the stampMaskOverMain(uint8_t*, uint8_t*) method, and might be used to modify the Main Buffer of the ShiftRegGPIOXpander object by setting or resetting the pins in the virtual port. 
+    * 
+    * @return uint8_t* 
+    */
+   uint8_t* getStampMask();
    /**
     * @brief Returns the maximum value that can be set in the virtual port.
     * 
