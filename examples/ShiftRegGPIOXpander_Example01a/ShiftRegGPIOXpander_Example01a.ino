@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file	: ShiftRegGPIOXpander_Example01.cpp
+  * @file	: ShiftRegGPIOXpander_Example01a.cpp
   * @brief  : Code example of the use of the ShiftRegGPIOXpander_ESP32 library
   * 
   * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   15/05/2025 14:00 GMT+0200 DST
+  *       Last update:   06/06/2025 11:10 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -99,7 +99,7 @@ void loop() {
       srgx.digitalWriteSr(pinUpdtd, setVal);
       vTaskDelay(1000);
       pinUpdtd++;
-      if(pinUpdtd > srgx.getMaxPin()){
+      if(pinUpdtd > srgx.getMaxSRGXPin()){
          pinUpdtd = 0;
          if(setVal == HIGH)
             setVal = LOW;

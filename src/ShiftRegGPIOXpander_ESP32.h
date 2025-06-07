@@ -17,7 +17,7 @@
  * @version 3.0.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   03/06/2025 18:50 (GMT+0200) DST  
+ *       Last update:   07/06/2025 10:40 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -44,9 +44,6 @@
 
 #include <Arduino.h>
 #include <stdint.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/semphr.h>
 
 class SRGXVPort;
 
@@ -114,8 +111,8 @@ private:
    bool _sendSnglSRCntnt(const uint8_t &data); 
 
 protected:
-   SemaphoreHandle_t _SRGXAuxBffrMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
-   SemaphoreHandle_t _SRGXMnBffrMutex; // Mutex to protect the Main Buffer from concurrent access
+   SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
+   SemaphoreHandle_t _SRGXMnBffrMtx; // Mutex to protect the Main Buffer from concurrent access
 
    uint8_t* _mainBuffrArryPtr{};
    uint8_t* _auxBuffrArryPtr{nullptr};
@@ -557,6 +554,8 @@ private:
    bool _buildSRGXVPortMsk(uint8_t* &maskPtr);
 
 protected:
+   SemaphoreHandle_t _SRGXVPortMskMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
+
    /**
     * @brief Default constructor
     */

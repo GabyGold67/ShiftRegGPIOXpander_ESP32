@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['digital_20outputs_20expander_20library_20shiftreggpioxpander_5fesp32_0',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]]
+  ['are_3a_0',['The main concepts driving this development are:',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/README.md#the-main-concepts-driving-this-development-are',1,'']]]
 ];

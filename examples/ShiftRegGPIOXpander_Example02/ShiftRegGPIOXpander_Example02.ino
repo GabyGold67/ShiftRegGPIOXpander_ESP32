@@ -4,7 +4,7 @@
   * @brief  : Code example of the use of the ShiftRegGPIOXpander_ESP32 library
   * 
   * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
-  * Simulation url: https://wokwi.com/projects/423796255664866305
+  * Simulation url: 
   * 
   * Framework: Arduino
   * Platform: ESP32
@@ -14,7 +14,7 @@
   * Github <https://github.com/GabyGold67>
   *
   * @date First release: 16/02/2025 
-  *       Last update:   15/05/2025 14:20 GMT+0200 DST
+  *       Last update:   06/06/2025 11:20 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -78,14 +78,14 @@ void loop() {
 
    Serial.println("digitalWriteSr() method writing HIGH pin by pin");
    setVal = HIGH;
-   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxPin(); pinNum++){
+   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxSRGXPin(); pinNum++){
       srgx.digitalWriteSr(pinNum, setVal);
       vTaskDelay(200);
    }
 
    Serial.println("digitalWriteSr() method writing LOW pin by pin");
    setVal = LOW;
-   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxPin(); pinNum++){
+   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxSRGXPin(); pinNum++){
       srgx.digitalWriteSr(pinNum, setVal);
       vTaskDelay(200);
    }
@@ -93,7 +93,7 @@ void loop() {
 
    Serial.println("digitalWriteSrToAux() method writing TO THE BUFFER HIGH pin by pin and 'move & flush automatic' every 3rd pin ");
    setVal = HIGH;
-   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxPin(); pinNum++){
+   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxSRGXPin(); pinNum++){
       if((pinNum+1) % 3 != 0)
          srgx.digitalWriteSrToAux(pinNum, setVal);
       else
@@ -105,7 +105,7 @@ void loop() {
 
    Serial.println("digitalWriteSrToAux() method writing TO THE BUFFER LOW pin by pin and 'move & flush automatic' every 4th pin");
    setVal = LOW;
-   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxPin(); pinNum++){
+   for(uint8_t pinNum{0}; pinNum <= srgx.getMaxSRGXPin(); pinNum++){
       if((pinNum+1) % 4 != 0)
          srgx.digitalWriteSrToAux(pinNum, setVal);
       else

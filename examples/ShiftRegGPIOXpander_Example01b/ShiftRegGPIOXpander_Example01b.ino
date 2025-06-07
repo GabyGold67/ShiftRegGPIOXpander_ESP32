@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file	: ShiftRegGPIOXpander_Example05.ino
+  * @file	: ShiftRegGPIOXpander_Example01b.ino
   * @brief  : Code example of the use of the ShiftRegGPIOXpander_ESP32 library
   * 
   * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
-  * Simulation url: 
+  * Simulation url: https://wokwi.com/projects/423845574469125121
   * 
   * Framework: Arduino
   * Platform: ESP32
@@ -13,8 +13,8 @@
   * mail <gdgoldman67@hotmail.com>
   * Github <https://github.com/GabyGold67>
   *
-  * @date First release: 01/06/2025 
-  *       Last update:   06/06/2025 11:58 GMT+0200 DST
+  * @date First release: 16/02/2025 
+  *       Last update:   06/06/2025 11:20 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -42,7 +42,7 @@ BaseType_t ssdExecTskPrrtyCnfg = MainCtrlTskPrrtyLvl;
 //================================================>> General use definitions END
  
 //======================================>> General use function prototypes BEGIN
-void Error_Handler(int8_t errorCode); /*!<Error Handler function prototype, to be implemented by the user*/
+void Error_Handler();
 //========================================>> General use function prototypes END
  
 //====================================>> Task Callback function prototypes BEGIN
@@ -66,7 +66,7 @@ void setup() {
        ssdExecTskCore // Run in the App Core if it's a dual core mcu (ESP-FreeRTOS specific)
     );
     if(xReturned != pdPASS)
-       Error_Handler(0x01);
+       Error_Handler();
 }
 
 void loop() {
@@ -77,72 +77,29 @@ void loop() {
  void mainCtrlTsk(void *pvParameters){
    delay(10);  //FTPO Part of the WOKWI simulator additions, for simulation startup needs
 
+   TickType_t loopTmrStrtTm{0};
+   TickType_t* loopTmrStrtTmPtr{&loopTmrStrtTm};
+   TickType_t totalDelay {LoopDlyTtlTm};
+
    uint8_t ds{33};
    uint8_t sh_cp{26};
    uint8_t st_cp{25};
    uint8_t srQty{1};
-
-   /*Constants for pin based methods*/
-   const uint16_t redPin{0x00}; // Red light pin
-   const uint16_t yellowPin{0x01}; // Yellow light pin
-   const uint16_t greenPin{0x02}; // Green light pin
-
-   /*Constants for mask based methods*/
-   const uint16_t redMsk{0x01 << redPin}; // Red light
-   const uint16_t yellowMsk{0x01 << yellowPin}; // Yellow light
-   const uint16_t greenMsk{0x01 << greenPin}; // Green light
    
-   uint8_t SRGXstrtngVal [1] {0x00};
-   uint16_t portStrtngVal{0x0000}; 
-
-   Serial.begin(9600);  //FTPO
+   uint8_t strtngVals [1] {0x00};
+   uint8_t* stVlsPtr = strtngVals;
 
    ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty);
-   srgx.begin(SRGXstrtngVal); 
+   srgx.begin(stVlsPtr);
 
-   Serial.println("Instantiating myVPortNS while _maxSRGXPin value: " + String(srgx.getMaxSRGXPin()));
-   Serial.println("====================================");
-   
-   SRGXVPort myVPortNS = srgx.createSRGXVPort(0, 3);
-   if(!(srgx.isValid(myVPortNS)))
-      Error_Handler(0x02); // Error creating the virtual port, exit the task
-   myVPortNS.begin(0x00);
-
-   SRGXVPort myVPortEW = srgx.createSRGXVPort(4, 3);
-   if(!(srgx.isValid(myVPortEW)))
-      Error_Handler(0x03); // Error creating the virtual port, exit the task
-   myVPortEW.begin(0x00);
+   uint8_t pinUpdtd{0};
 
    for(;;){
-
-      {
-         Serial.println("Set the ports pins to the first traffic lights state");
-         myVPortNS.writePort(redMsk); 
-         myVPortEW.writePort(greenMsk);
-         vTaskDelay(3000);
-      }
-
-      {
-         Serial.println("Set the ports pins to the second traffic lights state");
-         // myVPortNS.writePort(redMsk); 
-         myVPortEW.writePort(yellowMsk);
-         vTaskDelay(1000);
-      }
-
-      {
-         Serial.println("Set the ports pins to the third traffic lights state");
-         myVPortNS.writePort(greenMsk); 
-         myVPortEW.writePort(redMsk);
-         vTaskDelay(3000);
-      }
-
-      {
-         Serial.println("Set the ports pins to the fourth traffic lights state");
-         myVPortNS.writePort(yellowMsk); 
-         // myVPortEW.writePort(redMsk);
-         vTaskDelay(1000);
-      }
-
+      srgx.flipBit(pinUpdtd);
+      vTaskDelay(1000);
+      pinUpdtd++;
+      if(pinUpdtd > srgx.getMaxSRGXPin())
+         pinUpdtd = 0;
    }
 }
 
@@ -156,8 +113,7 @@ void loop() {
   * Placeholder for a Error Handling function, in case of an error the execution
   * will be trapped in this endless loop
   */
- void Error_Handler(int8_t errorCode){
-   Serial.println("Error Handler called with error code: " + String(errorCode));
+ void Error_Handler(){
    for(;;)
    {    
    }
