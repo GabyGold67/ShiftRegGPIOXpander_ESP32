@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7eshiftreggpioxpander_0',['~ShiftRegGPIOXpander',['../class_shift_reg_g_p_i_o_xpander.html#a68fe6cf0609e80ec31a622b8e1265a20',1,'ShiftRegGPIOXpander']]]
+  ['here_0',['&lt;a href=&quot;https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/&quot;&gt;Complete library documentation HERE!&lt;/a&gt;',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/README.md#complete-library-documentation-herehttpsgabygold67githubioshiftreggpioxpander_esp32',1,'']]]
 ];

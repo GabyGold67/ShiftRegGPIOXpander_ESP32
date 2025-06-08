@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::digitalToggleSr" name="ShiftRegGPIOXpander::digitalToggleSr">
+<area shape="rect" id="Node000001" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
+</map>

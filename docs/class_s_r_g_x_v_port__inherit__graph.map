@@ -1,0 +1,5 @@
+<map id="SRGXVPort" name="SRGXVPort">
+<area shape="rect" id="Node000001" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object." alt="" coords="36,80,128,107"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8&#45;bits Serial In Paralell Out (SI..." alt="" coords="5,5,159,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,48,85,80,79,80,79,48"/>
+</map>

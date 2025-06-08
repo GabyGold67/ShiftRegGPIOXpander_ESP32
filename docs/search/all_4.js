@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['getmainbuffptr_0',['getMainBuffPtr',['../class_shift_reg_g_p_i_o_xpander.html#a7ca688abf5eab3f4984320b90956e1f2',1,'ShiftRegGPIOXpander']]],
-  ['getmaxpin_1',['getMaxPin',['../class_shift_reg_g_p_i_o_xpander.html#a5d26546d401570b73507325f2ffb9add',1,'ShiftRegGPIOXpander']]],
-  ['getsrqty_2',['getSrQty',['../class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152',1,'ShiftRegGPIOXpander']]]
+  ['end_0',['end',['../class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049',1,'ShiftRegGPIOXpander']]],
+  ['expander_20library_20shiftreggpioxpander_5fesp32_1',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/README.md#gpio-digital-outputs-expander-library-shiftreggpioxpander_esp32',1,'']]]
 ];

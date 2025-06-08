@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['sendallsrcntnt_0',['sendAllSRCntnt',['../class_shift_reg_g_p_i_o_xpander.html#aa5de617c5611ad017e94a858bd5fa9c5',1,'ShiftRegGPIOXpander']]],
-  ['shiftreggpioxpander_1',['ShiftRegGPIOXpander',['../class_shift_reg_g_p_i_o_xpander.html',1,'ShiftRegGPIOXpander'],['../class_shift_reg_g_p_i_o_xpander.html#a633eb548723eeebf75d524b1c3e5b0f1',1,'ShiftRegGPIOXpander::ShiftRegGPIOXpander()'],['../class_shift_reg_g_p_i_o_xpander.html#a5bec8b90536ec0a1a1d1766fc68c7ce1',1,'ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty=1)']]],
-  ['shiftreggpioxpander_5fesp32_2ecpp_2',['ShiftRegGPIOXpander_ESP32.cpp',['../_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html',1,'']]],
-  ['shiftreggpioxpander_5fesp32_2eh_3',['ShiftRegGPIOXpander_ESP32.h',['../_shift_reg_g_p_i_o_xpander___e_s_p32_8h.html',1,'']]],
-  ['stampovermain_4',['stampOverMain',['../class_shift_reg_g_p_i_o_xpander.html#a07e5c7279e11044eec16e9d9020a77cf',1,'ShiftRegGPIOXpander']]]
+  ['getmainbuffptr_0',['getMainBuffPtr',['../class_shift_reg_g_p_i_o_xpander.html#a7ca688abf5eab3f4984320b90956e1f2',1,'ShiftRegGPIOXpander']]],
+  ['getmaxsrgxpin_1',['getMaxSRGXPin',['../class_shift_reg_g_p_i_o_xpander.html#a54a0ba6144b5760e7d6ddc0051226b4f',1,'ShiftRegGPIOXpander']]],
+  ['getsrgxptr_2',['getSRGXPtr',['../class_s_r_g_x_v_port.html#ae88950db6634ee05060a0d080d739d11',1,'SRGXVPort']]],
+  ['getsrqty_3',['getSrQty',['../class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152',1,'ShiftRegGPIOXpander']]],
+  ['getstampmask_4',['getStampMask',['../class_s_r_g_x_v_port.html#a3eb859560bca35facffa96fa69fbfdef',1,'SRGXVPort']]],
+  ['getvportmaxval_5',['getVPortMaxVal',['../class_s_r_g_x_v_port.html#a23b5759e872a78b7526914a0c0c89c13',1,'SRGXVPort']]],
+  ['gpio_20digital_20outputs_20expander_20library_20shiftreggpioxpander_5fesp32_6',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/ShiftRegGPIOXpander_ESP32/README.md#gpio-digital-outputs-expander-library-shiftreggpioxpander_esp32',1,'']]]
 ];

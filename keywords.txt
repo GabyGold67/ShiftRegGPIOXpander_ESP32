@@ -6,13 +6,20 @@
 # Datatypes (KEYWORD1)
 ###############################################
 ShiftRegGPIOXpander	KEYWORD1
+SRGXVPort  KEYWORD1
 
 ###############################################
 # Methods and Functions (KEYWORD2)
 ###############################################
 begin KEYWORD2
 copyMainToAux	KEYWORD2
+createSRGXVPort  KEYWORD2
+digitalReadSgmntSr KEYWORD2
 digitalReadSr	KEYWORD2
+digitalToggleSr   KEYWORD2
+digitalToggleSrAll   KEYWORD2
+digitalToggleSrMask  KEYWORD2
+digitalToggleSrToAux KEYWORD2
 digitalWriteSr	KEYWORD2
 digitalWriteSrAllReset	KEYWORD2
 digitalWriteSrAllSet	KEYWORD2
@@ -21,9 +28,23 @@ digitalWriteSrMaskSet   KEYWORD2
 digitalWriteSrToAux	KEYWORD2
 discardAux	KEYWORD2
 end   KEYWORD2
+flipBit  KEYWORD2
 getMainBuffPtr	KEYWORD2
-getMaxPin	KEYWORD2
+getMaxSRGXPin	KEYWORD2
 getSrQty	KEYWORD2
+isValid  KEYWORD2
 moveAuxToMain	KEYWORD2
-sendAllSRCntnt	KEYWORD2
+resetBit KEYWORD2
+setBit   KEYWORD2
+stampMaskOverMain KEYWORD2
 stampOverMain	KEYWORD2
+stampSgmntOverMain   KEYWORD2
+
+###########################
+# Added by SRGVXVPort Class
+###########################
+getSRGXPtr  KEYWORD2
+getStampMask   KEYWORD2
+getVPortMaxVal KEYWORD2
+readPort KEYWORD2
+writePort   KEYWORD2

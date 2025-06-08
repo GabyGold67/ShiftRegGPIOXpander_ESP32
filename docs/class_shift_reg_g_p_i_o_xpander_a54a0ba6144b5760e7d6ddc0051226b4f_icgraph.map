@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::getMaxSRGXPin" name="ShiftRegGPIOXpander::getMaxSRGXPin">
+<area shape="rect" id="Node000001" title="Return the greatest valid pin number." alt="" coords="225,5,378,48"/>
+<area shape="rect" id="Node000002" href="$class_s_r_g_x_v_port.html#a0419134f57ef63fe35c3c530b7852bb4" title="Class constructor." alt="" coords="5,13,177,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,29,177,29,177,24,209,24"/>
+</map>

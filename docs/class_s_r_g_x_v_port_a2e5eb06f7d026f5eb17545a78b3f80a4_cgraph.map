@@ -1,0 +1,5 @@
+<map id="SRGXVPort::begin" name="SRGXVPort::begin">
+<area shape="rect" id="Node000001" title="Begins the virtual port, setting the initial state of the VPort pins." alt="" coords="5,13,137,40"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a6c1c01fb3d0195358ca0c9868f9ac122" title="Sets the value of a set of consecutive pins (the segment) in the Main Buffer." alt="" coords="185,5,344,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,24,169,24,169,29,137,29"/>
+</map>

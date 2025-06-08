@@ -1,0 +1,5 @@
+<map id="SRGXVPort::getSRGXPtr" name="SRGXVPort::getSRGXPtr">
+<area shape="rect" id="Node000001" title="Returns a pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port." alt="" coords="207,13,380,40"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a10566c68d46c779eb54e407a39893cef" title="Checks if the provided SRGXVPort object is valid." alt="" coords="5,5,159,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
+</map>

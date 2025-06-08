@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file	: ShiftRegGPIOXpander_Example01.cpp
+  * @file	: ShiftRegGPIOXpander_Example03.cpp
   * @brief  : Code example of the use of the ShiftRegGPIOXpander_ESP32 library
   * 
   * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32
-  * Simulation url: https://wokwi.com/projects/423845574469125121
+  * Simulation url: 
   * 
   * Framework: Arduino
   * Platform: ESP32
@@ -13,8 +13,8 @@
   * mail <gdgoldman67@hotmail.com>
   * Github <https://github.com/GabyGold67>
   *
-  * @date First release: 16/02/2025 
-  *       Last update:   15/05/2025 14:00 GMT+0200 DST
+  * @date First release: 24/05/2025 
+  *       Last update:   28/05/2025 16:00 GMT+0200 DST
   ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -77,10 +77,6 @@ void loop() {
  void mainCtrlTsk(void *pvParameters){
    delay(10);  //FTPO Part of the WOKWI simulator additions, for simulation startup needs
 
-   TickType_t loopTmrStrtTm{0};
-   TickType_t* loopTmrStrtTmPtr{&loopTmrStrtTm};
-   TickType_t totalDelay {LoopDlyTtlTm};
-
    uint8_t ds{33};
    uint8_t sh_cp{26};
    uint8_t st_cp{25};
@@ -89,23 +85,61 @@ void loop() {
    uint8_t strtngVals [1] {0x00};
    uint8_t* stVlsPtr = strtngVals;
 
+   Serial.begin(9600);  
+
    ShiftRegGPIOXpander srgx(ds, sh_cp, st_cp, srQty);
    srgx.begin(stVlsPtr);
 
-   uint8_t pinUpdtd{0};
-   uint8_t setVal{HIGH};
+   SRGXVPort myVPort = srgx.createSRGXVPort(1, 3);
+
+   uint8_t mask{0b00001111};
+   uint8_t* maskPtr = &mask;
 
    for(;;){
-      srgx.digitalWriteSr(pinUpdtd, setVal);
+      Serial.println("Flip bits one by one using the digitalToggleSr() method");
+      for(int pinUpdtd{0}; pinUpdtd < 16; pinUpdtd++){
+         srgx.digitalToggleSr(pinUpdtd % 8);
+         vTaskDelay(1000);
+      }      
+      vTaskDelay(2000);
+
+      Serial.println("Flip the rightmost 4 bits using the digitalToggleSrMask() method with mask 0b00001111");
+      srgx.digitalToggleSrMask(maskPtr);
+      vTaskDelay(4000);
+
+      Serial.println("Flip bits using the digitalToggleSrMask() method with mask 0b01010101");
+      mask = 0b01010101;
+      srgx.digitalToggleSrMask(maskPtr);
+      vTaskDelay(4000);
+
+      Serial.println("Flip the rightmost 4 bits using the digitalToggleSrMask() method with mask 0b00001111");
+      mask = 0b00001111;
+      srgx.digitalToggleSrMask(maskPtr);
+      vTaskDelay(4000);
+
+      Serial.println("Flip all the bits using the digitalToggleSrAll() method");
+      srgx.digitalToggleSrAll();
+      vTaskDelay(4000);
+
+      Serial.println("Set all the bits to 0 using the digitalWriteSrAllReset() method");
+      srgx.digitalWriteSrAllReset();
       vTaskDelay(1000);
-      pinUpdtd++;
-      if(pinUpdtd > srgx.getMaxPin()){
-         pinUpdtd = 0;
-         if(setVal == HIGH)
-            setVal = LOW;
-         else
-            setVal = HIGH;
-      }
+
+      Serial.println("Copy the Main Buffer to the Auxiliary Buffer with all it's bits reset using the copyMainToAux() method");
+      srgx.copyMainToAux();
+      Serial.println("Flip the two rightmost and the two leftmost bits using the digitalToggleSrToAux() method");
+      srgx.digitalToggleSrToAux(0);
+      srgx.digitalToggleSrToAux(1);
+      srgx.digitalToggleSrToAux(6);
+      srgx.digitalToggleSrToAux(7);
+      Serial.println("Move the Auxiliary Buffer to the Main Buffer and flush it using the moveAuxToMain() method");
+      srgx.moveAuxToMain();
+      vTaskDelay(4000);
+
+      Serial.println("Clear al bits of the Shift Register GPIO Expander using the digitalWriteSrAllReset() method");
+      srgx.digitalWriteSrAllReset();
+      vTaskDelay(2000);
+
    }
 }
 
