@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ShiftRegGPIOXpander Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">ShiftRegGPIOXpander Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.1.0</span>
    </div>
    <div id="projectbrief">A library that provides an easy mechanism to add GPIO digital output pins by using Shift Registers</div>
   </td>
@@ -125,8 +125,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae058de4139c2756336c0517c4eab36ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="memitem:a2e5eb06f7d026f5eb17545a78b3f80a4" id="r_a2e5eb06f7d026f5eb17545a78b3f80a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e5eb06f7d026f5eb17545a78b3f80a4">begin</a> (uint16_t initCntnt)</td></tr>
 <tr class="memdesc:a2e5eb06f7d026f5eb17545a78b3f80a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the virtual port, setting the initial state of the VPort pins.  <br /></td></tr>
+<tr class="memitem:ad1021d932ce15fc5c07a02c83282d38e" id="r_ad1021d932ce15fc5c07a02c83282d38e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1021d932ce15fc5c07a02c83282d38e">digitalRead</a> (const uint8_t &amp;srPin)</td></tr>
+<tr class="memdesc:ad1021d932ce15fc5c07a02c83282d38e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin of the virtual port (<a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a>).  <br /></td></tr>
 <tr class="memitem:a025a8760411de0966ee40d246bbb164c" id="r_a025a8760411de0966ee40d246bbb164c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a025a8760411de0966ee40d246bbb164c">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a025a8760411de0966ee40d246bbb164c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the state of a specific pin in the virtual port.  <br /></td></tr>
+<tr class="memitem:ad2d8382290927b4f48c47e5056592d12" id="r_ad2d8382290927b4f48c47e5056592d12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2d8382290927b4f48c47e5056592d12">digitalWrite</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
+<tr class="memdesc:ad2d8382290927b4f48c47e5056592d12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
 <tr class="memitem:a9ccf2715e1c2993bf5de9ad906115de0" id="r_a9ccf2715e1c2993bf5de9ad906115de0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ccf2715e1c2993bf5de9ad906115de0">digitalWriteSr</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
 <tr class="memdesc:a9ccf2715e1c2993bf5de9ad906115de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset).  <br /></td></tr>
 <tr class="memitem:a57373de85b3d808601706f111a8df49c" id="r_a57373de85b3d808601706f111a8df49c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57373de85b3d808601706f111a8df49c">flipBit</a> (const uint8_t &amp;srPin)</td></tr>
@@ -161,6 +165,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac36a36a34fbcf6b9761e201599f3bacc inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object.  <br /></td></tr>
 <tr class="memitem:a184e452056ea5b1fb11afacb8acfc23b inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a184e452056ea5b1fb11afacb8acfc23b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a184e452056ea5b1fb11afacb8acfc23b">digitalReadSgmntSr</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
 <tr class="memdesc:a184e452056ea5b1fb11afacb8acfc23b inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
+<tr class="memitem:a81ac29c6ff0866d2d4b4b4830fbd0cf3 inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a81ac29c6ff0866d2d4b4b4830fbd0cf3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a81ac29c6ff0866d2d4b4b4830fbd0cf3">digitalRead</a> (const uint8_t &amp;srPin)</td></tr>
+<tr class="memdesc:a81ac29c6ff0866d2d4b4b4830fbd0cf3 inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a>.  <br /></td></tr>
 <tr class="memitem:ad0a3e91286d39a4c9622b1382febf4cb inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_ad0a3e91286d39a4c9622b1382febf4cb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:ad0a3e91286d39a4c9622b1382febf4cb inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin.  <br /></td></tr>
 <tr class="memitem:a4a517bdf7225c90b2cb03ee8411d89d4 inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a4a517bdf7225c90b2cb03ee8411d89d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a4a517bdf7225c90b2cb03ee8411d89d4">digitalToggleSr</a> (const uint8_t &amp;srPin)</td></tr>
@@ -171,6 +177,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8fa463061fbfe427c32989d1de5f223e inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of the pins in the Main Buffer according to the provided mask.  <br /></td></tr>
 <tr class="memitem:ac146784b47a23b82c7b883a18c7d7d17 inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_ac146784b47a23b82c7b883a18c7d7d17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#ac146784b47a23b82c7b883a18c7d7d17">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:ac146784b47a23b82c7b883a18c7d7d17 inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin in the Auxiliary Buffer.  <br /></td></tr>
+<tr class="memitem:a109f90a7a8e05093e3911d5402dfdabe inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a109f90a7a8e05093e3911d5402dfdabe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a109f90a7a8e05093e3911d5402dfdabe">digitalWrite</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
+<tr class="memdesc:a109f90a7a8e05093e3911d5402dfdabe inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
 <tr class="memitem:a650d0f6589b37aefb2f7fb009619da2f inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a650d0f6589b37aefb2f7fb009619da2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f">digitalWriteSr</a> (const uint8_t &amp;srPin, const uint8_t &amp;value)</td></tr>
 <tr class="memdesc:a650d0f6589b37aefb2f7fb009619da2f inherit pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00).  <br /></td></tr>
 <tr class="memitem:aa62e8f2011a07ecddd83d5f72df4c291 inherit pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_aa62e8f2011a07ecddd83d5f72df4c291"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#aa62e8f2011a07ecddd83d5f72df4c291">digitalWriteSrAllReset</a> ()</td></tr>
@@ -321,6 +329,51 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ad1021d932ce15fc5c07a02c83282d38e" name="ad1021d932ce15fc5c07a02c83282d38e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1021d932ce15fc5c07a02c83282d38e">&#9670;&#160;</a></span>digitalRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SRGXVPort::digitalRead </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the state of the requested pin of the virtual port (<a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a>). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">srPin</td><td>Pin whose current value is required.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset) </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>The pin state was LOW </td></tr>
+    <tr><td class="paramname">0x01</td><td>The pin state was HIGH </td></tr>
+    <tr><td class="paramname">-1</td><td>ERROR, the pin number was beyond implemented number of pins of the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The method's name, <a class="el" href="#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort).">digitalRead()</a>, is identical to the Arduino's <a class="el" href="#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort).">digitalRead()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object instantitated before existing <a class="el" href="#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort).">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph" id="aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph">
+<area shape="rect" title="Returns the state of the requested pin of the virtual port (SRGXVPort)." alt="" coords="5,5,171,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a025a8760411de0966ee40d246bbb164c" title="Reads the state of a specific pin in the virtual port." alt="" coords="219,5,397,32"/>
+<area shape="poly" title=" " alt="" coords="171,16,203,16,203,21,171,21"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a025a8760411de0966ee40d246bbb164c" name="a025a8760411de0966ee40d246bbb164c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a025a8760411de0966ee40d246bbb164c">&#9670;&#160;</a></span>digitalReadSr()</h2>
 
@@ -345,6 +398,59 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset). </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph" id="aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph">
+<area shape="rect" title="Reads the state of a specific pin in the virtual port." alt="" coords="219,5,397,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort)." alt="" coords="5,5,171,32"/>
+<area shape="poly" title=" " alt="" coords="203,21,171,21,171,16,203,16"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad2d8382290927b4f48c47e5056592d12" name="ad2d8382290927b4f48c47e5056592d12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2d8382290927b4f48c47e5056592d12">&#9670;&#160;</a></span>digitalWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SRGXVPort::digitalWrite </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>srPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a specific pin to either HIGH (0x01) or LOW (0x00). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">srPin</td><td>a positive value indicating which pin to set. The valid range is 0 &lt;= srPin &lt; _pinsQty() <br  />
+ </td></tr>
+    <tr><td class="paramname">value</td><td>Value to set the indicated Pin. <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The method's name, <a class="el" href="#ad2d8382290927b4f48c47e5056592d12" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a>, is identical to the Arduino's <a class="el" href="#ad2d8382290927b4f48c47e5056592d12" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object instantitated before existing <a class="el" href="#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort).">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph" id="aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,5,170,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a9ccf2715e1c2993bf5de9ad906115de0" title="Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset)." alt="" coords="218,5,395,32"/>
+<area shape="poly" title=" " alt="" coords="170,16,202,16,202,21,170,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -383,6 +489,16 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph" id="aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph">
+<area shape="rect" title="Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset)." alt="" coords="218,5,395,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#ad2d8382290927b4f48c47e5056592d12" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,5,170,32"/>
+<area shape="poly" title=" " alt="" coords="202,21,170,21,170,16,202,16"/>
+</map>
+</div>
 
 </div>
 </div>

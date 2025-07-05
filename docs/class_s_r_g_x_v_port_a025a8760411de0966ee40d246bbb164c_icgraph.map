@@ -1,0 +1,5 @@
+<map id="SRGXVPort::digitalReadSr" name="SRGXVPort::digitalReadSr">
+<area shape="rect" id="Node000001" title="Reads the state of a specific pin in the virtual port." alt="" coords="219,5,397,32"/>
+<area shape="rect" id="Node000002" href="$class_s_r_g_x_v_port.html#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort)." alt="" coords="5,5,171,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,21,171,21,171,16,203,16"/>
+</map>
