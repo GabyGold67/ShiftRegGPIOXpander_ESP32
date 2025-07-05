@@ -1,0 +1,5 @@
+<map id="SRGXVPort::digitalWriteSr" name="SRGXVPort::digitalWriteSr">
+<area shape="rect" id="Node000001" title="Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset)." alt="" coords="218,5,395,32"/>
+<area shape="rect" id="Node000002" href="$class_s_r_g_x_v_port.html#ad2d8382290927b4f48c47e5056592d12" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,5,170,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,21,170,21,170,16,202,16"/>
+</map>

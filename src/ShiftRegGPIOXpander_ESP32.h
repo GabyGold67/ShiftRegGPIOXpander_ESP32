@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.0
+ * @version 3.1.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   07/06/2025 10:40 (GMT+0200) DST  
+ *       Last update:   05/07/2025 17:30 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -207,6 +207,21 @@ public:
     */
    bool digitalReadSgmntSr(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt);   
    /**
+    * @brief Returns the state of the requested pin of the ShiftRegGPIOXpander.
+    * 
+    * @param srPin Pin whose current value is required.
+    * 
+    * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
+    * @retval 0x00 The pin state was LOW
+    * @retval 0x01 The pin state was HIGH
+    * @retval -1 ERROR, the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
+    * 
+    * @note The method's name, digitalRead(), is identical to the Arduino's digitalRead() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the ShiftRegGPIOXpander object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
+    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
+    * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
+    */
+   int digitalRead(const uint8_t &srPin); 
+   /**
     * @brief Returns the state of the requested pin.
     * 
     * @param srPin Pin whose current value is required.
@@ -278,6 +293,15 @@ public:
     * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken.
     */
    bool digitalToggleSrToAux(const uint8_t &srPin); 
+   /**
+   * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
+   * 
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin <= getMaxSRGXPin()  
+   * @param value Value to set the indicated Pin.  
+   * 
+   * @note The method's name, digitalWrite(), is identical to the Arduino's digitalWrite() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the ShiftRegGPIOXpander object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
+    */
+   void digitalWrite(const uint8_t &srPin, const uint8_t &value);
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -585,6 +609,19 @@ public:
     */
    bool begin(uint16_t initCntnt);
    /**
+    * @brief Returns the state of the requested pin of the virtual port (SRGXVPort).
+    * 
+    * @param srPin Pin whose current value is required.
+    * 
+    * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
+    * @retval 0x00 The pin state was LOW
+    * @retval 0x01 The pin state was HIGH
+    * @retval -1 ERROR, the pin number was beyond implemented number of pins of the SRGXVPort object.
+    * 
+    * @note The method's name, digitalRead(), is identical to the Arduino's digitalRead() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the SRGXVPort object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
+    */
+   int digitalRead(const uint8_t &srPin); 
+   /**
     * @brief Reads the state of a specific pin in the virtual port.  
     * 
     * @param srPin Pin number whose state is to be read. The valid range is 0 <= srPin < _pinsQty.  
@@ -592,6 +629,15 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset).  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);
+   /**
+   * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
+   * 
+   * @param srPin a positive value indicating which pin to set. The valid range is 0 <= srPin < _pinsQty()  
+   * @param value Value to set the indicated Pin.  
+   * 
+   * @note The method's name, digitalWrite(), is identical to the Arduino's digitalWrite() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the SRGXVPort object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
+   */
+   void digitalWrite(const uint8_t &srPin, const uint8_t &value);
    /**
     * @brief Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset).
     * 

@@ -14,12 +14,14 @@ SRGXVPort  KEYWORD1
 begin KEYWORD2
 copyMainToAux	KEYWORD2
 createSRGXVPort  KEYWORD2
+digitalRead KEYWORD2
 digitalReadSgmntSr KEYWORD2
 digitalReadSr	KEYWORD2
 digitalToggleSr   KEYWORD2
 digitalToggleSrAll   KEYWORD2
 digitalToggleSrMask  KEYWORD2
 digitalToggleSrToAux KEYWORD2
+digitalWrite   KEYWORD2
 digitalWriteSr	KEYWORD2
 digitalWriteSrAllReset	KEYWORD2
 digitalWriteSrAllSet	KEYWORD2
