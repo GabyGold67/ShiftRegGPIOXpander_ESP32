@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.0
+ * @version 3.1.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   07/06/2025 10:40 (GMT+0200) DST  
+ *       Last update:   05/07/2025 14:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -206,6 +206,9 @@ public:
     * @attention The method is tightly related to the SRGXVPort class, which uses it to retrieve the segment of the Main Buffer that corresponds to the virtual port being manipulated. The SRGXVPort class will ensure that the parameters provided are valid before calling this method.
     */
    bool digitalReadSgmntSr(const uint8_t &strtPin, const uint8_t &pinsQty, uint16_t &bffrSgmnt);   
+
+   int digitalRead(const uint8_t &srPin); 
+
    /**
     * @brief Returns the state of the requested pin.
     * 
@@ -278,6 +281,9 @@ public:
     * @retval false The operation failed, either because the pin number was beyond the implemented limit or because the mutexes could not be taken.
     */
    bool digitalToggleSrToAux(const uint8_t &srPin); 
+
+   void digitalWrite(const uint8_t &srPin, const uint8_t &value);
+
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00).
    * 
@@ -584,6 +590,9 @@ public:
     * @param initCntnt Initial value to be loaded into the virtual port. 
     */
    bool begin(uint16_t initCntnt);
+
+   int digitalRead(const uint8_t &srPin); 
+
    /**
     * @brief Reads the state of a specific pin in the virtual port.  
     * 
@@ -592,7 +601,10 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset).  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);
-   /**
+  
+   void digitalWrite(const uint8_t &srPin, const uint8_t &value);
+
+ /**
     * @brief Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset).
     * 
     * @param srPin Pin number whose state is to be set. The valid range is 0 <= srPin < _pinsQty.
