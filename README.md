@@ -21,15 +21,15 @@
 
 - Initiate the ShiftRegGPIOXpander object by using the `.begin()` method, as simple as: `mySrgx.begin();`
 
-- Start using the ShiftRegGPIOXpander object as normal MCU pins, setting pins value with the `mySrgx.digitalWriteSr(pinToModify, LOW);` and `mySrgx.digitalWriteSr(pinToModify, HIGH);`.
+- Start using the ShiftRegGPIOXpander object as normal MCU pins, setting pins value with the `mySrgx.digitalWrite(pinToModify, LOW);` and `mySrgx.digitalWrite(pinToModify, HIGH);`.
 
-- The current pin setting might be checked by using `mySrgx.digitalReadSr(pinToRead);`, but remember: all the ShiftRegGPIOXpander pins are set to **Outputs**.
+- The current pin setting might be checked by using `mySrgx.digitalRead(pinToRead);`, but remember: all the ShiftRegGPIOXpander pins are set to **Outputs**.
 
 In short:
 ```
 ShiftRegGPIOXpander mySrgx(ds, sh_cp, st_cp, srQty);
 mySrgx.begin();
-mySrgx.digitalWriteSr(pinToModify, HIGH);
+mySrgx.digitalWrite(pinToModify, HIGH);
 ```
 You then have a plethora of methods to use for managing the **ShiftRegGPIOXpander** pins.
 
