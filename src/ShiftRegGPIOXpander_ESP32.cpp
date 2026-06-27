@@ -234,10 +234,10 @@ bool ShiftRegGPIOXpander::digitalToggleSrMask(uint8_t *toggleMask){
    bool result{false};
 
    if(toggleMask != nullptr){
-      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid toggleMask being modified while the copy operation is being performed
+      portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid toggleMask being modified while the copy operation is being performed
       uint8_t* localToggleMask = new uint8_t[_srQty];
       memcpy(localToggleMask, toggleMask, _srQty);
-      taskEXIT_CRITICAL(&mux);   // Exit critical section
+      portEXIT_CRITICAL(&mux);   // Exit critical section
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
@@ -346,10 +346,10 @@ bool ShiftRegGPIOXpander::digitalWriteSrMaskReset(uint8_t* resetMask){
    bool result{false};
 
    if(resetMask != nullptr){
-      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid resetMask being modified while the operation is being performed
+      portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid resetMask being modified while the operation is being performed
       uint8_t* localResetMask = new uint8_t[_srQty];
       memcpy(localResetMask, resetMask, _srQty);
-      taskEXIT_CRITICAL(&mux);   // Exit critical section
+      portEXIT_CRITICAL(&mux);   // Exit critical section
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
@@ -374,10 +374,10 @@ bool ShiftRegGPIOXpander::digitalWriteSrMaskSet(uint8_t* setMask){
    bool result{false};
 
    if(setMask != nullptr){
-      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid resetMask being modified while the operation is being performed
+      portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching, to avoid resetMask being modified while the operation is being performed
       uint8_t* localSetMask = new uint8_t[_srQty];
       memcpy(localSetMask, setMask, _srQty);
-      taskEXIT_CRITICAL(&mux);   // Exit critical section
+      portEXIT_CRITICAL(&mux);   // Exit critical section
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
@@ -484,10 +484,10 @@ bool ShiftRegGPIOXpander::_moveAuxToMain(){
    bool result {false};
 
    if(_auxBuffrArryPtr != nullptr){
-      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
+      portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
       memcpy( _mainBuffrArryPtr, _auxBuffrArryPtr, _srQty);
       _discardAux();
-      taskEXIT_CRITICAL(&mux);   // Exit critical section
+      portEXIT_CRITICAL(&mux);   // Exit critical section
       _sendAllSRCntnt();
       result = true;}
 
@@ -574,12 +574,12 @@ bool ShiftRegGPIOXpander::stampMaskOverMain(uint8_t* maskPtr, uint8_t* valsPtr){
    bool result{false};  
 
    if((maskPtr != nullptr) && (valsPtr != nullptr)){
-      taskENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
+      portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
       uint8_t* localMaskPtr = new uint8_t[_srQty];
       memcpy(localMaskPtr, maskPtr, _srQty);
       uint8_t* localValsPtr = new uint8_t[_srQty];
       memcpy(localValsPtr, valsPtr, _srQty);
-      taskEXIT_CRITICAL(&mux);   // Exit critical section
+      portEXIT_CRITICAL(&mux);   // Exit critical section
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
@@ -609,10 +609,10 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
    bool result {false};
 
    if ((newCntntPtr != nullptr) && (newCntntPtr != NULL)){
-      taskENTER_CRITICAL(&mux);
+      portENTER_CRITICAL(&mux);
       uint8_t* localNewCntntPtr = new uint8_t[_srQty];
       memcpy(localNewCntntPtr, newCntntPtr, _srQty);
-      taskEXIT_CRITICAL(&mux);
+      portEXIT_CRITICAL(&mux);
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){            
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
