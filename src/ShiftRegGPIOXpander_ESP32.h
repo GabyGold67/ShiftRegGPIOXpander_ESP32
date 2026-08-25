@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0
+ * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   05/07/2025 17:30 (GMT+0200) DST  
+ *       Last update:   24/08/2026 18:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -108,7 +108,16 @@ private:
     * 
     * @return true Allways true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
     */
-   bool _sendSnglSRCntnt(const uint8_t &data); 
+   bool _sendSnglSRCntnt(const uint8_t &data);
+
+   //TODO: Code following method
+   bool _shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   //TODO: Code following method
+   bool _shiftGenRight(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   //TODO: Code following method
+   bool _shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   //TODO: Code following method
+   bool _shiftGenRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
@@ -485,6 +494,34 @@ public:
     * @note setBit(n) is a synonym for digitalWriteSr(n, HIGH), and is provided for shortening and using more meaningful name in the code.
     */
    bool setBit(const uint8_t &srPin);
+
+   //TODO: Code following method
+   bool shiftStdLeft(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftStdRight(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftRttLeft(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftRttRight(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftArthmLeft(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftArthmRight(const uint8_t &qty);
+
+   //TODO: Code following method
+   bool shiftStdLeftToAux(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftStdRightToAux(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftRttLeftToAux(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftRttRightToAux(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftArthmLeftToAux(const uint8_t &qty);
+   //TODO: Code following method
+   bool shiftArthmRightToAux(const uint8_t &qty);
+
+
    /**
     * @brief Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.
     * 

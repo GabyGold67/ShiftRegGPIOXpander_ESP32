@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0
+ * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   05/07/2025 17:30 (GMT+0200) DST  
+ *       Last update:   24/08/2026 18:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -556,6 +556,16 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
    }
 
    return result;
+}
+
+bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal)
+{
+   return false;
+}
+
+bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal)
+{
+   return false;
 }
 
 bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
