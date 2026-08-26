@@ -560,7 +560,39 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
 
 bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal)
 {
-   return false;
+   bool result{false};
+   bool carryPrv{false};
+   bool carryNxt{false};
+   bool carryCrrnt{false};
+   
+   
+   // - Check for qty to be greater than zero
+   //    - if qty == 0 no action required
+   // - Check for qty to be greater than "pin qty"
+   //    - If greater fill the corresponding bytes with fillVal
+   
+   if(qty > 0){
+      if(qty > _maxSRGXPin + 1){
+         for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+            *(_mainBuffrArryPtr + ptrInc) = fillVal;
+         result = true;
+      }
+      else{
+         for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+            carryPrv = false;
+            for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
+               carryCrrnt = (*(_mainBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
+               *(_mainBuffrArryPtr + ptrInc) <<= qty; // Shift the current byte to the left by qty bits
+               if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
+                  *(_mainBuffrArryPtr + ptrInc) |= (0x01 << (qty - 1));
+               carryPrv = carryCrrnt; // Update the carry for the next byte
+            }
+            result = true;
+         }
+      }
+   }
+
+   return result;
 }
 
 bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal)
