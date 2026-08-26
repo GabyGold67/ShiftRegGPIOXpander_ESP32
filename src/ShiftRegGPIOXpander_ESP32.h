@@ -111,13 +111,13 @@ private:
    bool _sendSnglSRCntnt(const uint8_t &data);
 
    //TODO: Code following method
-   bool _shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   void _shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
    //TODO: Code following method
-   bool _shiftGenRight(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   void _shiftGenRight(const uint8_t &qty, const uint8_t &fillVal = 0x00);
    //TODO: Code following method
-   bool _shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   void _shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
    //TODO: Code following method
-   bool _shiftGenRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   void _shiftGenRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access

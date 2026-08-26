@@ -558,46 +558,52 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal)
-{
-   bool result{false};
+void ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal){
    bool carryPrv{false};
    bool carryNxt{false};
    bool carryCrrnt{false};
    
-   
-   // - Check for qty to be greater than zero
-   //    - if qty == 0 no action required
-   // - Check for qty to be greater than "pin qty"
-   //    - If greater fill the corresponding bytes with fillVal
-   
    if(qty > 0){
-      if(qty > _maxSRGXPin + 1){
-         for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-            *(_mainBuffrArryPtr + ptrInc) = fillVal;
-         result = true;
-      }
-      else{
-         for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-            carryPrv = false;
-            for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
-               carryCrrnt = (*(_mainBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
-               *(_mainBuffrArryPtr + ptrInc) <<= qty; // Shift the current byte to the left by qty bits
-               if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
-                  *(_mainBuffrArryPtr + ptrInc) |= (0x01 << (qty - 1));
-               carryPrv = carryCrrnt; // Update the carry for the next byte
-            }
-            result = true;
+      if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
+            if(_auxBuffrArryPtr != nullptr)
+               _moveAuxToMain();
+            xSemaphoreGive(_SRGXAuxBffrMtx);
          }
+         if(qty > _maxSRGXPin){
+            if(fillVal)
+               digitalWriteSrAllSet(); 
+            else
+               digitalWriteSrAllReset();
+         }
+
+         //TODO: Optimize the following code to avoid unnecessary shifts when qty is greater than 8 and less than _maxSRGXPin
+         else{
+            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+               carryPrv = false;
+               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
+                  carryCrrnt = (*(_mainBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
+                  *(_mainBuffrArryPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
+                  if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
+                     *(_mainBuffrArryPtr + ptrInc) |= 0x01; // Set the LSB of the current byte if there was a carry from the previous byte
+                  if(ptrInc == (_srQty - 1)) // If this is the last byte
+                     *(_mainBuffrArryPtr + ptrInc) |= (fillVal?0x01:0x00); // Set the LSB of the last byte to fillVal if there was a carry from the previous byte
+                  carryPrv = carryCrrnt; // Update the carry for the next byte
+               }
+            }
+         }
+         _sendAllSRCntnt();
+         xSemaphoreGive(_SRGXMnBffrMtx);
+
       }
    }
 
-   return result;
+   return;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal)
+void ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal)
 {
-   return false;
+   return;
 }
 
 bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
