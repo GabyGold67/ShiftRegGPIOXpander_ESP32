@@ -38,6 +38,12 @@ isValid  KEYWORD2
 moveAuxToMain	KEYWORD2
 resetBit KEYWORD2
 setBit   KEYWORD2
+shiftStdLeft KEYWORD2
+shiftStdRight KEYWORD2
+shiftRttLeft KEYWORD2
+shiftRttRight KEYWORD2
+shiftArthmLeft KEYWORD2
+shiftArthmRight KEYWORD2
 stampMaskOverMain KEYWORD2
 stampOverMain	KEYWORD2
 stampSgmntOverMain   KEYWORD2

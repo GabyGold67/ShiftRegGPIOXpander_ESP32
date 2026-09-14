@@ -615,6 +615,46 @@ bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillV
    return result;
 }
 
+bool ShiftRegGPIOXpander::_shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal){
+   bool carryPrv{false};
+   bool carryCrrnt{false};
+   bool result{false};
+   
+   if(qty > 0){
+      if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
+            if(_auxBuffrArryPtr == nullptr)
+               _copyMainToAux();
+            xSemaphoreGive(_SRGXAuxBffrMtx);
+         }
+
+         if(qty > _maxSRGXPin){
+            for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+               *(_auxBuffrArryPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the auxiliary buffer to fillVal
+         }         
+         else{
+            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+               carryPrv = false;
+               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
+                  carryCrrnt = (*(_auxBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
+                  *(_auxBuffrArryPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
+                  if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
+                     *(_auxBuffrArryPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
+                  carryPrv = carryCrrnt; // Update the carry for the next byte
+
+               }
+               *(_auxBuffrArryPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
+            }
+
+            result = true;
+         }
+
+         xSemaphoreGive(_SRGXMnBffrMtx);
+      }
+   }
+
+   return result;
+}
 bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal){
    bool carryPrv{false};
    bool carryCrrnt{false};
@@ -661,6 +701,7 @@ bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fill
    return result;
 }
 
+
 bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
    bool result{false};
 
@@ -700,7 +741,7 @@ bool ShiftRegGPIOXpander::shiftRttRight(const uint8_t &qty){
 }
 
 bool ShiftRegGPIOXpander::shiftArthmLeft(const uint8_t &qty){
-   
+
    return shiftStdLeft(qty);
 }
 
