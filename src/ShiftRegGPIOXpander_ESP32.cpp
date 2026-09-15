@@ -569,7 +569,8 @@ bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal){
+/*
+bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
@@ -614,27 +615,45 @@ bool ShiftRegGPIOXpander::_shiftGenLeft(const uint8_t &qty, const uint8_t &fillV
 
    return result;
 }
+*/
 
-bool ShiftRegGPIOXpander::_shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal){
+bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
+   uint8_t* targetBufferPtr = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
    
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr == nullptr)
-               _copyMainToAux();
+            if(toMainBuffr){
+               if(_auxBuffrArryPtr != nullptr)
+                  _moveAuxToMain();
+            }
+            else{
+               if(_auxBuffrArryPtr == nullptr)
+                  _copyMainToAux();
+            }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
 
          if(qty > _maxSRGXPin){
-            for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-               *(_auxBuffrArryPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the auxiliary buffer to fillVal
-         }         
+            if(toMainBuffr){
+               if(fillVal)
+                  digitalWriteSrAllSet(); 
+               else
+                  digitalWriteSrAllReset();
+            }
+            else{
+               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+                  *(targetBufferPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the target buffer to fillVal
+            }
+         }
          else{
+
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
                carryPrv = false;
+
                for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
                   carryCrrnt = (*(_auxBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
                   *(_auxBuffrArryPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
@@ -651,11 +670,14 @@ bool ShiftRegGPIOXpander::_shiftGenLeftToAux(const uint8_t &qty, const uint8_t &
 
          xSemaphoreGive(_SRGXMnBffrMtx);
       }
+
    }
 
    return result;
 }
-bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fillVal){
+
+//TODO: Add a parameter to specify whether to shift the main buffer or the auxiliary buffer, similar to _shiftGenFullLeft.
+bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
@@ -705,7 +727,7 @@ bool ShiftRegGPIOXpander::_shiftGenRight(const uint8_t &qty, const uint8_t &fill
 bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenLeft(qty, 0x00); // Shift left and fill with 0s
+   result = _shiftGenFullLeft(qty, 0x00, true); // Shift left and fill with 0s
 
    return result;
 }
@@ -713,7 +735,7 @@ bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftStdRight(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenRight(qty, 0x00); // Shift right and fill with 0s
+   result = _shiftGenFullRight(qty, 0x00); // Shift right and fill with 0s
 
    return result;
 }
@@ -723,7 +745,7 @@ bool ShiftRegGPIOXpander::shiftRttLeft(const uint8_t &qty){
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
       fillVal = (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
-      _shiftGenLeft(1, fillVal); // Shift left and fill with the MSb of the last byte
+      _shiftGenFullLeft(1, fillVal, true); // Shift left and fill with the MSb of the last byte
    }
 
    return true;
@@ -734,7 +756,7 @@ bool ShiftRegGPIOXpander::shiftRttRight(const uint8_t &qty){
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
       fillVal = (*(_mainBuffrArryPtr) & 0x01)?0x01:0x00;
-      _shiftGenRight(1, fillVal); // Shift right and fill with the LSb of the first byte
+      _shiftGenFullRight(1, fillVal); // Shift right and fill with the LSb of the first byte
    }
 
    return true;
@@ -748,7 +770,7 @@ bool ShiftRegGPIOXpander::shiftArthmLeft(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftArthmRight(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00); // Shift right and fill with the MSb of the last byte
+   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00); // Shift right and fill with the MSb of the last byte
 
    return result;
 }

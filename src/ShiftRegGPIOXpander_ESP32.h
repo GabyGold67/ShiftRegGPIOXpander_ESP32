@@ -109,12 +109,15 @@ private:
     * @return true Allways true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
     */
    bool _sendSnglSRCntnt(const uint8_t &data);
-   bool _shiftGenLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
-   bool _shiftGenRight(const uint8_t &qty, const uint8_t &fillVal = 0x00);
-   bool _shiftGenLeftToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+
+   // bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
+
+   //TODO: Add a parameter to specify whether to shift the main buffer or the auxiliary buffer, similar to _shiftGenFullLeft.
+   bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
    //TODO: Code following method
-   bool _shiftGenRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+   bool _shiftGenFullRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
