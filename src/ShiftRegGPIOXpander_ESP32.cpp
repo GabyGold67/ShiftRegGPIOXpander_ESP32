@@ -569,54 +569,6 @@ bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
    return result;
 }
 
-/*
-bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal){
-   bool carryPrv{false};
-   bool carryCrrnt{false};
-   bool result{false};
-   
-   if(qty > 0){
-      if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
-         if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
-               _moveAuxToMain();
-            xSemaphoreGive(_SRGXAuxBffrMtx);
-         }
-
-         if(qty > _maxSRGXPin){
-            if(fillVal)
-               digitalWriteSrAllSet(); 
-            else
-               digitalWriteSrAllReset();
-         }
-         else{
-
-            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-               carryPrv = false;
-
-               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
-                  carryCrrnt = (*(_mainBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
-                  *(_mainBuffrArryPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
-                  if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
-                     *(_mainBuffrArryPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
-                  carryPrv = carryCrrnt; // Update the carry for the next byte
-
-               }
-               *(_mainBuffrArryPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
-            }
-
-            result = true;
-         }
-
-         xSemaphoreGive(_SRGXMnBffrMtx);
-      }
-
-   }
-
-   return result;
-}
-*/
-
 bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
    bool carryPrv{false};
    bool carryCrrnt{false};
@@ -655,14 +607,14 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
                carryPrv = false;
 
                for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
-                  carryCrrnt = (*(_auxBuffrArryPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
-                  *(_auxBuffrArryPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
+                  carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
+                  *(targetBufferPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
                   if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
-                     *(_auxBuffrArryPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
+                     *(targetBufferPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
                   carryPrv = carryCrrnt; // Update the carry for the next byte
 
                }
-               *(_auxBuffrArryPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
+               *() |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
             }
 
             result = true;
@@ -677,24 +629,37 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
 }
 
 //TODO: Add a parameter to specify whether to shift the main buffer or the auxiliary buffer, similar to _shiftGenFullLeft.
-bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal){
+bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
+   uint8_t* targetBufferPtr = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
    
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
-               _moveAuxToMain();
+            if(toMainBuffr){
+               if(_auxBuffrArryPtr != nullptr)
+                  _moveAuxToMain();
+            }
+            else{
+               if(_auxBuffrArryPtr == nullptr)
+                  _copyMainToAux();
+            }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
 
          if(qty > _maxSRGXPin){
-            if(fillVal)
-               digitalWriteSrAllSet(); 
-            else
-               digitalWriteSrAllReset();
+            if(toMainBuffr){
+               if(fillVal)
+                  digitalWriteSrAllSet(); 
+               else
+                  digitalWriteSrAllReset();
+         }
+            else{
+               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
+                  *(targetBufferPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the target buffer to fillVal
+            }
          }
          else{
 
@@ -702,14 +667,14 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
                carryPrv = false;
 
                for(int ptrInc{_srQty - 1}; ptrInc >= 0; ptrInc--){
-                  carryCrrnt = (*(_mainBuffrArryPtr + ptrInc) & 0x01)?true:false; // Get the carry bit from the current byte
-                  *(_mainBuffrArryPtr + ptrInc) >>= 1; // Shift the current byte to the right by 1 bit
+                  carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x01)?true:false; // Get the carry bit from the current byte
+                  *(targetBufferPtr + ptrInc) >>= 1; // Shift the current byte to the right by 1 bit
                   if(carryPrv) // If there was a carry from the previous byte, set the MSb of the current byte
-                     *(_mainBuffrArryPtr + ptrInc) |= 0x80; // Set the MSb of the current byte if there was a carry from the previous byte
+                     *(targetBufferPtr + ptrInc) |= 0x80; // Set the MSb of the current byte if there was a carry from the previous byte
                   carryPrv = carryCrrnt; // Update the carry for the next byte
 
                }
-               *(_mainBuffrArryPtr + _srQty - 1) |= (fillVal?0x80:0x00); // Set the MSb of the first byte to fillVal
+               *(targetBufferPtr + _srQty - 1) |= (fillVal?0x80:0x00); // Set the MSb of the first byte to fillVal
             }
 
             result = true;
