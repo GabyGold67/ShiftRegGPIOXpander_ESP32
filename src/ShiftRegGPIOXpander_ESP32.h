@@ -17,7 +17,7 @@
  * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   24/08/2026 18:00 (GMT+0200) DST  
+ *       Last update:   02/10/2026 19:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -110,14 +110,14 @@ private:
     */
    bool _sendSnglSRCntnt(const uint8_t &data);
 
-   // bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00);
    bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
-   //TODO: Add a parameter to specify whether to shift the main buffer or the auxiliary buffer, similar to _shiftGenFullLeft.
    bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
-   //TODO: Code following method
-   bool _shiftGenFullRightToAux(const uint8_t &qty, const uint8_t &fillVal = 0x00);
+
+   bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
+
+   bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
@@ -563,17 +563,16 @@ public:
     */
    bool shiftArthmRight(const uint8_t &qty);
 
-   //TODO: Code following method
    bool shiftStdLeftToAux(const uint8_t &qty);
-   //TODO: Code following method
+
    bool shiftStdRightToAux(const uint8_t &qty);
-   //TODO: Code following method
+
    bool shiftRttLeftToAux(const uint8_t &qty);
-   //TODO: Code following method
+
    bool shiftRttRightToAux(const uint8_t &qty);
-   //TODO: Code following method
+
    bool shiftArthmLeftToAux(const uint8_t &qty);
-   //TODO: Code following method
+
    bool shiftArthmRightToAux(const uint8_t &qty);
 
 
@@ -808,6 +807,64 @@ public:
     */
    bool writePort(uint16_t newPortVal);
 };
+
+//==========================================================>>
+/**
+ * @brief Auxiliary function to reset a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be reset.
+ * @param bitPos The position of the bit to reset (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was reset successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool resetBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte &= ~(bitMask << bitPos);
+
+   return result;
+}
+
+/**
+ * @brief Auxiliary function to set a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be set.
+ * @param bitPos The position of the bit to set (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was set successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool setBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte |= (bitMask << bitPos);
+
+   return result;
+}
+
+/**
+ * @brief Auxiliary function to toggle a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be toggled.
+ * @param bitPos The position of the bit to toggle (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was toggled successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte ^= (bitMask << bitPos);
+
+   return result;
+}
 
 //==========================================================>>
 

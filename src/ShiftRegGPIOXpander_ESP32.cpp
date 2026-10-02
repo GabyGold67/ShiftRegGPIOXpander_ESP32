@@ -17,7 +17,7 @@
  * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   24/08/2026 18:00 (GMT+0200) DST  
+ *       Last update:   02/10/2026 19:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -200,7 +200,8 @@ bool ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         *(_mainBuffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+         // *(_mainBuffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+         toggleBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
          _sendAllSRCntnt();
          xSemaphoreGive(_SRGXMnBffrMtx);
          result = true;  //!< The operation was successful, the pin was toggled in the Main Buffer
@@ -293,9 +294,11 @@ bool ShiftRegGPIOXpander::digitalWriteSr(const uint8_t &srPin, const uint8_t &va
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          if(value)
-            *(_mainBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+            // *(_mainBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+            setBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
          else
-            *(_mainBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+            // *(_mainBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+            resetBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
          _sendAllSRCntnt();
          result = true;  
          xSemaphoreGive(_SRGXMnBffrMtx);
@@ -406,9 +409,11 @@ bool ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t
             if(_auxBuffrArryPtr == nullptr)
                _copyMainToAux();
             if(value)
-               *(_auxBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+               // *(_auxBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+               setBitInByte(_auxBuffrArryPtr + (srPin / 8), srPin % 8);
             else
-               *(_auxBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+               // *(_auxBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+               resetBitInByte(_auxBuffrArryPtr + (srPin / 8), srPin % 8);
             xSemaphoreGive(_SRGXAuxBffrMtx);
             result = true;
          }
@@ -573,7 +578,7 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
-   uint8_t* targetBufferPtr = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
+   uint8_t* targetBufferPtr {nullptr};
    
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
@@ -581,14 +586,16 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
             if(toMainBuffr){
                if(_auxBuffrArryPtr != nullptr)
                   _moveAuxToMain();
+               targetBufferPtr = _mainBuffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr)
+               if(_auxBuffrArryPtr == nullptr){
                   _copyMainToAux();
+                  targetBufferPtr = _auxBuffrArryPtr;
+               }
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-
          if(qty > _maxSRGXPin){
             if(toMainBuffr){
                if(fillVal)
@@ -602,97 +609,120 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
             }
          }
          else{
-
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
                carryPrv = false;
-
                for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
                   carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
                   *(targetBufferPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
-                  if(carryPrv) // If there was a carry from the previous byte, set the LSB of the current byte
+                  if(carryPrv) // If there was a carry from the previous byte, set the LSb of the current byte
                      *(targetBufferPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
                   carryPrv = carryCrrnt; // Update the carry for the next byte
-
                }
-               *() |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
+               *(targetBufferPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
             }
-
             result = true;
          }
-
          xSemaphoreGive(_SRGXMnBffrMtx);
       }
-
    }
 
    return result;
 }
 
-//TODO: Add a parameter to specify whether to shift the main buffer or the auxiliary buffer, similar to _shiftGenFullLeft.
-bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
-   bool carryPrv{false};
-   bool carryCrrnt{false};
+bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBuffr){
+   bool bitValPrvSet{false};
+   bool bitValCrrntSet{false};
    bool result{false};
-   uint8_t* targetBufferPtr = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
-   
-   if(qty > 0){
+   const uint8_t segmentSize{endPin - strtPin + 1U};
+   uint8_t* targetBufferPtr {nullptr};
+
+   // Testing preconditions
+   if (qty > 0 && strtPin < endPin && endPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
             if(toMainBuffr){
                if(_auxBuffrArryPtr != nullptr)
                   _moveAuxToMain();
+               targetBufferPtr = _mainBuffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr)
+               if(_auxBuffrArryPtr == nullptr){
                   _copyMainToAux();
+                  targetBufferPtr = _auxBuffrArryPtr;
+               }
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-
-         if(qty > _maxSRGXPin){
+         if(segmentSize > qty){
             if(toMainBuffr){
-               if(fillVal)
-                  digitalWriteSrAllSet(); 
-               else
-                  digitalWriteSrAllReset();
-         }
+               if(fillVal){
+                  // Set all the bits in the segment to HIGH
+               }
+               else{
+                  // Set all the bits in the segment to LOW
+               }
+            }
             else{
                for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
                   *(targetBufferPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the target buffer to fillVal
             }
          }
          else{
-
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-               carryPrv = false;
-
-               for(int ptrInc{_srQty - 1}; ptrInc >= 0; ptrInc--){
-                  carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x01)?true:false; // Get the carry bit from the current byte
-                  *(targetBufferPtr + ptrInc) >>= 1; // Shift the current byte to the right by 1 bit
-                  if(carryPrv) // If there was a carry from the previous byte, set the MSb of the current byte
-                     *(targetBufferPtr + ptrInc) |= 0x80; // Set the MSb of the current byte if there was a carry from the previous byte
-                  carryPrv = carryCrrnt; // Update the carry for the next byte
-
+               //carryPrv = false;
+               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
+                 // carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
+                  *(targetBufferPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
+                  //if(carryPrv) // If there was a carry from the previous byte, set the LSb of the current byte
+                     *(targetBufferPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
+                  //carryPrv = carryCrrnt; // Update the carry for the next byte
                }
-               *(targetBufferPtr + _srQty - 1) |= (fillVal?0x80:0x00); // Set the MSb of the first byte to fillVal
+               *(targetBufferPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
             }
-
             result = true;
          }
-
          xSemaphoreGive(_SRGXMnBffrMtx);
       }
-      
+
+      else{
+         //Set all the bits in the segment to fillVal
+      }
+      result = true;
    }
 
-   return result;
-}
 
+
+   uint8_t* buffer = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
+   if (buffer == nullptr)
+      return false;
+
+   // Work forwards so that source bits are not overwritten before they
+   // are copied.  Bits outside the requested segment remain unchanged.
+   for (uint16_t pin = strtPin; pin <= static_cast<uint16_t>(endPin) - qty; ++pin) {
+      const uint16_t sourcePin = pin + qty;
+      const uint8_t sourceBit = (buffer[sourcePin / 8U] >> (sourcePin % 8U)) & 0x01U;
+      const uint8_t mask = static_cast<uint8_t>(1U << (pin % 8U));
+      if (sourceBit)
+         buffer[pin / 8U] |= mask;
+      else
+         buffer[pin / 8U] &= static_cast<uint8_t>(~mask);
+   }
+
+   for (uint16_t pin = static_cast<uint16_t>(endPin) - qty + 1; pin <= endPin; ++pin) {
+      const uint8_t mask = static_cast<uint8_t>(1U << (pin % 8U));
+      if ((fillVal >> (pin % 8U)) & 0x01U)
+         buffer[pin / 8U] |= mask;
+      else
+         buffer[pin / 8U] &= static_cast<uint8_t>(~mask);
+   }
+
+   return true;
+}
 
 bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenFullLeft(qty, 0x00, true); // Shift left and fill with 0s
+   result = _shiftGenFullLeft(qty, 0x00, true); // Shift the main buffer content left and fill with 0s
 
    return result;
 }
@@ -700,31 +730,33 @@ bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftStdRight(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenFullRight(qty, 0x00); // Shift right and fill with 0s
+   result = _shiftGenFullRight(qty, 0x00, true); // Shift the main buffer content right and fill with 0s
 
    return result;
 }
 
 bool ShiftRegGPIOXpander::shiftRttLeft(const uint8_t &qty){
    uint8_t fillVal{0x00};
+   bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
       fillVal = (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
-      _shiftGenFullLeft(1, fillVal, true); // Shift left and fill with the MSb of the last byte
+      result = _shiftGenFullLeft(1, fillVal, true); // Shift left and fill with the MSb of the last byte
    }
 
-   return true;
+   return result;
 }
 
 bool ShiftRegGPIOXpander::shiftRttRight(const uint8_t &qty){
    uint8_t fillVal{0x00};
+   bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
       fillVal = (*(_mainBuffrArryPtr) & 0x01)?0x01:0x00;
-      _shiftGenFullRight(1, fillVal); // Shift right and fill with the LSb of the first byte
+      result = _shiftGenFullRight(1, fillVal, true); // Shift right and fill with the LSb of the first byte
    }
 
-   return true;
+   return result;
 }
 
 bool ShiftRegGPIOXpander::shiftArthmLeft(const uint8_t &qty){
@@ -735,7 +767,60 @@ bool ShiftRegGPIOXpander::shiftArthmLeft(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftArthmRight(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00); // Shift right and fill with the MSb of the last byte
+   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, true); // Shift right and fill with the MSb of the last byte
+
+   return result;
+}
+
+bool ShiftRegGPIOXpander::shiftStdLeftToAux(const uint8_t &qty){
+   bool result{false};
+
+   result = _shiftGenFullLeft(qty, 0x00, false); // Shift the main buffer content left and fill with 0s
+
+   return result;
+}
+
+bool ShiftRegGPIOXpander::shiftStdRightToAux(const uint8_t &qty){
+   bool result{false};
+
+   result = _shiftGenFullRight(qty, 0x00, false); // Shift the main buffer content right and fill with 0s
+
+   return result;
+}
+
+bool ShiftRegGPIOXpander::shiftRttLeftToAux(const uint8_t &qty){
+   uint8_t fillVal{0x00};
+   bool result{false};
+
+   for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+      fillVal = (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
+      result = _shiftGenFullLeft(1, fillVal, false); // Shift left and fill with the MSb of the last byte
+   }
+
+   return result;
+}
+
+bool ShiftRegGPIOXpander::shiftRttRightToAux(const uint8_t &qty){
+   uint8_t fillVal{0x00};
+   bool result{false};
+
+   for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+      fillVal = (*(_mainBuffrArryPtr) & 0x01)?0x01:0x00;
+      result = _shiftGenFullRight(1, fillVal, false); // Shift right and fill with the LSb of the first byte
+   }
+
+   return result;
+}
+
+bool ShiftRegGPIOXpander::shiftArthmLeftToAux(const uint8_t &qty){
+
+   return shiftStdLeftToAux(qty);
+}
+
+bool ShiftRegGPIOXpander::shiftArthmRightToAux(const uint8_t &qty){
+   bool result{false};
+
+   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, false); // Shift right and fill with the MSb of the last byte
 
    return result;
 }
