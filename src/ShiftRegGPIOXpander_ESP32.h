@@ -114,10 +114,9 @@ private:
 
    bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
-
    bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
-   bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
+   // bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
