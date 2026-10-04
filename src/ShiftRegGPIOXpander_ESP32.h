@@ -63,6 +63,8 @@ private:
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
 
+   bool _otpInvrtd{false};
+
    /*
     * @brief A private version of the copyMainToAux() method
     * 
@@ -116,7 +118,7 @@ private:
 
    bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
-   // bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
+   bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
@@ -808,7 +810,15 @@ public:
 };
 
 //==========================================================>>
-
+/**
+ * @brief Get the bit value in the provided position of the provided byte.
+ * 
+ * @param dataByte Byte from which the bit value will be retrieved.
+ * @param bitPos Position of the bit to retrieve (0-7).
+ * @return The value of the bit in the specified position, either true (1) or false (0).
+ * @retval true The bit is set.
+ * @retval false The bit is not set.
+ */
 bool getBitInByte(const uint8_t* dataByte, const uint8_t bitPos){
    uint8_t bitMask{0x01};
    bool result{(bitPos < 8)?true:false};

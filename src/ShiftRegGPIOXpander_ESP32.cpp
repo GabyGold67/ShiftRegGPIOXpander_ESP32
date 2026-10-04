@@ -748,6 +748,72 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
    return result;
 }
 
+bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBuffr){
+   bool bitValPrvSet{false};
+   bool bitValCrrntSet{false};
+   bool result{false};
+   const uint8_t segmentSize{endPin - strtPin + 1U};
+   uint8_t* targetBufferPtr {nullptr};
+
+   if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
+      if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
+            if(toMainBuffr){
+               if(_auxBuffrArryPtr != nullptr)
+                  _moveAuxToMain();
+               targetBufferPtr = _mainBuffrArryPtr;
+            }
+            else{
+               if(_auxBuffrArryPtr == nullptr){
+                  _copyMainToAux();
+                  targetBufferPtr = _auxBuffrArryPtr;
+               }
+            }
+            xSemaphoreGive(_SRGXAuxBffrMtx);
+         }
+         // Once defined the target buffer, different cases based on the segment lenght and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
+         if(strtPin == 0 && endPin == _maxSRGXPin){   //* case: the segment to be shifted matches the whole target buffer, so the operation is equivalent to a full shift of the target buffer
+            result = _shiftGenFullRight(qty, fillVal, (targetBufferPtr == _mainBuffrArryPtr));
+         }
+         else if(qty > segmentSize){   //* case: the shift quantity is greater than the segment size, so all bits in the segment will be set to fillVal
+            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+               if(fillVal)
+                  setBitInByte(targetBufferPtr + (strtPin + shftCnt) / 8, (strtPin + shftCnt) % 8);
+               else
+                  resetBitInByte(targetBufferPtr + (strtPin + shftCnt) / 8, (strtPin + shftCnt) % 8);
+            }
+         }
+         else if(segmentSize == 1){  //* case: the segment size is 1, so the operation is equivalent to setting the single bit to fillVal
+            if(fillVal)
+               setBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
+            else
+               resetBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
+         }
+         else{ //* case: default case, the segment size is greater than 1 and the shift quantity is less than or equal to the segment size, so the operation will be performed by shifting the bits in the segment one by one to the right, preserving the bits outside the segment and filling the vacated bits with fillVal.
+            bitValPrvSet = getBitInByte(targetBufferPtr + (endPin / 8), endPin % 8); // Get the bit value from the first byte at the position corresponding to strtPin
+            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+               for(int bitCnt{segmentSize - 1}; bitCnt >= 0; bitCnt--){
+                  bitValCrrntSet = getBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8); // Get the bit value from the current byte at the position corresponding to strtPin + shftCnt
+                  if(bitValPrvSet)
+                     setBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8); 
+                  else
+                     resetBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8);
+                  bitValPrvSet = bitValCrrntSet; // Update the previous bit value for the next iteration
+               }
+               if (fillVal)
+                  setBitInByte(targetBufferPtr + (endPin / 8), endPin % 8);
+               else
+                  resetBitInByte(targetBufferPtr + (endPin / 8), endPin % 8);
+            }
+         }
+         xSemaphoreGive(_SRGXMnBffrMtx);
+      }
+      result = true;
+   }
+
+   return result;
+}
+
 bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){
    bool result{false};
 
