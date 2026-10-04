@@ -589,10 +589,9 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
                targetBufferPtr = _mainBuffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr){
+               if(_auxBuffrArryPtr == nullptr)
                   _copyMainToAux();
-                  targetBufferPtr = _auxBuffrArryPtr;
-               }
+               targetBufferPtr = _auxBuffrArryPtr;
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
@@ -644,10 +643,9 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
                targetBufferPtr = _mainBuffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr){
+               if(_auxBuffrArryPtr == nullptr)
                   _copyMainToAux();
-                  targetBufferPtr = _auxBuffrArryPtr;
-               }
+               targetBufferPtr = _auxBuffrArryPtr;
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
@@ -684,7 +682,6 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
    return result;
 }
 
-
 bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBuffr){
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
@@ -692,8 +689,7 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
    const uint8_t segmentSize{endPin - strtPin + 1U};
    uint8_t* targetBufferPtr {nullptr};
 
-   // Testing preconditions
-   if (qty > 0 && strtPin < endPin && endPin <= _maxSRGXPin){
+   if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
             if(toMainBuffr){
@@ -709,70 +705,47 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         if(segmentSize > qty){
-            if(toMainBuffr){
-               if(fillVal){
-                  // Set all the bits in the segment to HIGH
-               }
-               else{
-                  // Set all the bits in the segment to LOW
-               }
-            }
-            else{
-               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-                  *(targetBufferPtr + ptrInc) = (fillVal?0xFF:0x00); // Set all bytes in the target buffer to fillVal
+         // Once defined the target buffer, different cases based on the segment lenght and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
+         if(strtPin == 0 && endPin == _maxSRGXPin){   //* case: the segment to be shifted matches the whole target buffer, so the operation is equivalent to a full shift of the target buffer
+            result = _shiftGenFullLeft(qty, fillVal, (targetBufferPtr == _mainBuffrArryPtr));
+         }
+         else if(qty > segmentSize){   //* case: the shift quantity is greater than the segment size, so all bits in the segment will be set to fillVal
+            for(int shftCnt{0}; shftCnt < qty; shftCnt++){
+               if(fillVal)
+                  setBitInByte(targetBufferPtr + (strtPin + shftCnt) / 8, (strtPin + shftCnt) % 8);
+               else
+                  resetBitInByte(targetBufferPtr + (strtPin + shftCnt) / 8, (strtPin + shftCnt) % 8);
             }
          }
-         else{
+         else if(segmentSize == 1){  //* case: the segment size is 1, so the operation is equivalent to setting the single bit to fillVal
+            if(fillVal)
+               setBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
+            else
+               resetBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
+         }
+         else{ //* case: default case, the segment size is greater than 1 and the shift quantity is less than or equal to the segment size, so the operation will be performed by shifting the bits in the segment one by one to the left, preserving the bits outside the segment and filling the vacated bits with fillVal.
+            bitValPrvSet = getBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8); // Get the bit value from the first byte at the position corresponding to strtPin
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-               //carryPrv = false;
-               for(int ptrInc{0}; ptrInc < _srQty; ptrInc++){
-                 // carryCrrnt = (*(targetBufferPtr + ptrInc) & 0x80)?true:false; // Get the carry bit from the current byte
-                  *(targetBufferPtr + ptrInc) <<= 1; // Shift the current byte to the left by 1 bit
-                  //if(carryPrv) // If there was a carry from the previous byte, set the LSb of the current byte
-                     *(targetBufferPtr + ptrInc) |= 0x01; // Set the LSb of the current byte if there was a carry from the previous byte
-                  //carryPrv = carryCrrnt; // Update the carry for the next byte
+               for(int bitCnt{1}; bitCnt <= segmentSize; bitCnt++){
+                  bitValCrrntSet = getBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8); // Get the bit value from the current byte at the position corresponding to strtPin + shftCnt
+                  if(bitValPrvSet)
+                     setBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8); 
+                  else
+                     resetBitInByte(targetBufferPtr + ((strtPin + bitCnt) / 8), (strtPin + bitCnt) % 8);
+                  bitValPrvSet = bitValCrrntSet; // Update the previous bit value for the next iteration
                }
-               *(targetBufferPtr) |= (fillVal?0x01:0x00); // Set the LSb of the first byte to fillVal
+               if (fillVal)
+                  setBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
+               else
+                  resetBitInByte(targetBufferPtr + (strtPin / 8), strtPin % 8);
             }
-            result = true;
          }
          xSemaphoreGive(_SRGXMnBffrMtx);
-      }
-
-      else{
-         //Set all the bits in the segment to fillVal
       }
       result = true;
    }
 
-
-
-   uint8_t* buffer = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
-   if (buffer == nullptr)
-      return false;
-
-   // Work forwards so that source bits are not overwritten before they
-   // are copied.  Bits outside the requested segment remain unchanged.
-   for (uint16_t pin = strtPin; pin <= static_cast<uint16_t>(endPin) - qty; ++pin) {
-      const uint16_t sourcePin = pin + qty;
-      const uint8_t sourceBit = (buffer[sourcePin / 8U] >> (sourcePin % 8U)) & 0x01U;
-      const uint8_t mask = static_cast<uint8_t>(1U << (pin % 8U));
-      if (sourceBit)
-         buffer[pin / 8U] |= mask;
-      else
-         buffer[pin / 8U] &= static_cast<uint8_t>(~mask);
-   }
-
-   for (uint16_t pin = static_cast<uint16_t>(endPin) - qty + 1; pin <= endPin; ++pin) {
-      const uint8_t mask = static_cast<uint8_t>(1U << (pin % 8U));
-      if ((fillVal >> (pin % 8U)) & 0x01U)
-         buffer[pin / 8U] |= mask;
-      else
-         buffer[pin / 8U] &= static_cast<uint8_t>(~mask);
-   }
-
-   return true;
+   return result;
 }
 
 bool ShiftRegGPIOXpander::shiftStdLeft(const uint8_t &qty){

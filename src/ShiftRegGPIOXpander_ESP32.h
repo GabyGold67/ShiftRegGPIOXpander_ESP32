@@ -808,6 +808,17 @@ public:
 };
 
 //==========================================================>>
+
+bool getBitInByte(const uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      result = (*dataByte & (bitMask << bitPos))?true:false;
+
+   return result;
+}
+
 /**
  * @brief Auxiliary function to reset a specific bit in a byte.
  * 
