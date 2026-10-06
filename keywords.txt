@@ -44,6 +44,13 @@ shiftRttLeft KEYWORD2
 shiftRttRight KEYWORD2
 shiftArthmLeft KEYWORD2
 shiftArthmRight KEYWORD2
+shiftStdLeftToAux KEYWORD2
+shiftStdRightToAux   KEYWORD2
+shiftRttLeftToAux KEYWORD2
+shiftRttRightToAux   KEYWORD2
+shiftArthmLeftToAux  KEYWORD2
+shiftArthmRightToAux KEYWORD2
+stampMaskOverMain KEYWORD2
 stampMaskOverMain KEYWORD2
 stampOverMain	KEYWORD2
 stampSgmntOverMain   KEYWORD2

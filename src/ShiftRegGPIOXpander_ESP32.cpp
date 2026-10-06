@@ -549,7 +549,12 @@ bool ShiftRegGPIOXpander::_sendSnglSRCntnt(const uint8_t &data){
 
    for (int bitPos {7}; bitPos >= 0; bitPos--){   //Send each of the bits corresponding to one 8-bits shift register module
       ::digitalWrite(_sh_cp, LOW); // Start of next bit value addition to the shift register internal buffer -> Lower the clock pin         
-      ::digitalWrite(_ds, (data & mask)?HIGH:LOW);
+      if(!_otpInvrtd)
+         ::digitalWrite(_ds, (data & mask)?HIGH:LOW);
+      else
+         ::digitalWrite(_ds, (data & mask)?LOW:HIGH);
+
+      // Optional short code for the previous if() statement:  ::digitalWrite(_ds, (data & mask)?((!_otpInvrtd)?HIGH:LOW):((!_otpInvrtd)?LOW:HIGH)); // Set the data pin to the current bit value, considering the inversion state of the output pins
       mask >>= 1; // Shift the mask to the right to get the next bit value
       delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet
       /* 
@@ -632,7 +637,7 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
-   uint8_t* targetBufferPtr = toMainBuffr ? _mainBuffrArryPtr : _auxBuffrArryPtr;
+   uint8_t* targetBufferPtr {nullptr};
    
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
@@ -752,7 +757,7 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strt
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
    bool result{false};
-   const uint8_t segmentSize{endPin - strtPin + 1U};
+   const uint8_t segmentSize{endPin - strtPin + 1U};  //! Warning for narrowing endPin to uint8_t, but it is guaranteed that endPin is less than or equal to _maxSRGXPin, which is a uint8_t, so the narrowing is safe.
    uint8_t* targetBufferPtr {nullptr};
 
    if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
@@ -1192,3 +1197,82 @@ bool SRGXVPort::writePort(uint16_t portVal){
 
    return result;
 }
+
+//==========================================================>>
+/**
+ * @brief Get the bit value in the provided position of the provided byte.
+ * 
+ * @param dataByte Byte from which the bit value will be retrieved.
+ * @param bitPos Position of the bit to retrieve (0-7).
+ * @return The value of the bit in the specified position, either true (1) or false (0).
+ * @retval true The bit is set.
+ * @retval false The bit is not set.
+ */
+bool getBitInByte(const uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      result = (*dataByte & (bitMask << bitPos))?true:false;
+
+   return result;
+}
+
+/**
+ * @brief Auxiliary function to reset a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be reset.
+ * @param bitPos The position of the bit to reset (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was reset successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool resetBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte &= ~(bitMask << bitPos);
+
+   return result;
+}
+
+/**
+ * @brief Auxiliary function to set a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be set.
+ * @param bitPos The position of the bit to set (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was set successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool setBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte |= (bitMask << bitPos);
+
+   return result;
+}
+
+/**
+ * @brief Auxiliary function to toggle a specific bit in a byte.
+ * 
+ * @param dataByte Pointer to the byte in which the bit will be toggled.
+ * @param bitPos The position of the bit to toggle (0-7).
+ * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
+ * @retval true The bit was toggled successfully.
+ * @retval false The bit position is out of bounds.
+ */
+bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos){
+   uint8_t bitMask{0x01};
+   bool result{(bitPos < 8)?true:false};
+
+   if(result)
+      *dataByte ^= (bitMask << bitPos);
+
+   return result;
+}
+
+//==========================================================>>

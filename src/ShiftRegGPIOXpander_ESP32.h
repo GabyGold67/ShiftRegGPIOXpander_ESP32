@@ -45,7 +45,16 @@
 #include <Arduino.h>
 #include <stdint.h>
 
+//===========================>> BEGIN Classes prototypes
 class SRGXVPort;
+//===========================>> END Classes prototypes
+
+//===========================>> BEGIN General use functions prototypes
+bool getBitInByte(const uint8_t* dataByte, const uint8_t bitPos);
+bool resetBitInByte(uint8_t* dataByte, const uint8_t bitPos);
+bool setBitInByte(uint8_t* dataByte, const uint8_t bitPos);
+bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos);
+//===========================>> END General use functions prototypes
 
 /**
  * @brief A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
@@ -496,7 +505,7 @@ public:
     */
    bool setBit(const uint8_t &srPin);
    /**
-    * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after shifting.
+    * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
@@ -506,7 +515,7 @@ public:
     */
    bool shiftStdLeft(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after shifting.
+    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
@@ -520,7 +529,7 @@ public:
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side are wrapped around and placed back into the right side of the buffer, that would be the LSb of the buffer, that is the leftmost bit of the last pin in the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * @note The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back into the right side of the buffer (LSb), that is the righttmost bit in the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
     * 
     * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
@@ -532,7 +541,7 @@ public:
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side are wrapped around and placed back into the left side of the buffer, that would be the MSb of the buffer, that is the rightmost bit of the first pin in the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * @note The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
     * 
     * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
@@ -540,43 +549,65 @@ public:
     */
    bool shiftRttRight(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, performing an arithmetic left shift. The method will flush the buffer after shifting.
+    * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note The arithmetic left shift operation moves the bits in the Main Buffer to the left, the LSb of the buffer (the leftmost bit of the last pin in the ShiftRegGPIOXpander object) is filled with 0, and the MSb of the buffer (the rightmost bit of the first pin in the ShiftRegGPIOXpander object) is discarded. 
     * 
-    * @param qty 
-    * @retval true if the operation was successful and the Main Buffer was flushed.
-    * @retval false Otherwise.
+    * @return true if the shift operation was successful and the Main Buffer was flushed.
+    * 
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
+    * @attention The arithmetic left shift operation moves the bits in the Main Buffer to the left, and the LSb of the buffer is filled with 0x00, effectively discarding the leftmost bit (MSb) of the buffer. This operation does not preserve the sign of the number represented by the bits in the buffer, is identical to the standard left shift operation, and is provided for completeness and to comlement the arithmetic right shift operation, which does preserve the sign of the number represented by the bits in the buffer.
     */
    bool shiftArthmLeft(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The method will flush the buffer after shifting.
+    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting.
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
-    * 
-    * @note The arithmetic right shift operation moves the bits in the Main Buffer to the right, and the MSb of the buffer is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded.
     * 
     * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
+    * 
+    * @note The arithmetic right shift operation moves the bits in the Main Buffer to the right, and the MSb of the buffer is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded.
     */
    bool shiftArthmRight(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftStdLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftStdLeft(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftStdLeftToAux(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftStdRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftStdRight(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftStdRightToAux(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftRttLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftRttLeft(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftRttLeftToAux(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftRttRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftRttRight(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftRttRightToAux(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftArthmLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftArthmLeft(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftArthmLeftToAux(const uint8_t &qty);
-
+   /**
+    * @brief Analog to the shiftArthmRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * 
+    * See shiftArthmRight(const uint8_t) for more details on the shifting operation.
+    */
    bool shiftArthmRightToAux(const uint8_t &qty);
-
-
    /**
     * @brief Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.
     * 
@@ -808,84 +839,5 @@ public:
     */
    bool writePort(uint16_t newPortVal);
 };
-
-//==========================================================>>
-/**
- * @brief Get the bit value in the provided position of the provided byte.
- * 
- * @param dataByte Byte from which the bit value will be retrieved.
- * @param bitPos Position of the bit to retrieve (0-7).
- * @return The value of the bit in the specified position, either true (1) or false (0).
- * @retval true The bit is set.
- * @retval false The bit is not set.
- */
-bool getBitInByte(const uint8_t* dataByte, const uint8_t bitPos){
-   uint8_t bitMask{0x01};
-   bool result{(bitPos < 8)?true:false};
-
-   if(result)
-      result = (*dataByte & (bitMask << bitPos))?true:false;
-
-   return result;
-}
-
-/**
- * @brief Auxiliary function to reset a specific bit in a byte.
- * 
- * @param dataByte Pointer to the byte in which the bit will be reset.
- * @param bitPos The position of the bit to reset (0-7).
- * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
- * @retval true The bit was reset successfully.
- * @retval false The bit position is out of bounds.
- */
-bool resetBitInByte(uint8_t* dataByte, const uint8_t bitPos){
-   uint8_t bitMask{0x01};
-   bool result{(bitPos < 8)?true:false};
-
-   if(result)
-      *dataByte &= ~(bitMask << bitPos);
-
-   return result;
-}
-
-/**
- * @brief Auxiliary function to set a specific bit in a byte.
- * 
- * @param dataByte Pointer to the byte in which the bit will be set.
- * @param bitPos The position of the bit to set (0-7).
- * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
- * @retval true The bit was set successfully.
- * @retval false The bit position is out of bounds.
- */
-bool setBitInByte(uint8_t* dataByte, const uint8_t bitPos){
-   uint8_t bitMask{0x01};
-   bool result{(bitPos < 8)?true:false};
-
-   if(result)
-      *dataByte |= (bitMask << bitPos);
-
-   return result;
-}
-
-/**
- * @brief Auxiliary function to toggle a specific bit in a byte.
- * 
- * @param dataByte Pointer to the byte in which the bit will be toggled.
- * @param bitPos The position of the bit to toggle (0-7).
- * @return The success of the operation, depending on whether the bit position is within the valid range (0-7).
- * @retval true The bit was toggled successfully.
- * @retval false The bit position is out of bounds.
- */
-bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos){
-   uint8_t bitMask{0x01};
-   bool result{(bitPos < 8)?true:false};
-
-   if(result)
-      *dataByte ^= (bitMask << bitPos);
-
-   return result;
-}
-
-//==========================================================>>
 
 #endif //ShiftRegGPIOXpander_ESP32_H_
