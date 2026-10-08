@@ -691,7 +691,7 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
    bool result{false};
-   const uint8_t segmentSize{endPin - strtPin + 1U};
+   const uint8_t segmentSize = endPin - strtPin + 1U;
    uint8_t* targetBufferPtr {nullptr};
 
    if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
@@ -757,7 +757,7 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strt
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
    bool result{false};
-   const uint8_t segmentSize{endPin - strtPin + 1U};  //! Warning for narrowing endPin to uint8_t, but it is guaranteed that endPin is less than or equal to _maxSRGXPin, which is a uint8_t, so the narrowing is safe.
+   const uint8_t segmentSize = endPin - strtPin + 1U;
    uint8_t* targetBufferPtr {nullptr};
 
    if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
