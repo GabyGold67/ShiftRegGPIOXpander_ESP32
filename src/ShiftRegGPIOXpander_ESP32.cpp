@@ -629,6 +629,9 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
          xSemaphoreGive(_SRGXMnBffrMtx);
       }
    }
+   else{
+      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succed, as making no shift is a successful shift.
+   }
 
    return result;
 }
@@ -682,6 +685,9 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
          }
          xSemaphoreGive(_SRGXMnBffrMtx);
       }      
+   }
+   else{
+      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succed, as making no shift is a successful shift.
    }
 
    return result;

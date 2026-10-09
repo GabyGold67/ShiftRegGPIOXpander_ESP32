@@ -509,9 +509,16 @@ public:
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
     * 
     * @return true if the shift operation was successful and the Main Buffer was flushed.
+    * 
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
+    * 
+    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:
+    * - qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.
+    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.
+    * 
+    * @attention To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty > (getMaxSRGXPin() + 1) limit cases must be tested before the method invocation.
     */
    bool shiftStdLeft(const uint8_t &qty);
    /**
@@ -519,21 +526,24 @@ public:
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note If the qty parameter is greater than the number of bits in the Main Buffer, the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
     * 
-    * @return true if the shift operation was successful and the Main Buffer was flushed.
+    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:
+    * - qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.
+    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.
+    * 
+    * @attention To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty > (getMaxSRGXPin() + 1) limit cases must be tested before the method invocation.
     */
    bool shiftStdRight(const uint8_t &qty);
    /**
     * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.
-    *
+    * 
+    * The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back ("pushed") into the right side of the buffer (LSb), that is the righttmost bit position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * 
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
-    * 
-    * @note The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back into the right side of the buffer (LSb), that is the righttmost bit in the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
-    * 
-    * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
+    * 
     */
    bool shiftRttLeft(const uint8_t &qty);
    /**
