@@ -1,0 +1,8 @@
+<map id="ShiftRegGPIOXpander::flipBit" name="ShiftRegGPIOXpander::flipBit">
+<area shape="rect" id="Node000001" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,21,159,64"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a4a517bdf7225c90b2cb03ee8411d89d4" title="Toggles the state of a specific pin." alt="" coords="207,21,360,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,40,194,42,189,43,159,45"/>
+<area shape="rect" id="Node000003" href="$_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#adf0d545cc36cd2a40d130fbf32a7ffb3" title="Auxiliary function to toggle a specific bit in a byte." alt="" coords="408,29,518,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,40,395,43,390,43,360,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="432,28,427,21,431,11,443,5,463,3,485,5,498,15,492,14,483,10,463,8,445,10,435,15,432,20,437,30"/>
+</map>

@@ -121,7 +121,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('class_shift_re
 Inheritance diagram for ShiftRegGPIOXpander:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander__inherit__graph.png" border="0" usemap="#a_shift_reg_g_p_i_o_xpander_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
-<!-- MAP 0 -->
+<map name="a_shift_reg_g_p_i_o_xpander_inherit__map" id="a_shift_reg_g_p_i_o_xpander_inherit__map">
+<area shape="rect" title="A class that models a GPIO outputs pins expander through the use of 8&#45;bits Serial In Paralell Out (SI..." alt="" coords="5,5,159,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object." alt="" coords="36,80,128,107"/>
+<area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -194,7 +198,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad4832d031e1bf996139e394a2f96d683" id="r_ad4832d031e1bf996139e394a2f96d683"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad4832d031e1bf996139e394a2f96d683">shiftRttLeft</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:ad4832d031e1bf996139e394a2f96d683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.  <br /></td></tr>
 <tr class="memitem:a5f80a925d6e3c9bc29b8c5df2805c2e8" id="r_a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8">shiftRttRight</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.  <br /></td></tr>
+<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.  <br /></td></tr>
 <tr class="memitem:a9b814bf2c2d380dfdea459e82a2c5550" id="r_a9b814bf2c2d380dfdea459e82a2c5550"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550">shiftArthmLeft</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:a9b814bf2c2d380dfdea459e82a2c5550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.  <br /></td></tr>
 <tr class="memitem:aadb6da2d42f697e393def159ef970d5d" id="r_aadb6da2d42f697e393def159ef970d5d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aadb6da2d42f697e393def159ef970d5d">shiftArthmRight</a> (const uint8_t &amp;qty)</td></tr>
@@ -272,7 +276,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 There is no mechanism to flush the <b>Auxiliary</b> straight to the shift registers. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See digitalReadSr(const uint8_t) for more information. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWriteSr(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead(const uint8_t &amp;)</a> for more information. </dd></dl>
 
 </div>
 </div>
@@ -297,7 +301,11 @@ There is no mechanism to flush the <b>Auxiliary</b> straight to the shift regist
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a68fe6cf0609e80ec31a622b8e1265a20_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a68fe6cf0609e80ec31a622b8e1265a20_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 1 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a68fe6cf0609e80ec31a622b8e1265a20_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a68fe6cf0609e80ec31a622b8e1265a20_cgraph">
+<area shape="rect" title="Class destructor." alt="" coords="5,5,175,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="223,13,405,40"/>
+<area shape="poly" title=" " alt="" coords="175,24,210,26,204,27,175,29"/>
+</map>
 </div>
 
 </div>
@@ -339,7 +347,19 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a05bc7963b4c95d6b04afc44aa4a9a572_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a05bc7963b4c95d6b04afc44aa4a9a572_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 2 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a05bc7963b4c95d6b04afc44aa4a9a572_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a05bc7963b4c95d6b04afc44aa4a9a572_cgraph">
+<area shape="rect" title="GPIOXpander object setup and activation." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,59,360,101"/>
+<area shape="poly" title=" " alt="" coords="159,77,194,79,189,81,159,83"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="408,59,561,101"/>
+<area shape="poly" title=" " alt="" coords="360,77,395,80,390,80,361,83"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="609,29,714,56"/>
+<area shape="poly" title=" " alt="" coords="561,61,592,57,597,56,562,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="615,104,708,131"/>
+<area shape="poly" title=" " alt="" coords="562,94,602,105,597,104,562,99"/>
+<area shape="poly" title=" " alt="" coords="631,28,626,21,629,11,642,5,662,3,683,5,695,15,690,14,681,10,661,8,643,10,633,15,631,20,636,30"/>
+<area shape="poly" title=" " alt="" coords="631,102,626,95,629,86,642,79,662,77,683,80,695,89,690,88,681,85,661,83,643,85,633,89,631,95,636,105"/>
+</map>
 </div>
 
 </div>
@@ -424,7 +444,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 3 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph">
+<area shape="rect" title="Instantiate a SRGXVPort object." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#aaabc03e2f99a9cc58767cc4a09044600" title="Default constructor." alt="" coords="207,13,378,40"/>
+<area shape="poly" title=" " alt="" coords="159,24,194,26,188,27,159,29"/>
+</map>
 </div>
 
 </div>
@@ -468,7 +492,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a81ac29c6ff0866d2d4b4b4830fbd0cf3_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a81ac29c6ff0866d2d4b4b4830fbd0cf3_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 4 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a81ac29c6ff0866d2d4b4b4830fbd0cf3_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a81ac29c6ff0866d2d4b4b4830fbd0cf3_cgraph">
+<area shape="rect" title="Returns the state of the requested pin of the ShiftRegGPIOXpander." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb" title="Returns the state of the requested pin." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,194,26,189,27,159,29"/>
+</map>
 </div>
 
 </div>
@@ -505,7 +533,7 @@ Here is the call graph for this function:</div>
   <table class="params">
     <tr><td class="paramname">strtPin</td><td>The first pin number from which the segment will be taken. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
     <tr><td class="paramname">pinsQty</td><td>The number of pins that will compose the segment. The valid range is 1 &lt;= pinsQty &lt;= (_maxSRGXPin - strtPin + 1). </td></tr>
-    <tr><td class="paramname">buffSgmnt</td><td>A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.</td></tr>
+    <tr><td class="paramname">bffrSgmnt</td><td>A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.</td></tr>
   </table>
   </dd>
 </dl>
@@ -522,7 +550,11 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 5 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a184e452056ea5b1fb11afacb8acfc23b_icgraph">
+<area shape="rect" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,356,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a95da7b2c72d85ae9ffb91c906b446836" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
+<area shape="poly" title=" " alt="" coords="185,27,155,29,155,24,190,26"/>
+</map>
 </div>
 
 </div>
@@ -565,7 +597,11 @@ Here is the caller graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 6 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad0a3e91286d39a4c9622b1382febf4cb_icgraph">
+<area shape="rect" title="Returns the state of the requested pin." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>
@@ -607,13 +643,22 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 7 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_cgraph">
+<area shape="rect" title="Toggles the state of a specific pin." alt="" coords="5,21,159,64"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#adf0d545cc36cd2a40d130fbf32a7ffb3" title="Auxiliary function to toggle a specific bit in a byte." alt="" coords="207,29,317,56"/>
+<area shape="poly" title=" " alt="" coords="159,40,194,42,189,43,159,45"/>
+<area shape="poly" title=" " alt="" coords="231,28,226,21,229,11,242,5,262,3,283,5,296,14,291,14,282,10,262,8,243,10,233,15,231,20,236,30"/>
+</map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 8 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a4a517bdf7225c90b2cb03ee8411d89d4_icgraph">
+<area shape="rect" title="Toggles the state of a specific pin." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa5f62b5b35dba66d8ff3616746111f68" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>
@@ -753,13 +798,27 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 9 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_cgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,59,360,101"/>
+<area shape="poly" title=" " alt="" coords="159,77,194,79,189,81,159,83"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="408,29,512,56"/>
+<area shape="poly" title=" " alt="" coords="360,61,390,57,396,56,361,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="414,104,507,131"/>
+<area shape="poly" title=" " alt="" coords="361,94,401,104,396,104,360,99"/>
+<area shape="poly" title=" " alt="" coords="430,28,424,21,428,11,440,5,460,3,481,5,494,14,489,14,480,10,460,8,442,10,432,15,430,20,435,30"/>
+<area shape="poly" title=" " alt="" coords="430,102,424,95,428,86,440,79,460,77,481,80,494,89,489,88,480,85,460,83,442,85,432,89,430,95,434,105"/>
+</map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 10 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a109f90a7a8e05093e3911d5402dfdabe_icgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a05bc7963b4c95d6b04afc44aa4a9a572" title="GPIOXpander object setup and activation." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>
@@ -809,13 +868,31 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 11 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_cgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="207,29,311,56"/>
+<area shape="poly" title=" " alt="" coords="158,61,194,56,189,58,160,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="212,104,306,131"/>
+<area shape="poly" title=" " alt="" coords="159,94,200,104,194,105,159,99"/>
+<area shape="poly" title=" " alt="" coords="228,28,223,21,227,11,239,5,259,3,280,5,293,14,287,14,278,10,259,8,241,10,231,15,228,20,233,30"/>
+<area shape="poly" title=" " alt="" coords="228,102,223,95,227,86,239,79,259,77,280,80,293,89,287,88,278,85,259,83,241,85,231,89,228,95,233,105"/>
+</map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 12 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a650d0f6589b37aefb2f7fb009619da2f_icgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="408,72,561,115"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="402,67,350,51,350,46,407,67"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a1589457b53bda15c73cb00b6d0c66b1c" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="207,72,360,115"/>
+<area shape="poly" title=" " alt="" coords="390,94,360,96,360,91,395,93"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a55d9c0be46f84bf329fe930d929638bc" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="207,139,360,181"/>
+<area shape="poly" title=" " alt="" coords="407,119,351,141,350,135,402,120"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a05bc7963b4c95d6b04afc44aa4a9a572" title="GPIOXpander object setup and activation." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,28,160,29,158,24,194,25"/>
+</map>
 </div>
 
 </div>
@@ -1005,7 +1082,15 @@ The Main Buffer will be flushed after the mask modifications are applied.</dd></
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a220f5165290249e021a0876559042824_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a220f5165290249e021a0876559042824_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 13 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a220f5165290249e021a0876559042824_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a220f5165290249e021a0876559042824_cgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="207,29,311,56"/>
+<area shape="poly" title=" " alt="" coords="158,61,194,56,189,58,160,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="212,104,306,131"/>
+<area shape="poly" title=" " alt="" coords="159,94,200,104,194,105,159,99"/>
+<area shape="poly" title=" " alt="" coords="228,28,223,21,227,11,239,5,259,3,280,5,293,14,287,14,278,10,259,8,241,10,231,15,228,20,233,30"/>
+<area shape="poly" title=" " alt="" coords="228,102,223,95,227,86,239,79,259,77,280,80,293,89,287,88,278,85,259,83,241,85,231,89,228,95,233,105"/>
+</map>
 </div>
 
 </div>
@@ -1060,7 +1145,11 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 14 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_icgraph">
+<area shape="rect" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="223,13,405,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a68fe6cf0609e80ec31a622b8e1265a20" title="Class destructor." alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="205,27,175,29,175,24,210,26"/>
+</map>
 </div>
 
 </div>
@@ -1100,7 +1189,14 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 15 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa5f62b5b35dba66d8ff3616746111f68_cgraph">
+<area shape="rect" title="Toggles the state of a specific pin in the Main Buffer." alt="" coords="5,21,159,64"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a4a517bdf7225c90b2cb03ee8411d89d4" title="Toggles the state of a specific pin." alt="" coords="207,21,360,64"/>
+<area shape="poly" title=" " alt="" coords="159,40,194,42,189,43,159,45"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#adf0d545cc36cd2a40d130fbf32a7ffb3" title="Auxiliary function to toggle a specific bit in a byte." alt="" coords="408,29,518,56"/>
+<area shape="poly" title=" " alt="" coords="360,40,395,43,390,43,360,45"/>
+<area shape="poly" title=" " alt="" coords="432,28,427,21,431,11,443,5,463,3,485,5,498,15,492,14,483,10,463,8,445,10,435,15,432,20,437,30"/>
+</map>
 </div>
 
 </div>
@@ -1152,7 +1248,11 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 16 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a54a0ba6144b5760e7d6ddc0051226b4f_icgraph">
+<area shape="rect" title="Return the greatest valid pin number." alt="" coords="225,5,378,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a0419134f57ef63fe35c3c530b7852bb4" title="Class constructor." alt="" coords="5,13,177,40"/>
+<area shape="poly" title=" " alt="" coords="206,27,177,29,177,24,212,26"/>
+</map>
 </div>
 
 </div>
@@ -1211,7 +1311,11 @@ false The created <a class="el" href="class_s_r_g_x_v_port.html" title="A class 
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a10566c68d46c779eb54e407a39893cef_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a10566c68d46c779eb54e407a39893cef_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 17 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a10566c68d46c779eb54e407a39893cef_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a10566c68d46c779eb54e407a39893cef_cgraph">
+<area shape="rect" title="Checks if the provided SRGXVPort object is valid." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#ae88950db6634ee05060a0d080d739d11" title="Returns a pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port." alt="" coords="207,13,380,40"/>
+<area shape="poly" title=" " alt="" coords="159,24,194,26,188,27,159,29"/>
+</map>
 </div>
 
 </div>
@@ -1285,7 +1389,17 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 18 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a1589457b53bda15c73cb00b6d0c66b1c_cgraph">
+<area shape="rect" title="Sets a specific pin to LOW (0x00/Reset) in the Main Buffer." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,59,360,101"/>
+<area shape="poly" title=" " alt="" coords="159,77,194,79,189,81,159,83"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="408,29,512,56"/>
+<area shape="poly" title=" " alt="" coords="360,61,390,57,396,56,361,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="414,104,507,131"/>
+<area shape="poly" title=" " alt="" coords="361,94,401,104,396,104,360,99"/>
+<area shape="poly" title=" " alt="" coords="430,28,424,21,428,11,440,5,460,3,481,5,494,14,489,14,480,10,460,8,442,10,432,15,430,20,435,30"/>
+<area shape="poly" title=" " alt="" coords="430,102,424,95,428,86,440,79,460,77,481,80,494,89,489,88,480,85,460,83,442,85,432,89,430,95,434,105"/>
+</map>
 </div>
 
 </div>
@@ -1324,7 +1438,17 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 19 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a55d9c0be46f84bf329fe930d929638bc_cgraph">
+<area shape="rect" title="Sets a specific pin to HIGH (0x01/Set) in the Main Buffer." alt="" coords="5,59,159,101"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="207,59,360,101"/>
+<area shape="poly" title=" " alt="" coords="159,77,194,79,189,81,159,83"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#aaa31631fe7c5ece0a42c719bc077b28c" title="Auxiliary function to reset a specific bit in a byte." alt="" coords="408,29,512,56"/>
+<area shape="poly" title=" " alt="" coords="360,61,390,57,396,56,361,66"/>
+<area shape="rect" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#a361d76443630c89e041161cb48687f5e" title="Auxiliary function to set a specific bit in a byte." alt="" coords="414,104,507,131"/>
+<area shape="poly" title=" " alt="" coords="361,94,401,104,396,104,360,99"/>
+<area shape="poly" title=" " alt="" coords="430,28,424,21,428,11,440,5,460,3,481,5,494,14,489,14,480,10,460,8,442,10,432,15,430,20,435,30"/>
+<area shape="poly" title=" " alt="" coords="430,102,424,95,428,86,440,79,460,77,481,80,494,89,489,88,480,85,460,83,442,85,432,89,430,95,434,105"/>
+</map>
 </div>
 
 </div>
@@ -1358,7 +1482,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a9b814bf2c2d380dfdea459e82a2c5550_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a9b814bf2c2d380dfdea459e82a2c5550_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 20 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a9b814bf2c2d380dfdea459e82a2c5550_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_a9b814bf2c2d380dfdea459e82a2c5550_cgraph">
+<area shape="rect" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,..." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,..." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,194,26,189,27,159,29"/>
+</map>
 </div>
 
 </div>
@@ -1384,7 +1512,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 21 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph">
+<area shape="rect" title="Analog to the shiftArthmLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxilia..." alt="" coords="5,5,159,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad384c3227e4d7e180b6e593dfc6d98c3" title="Analog to the shiftStdLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxiliary..." alt="" coords="207,5,360,48"/>
+<area shape="poly" title=" " alt="" coords="159,24,194,26,189,27,159,29"/>
+</map>
 </div>
 
 </div>
@@ -1407,8 +1539,7 @@ Here is the call graph for this function:</div>
 <p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1).</td></tr>
-    <tr><td class="paramname">qty</td><td></td></tr>
+    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1). </td></tr>
   </table>
   </dd>
 </dl>
@@ -1511,17 +1642,10 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. </p>
+<p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">qty</td><td></td></tr>
+    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1). </td></tr>
   </table>
   </dd>
 </dl>
@@ -1590,7 +1714,11 @@ This method will avoid flagging the operation as unsuccessful when the failure m
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a972cf259a7577a85be83bae349a25053_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a972cf259a7577a85be83bae349a25053_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 22 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_a972cf259a7577a85be83bae349a25053_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a972cf259a7577a85be83bae349a25053_icgraph">
+<area shape="rect" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,..." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,..." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>
@@ -1616,7 +1744,11 @@ Here is the caller graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 23 -->
+<map name="aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph">
+<area shape="rect" title="Analog to the shiftStdLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxiliary..." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa092f348a8780956b96dfe70d461dc8d" title="Analog to the shiftArthmLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxilia..." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>

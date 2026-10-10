@@ -1,0 +1,6 @@
+<map id="ShiftRegGPIOXpander::digitalToggleSr" name="ShiftRegGPIOXpander::digitalToggleSr">
+<area shape="rect" id="Node000001" title="Toggles the state of a specific pin." alt="" coords="5,21,159,64"/>
+<area shape="rect" id="Node000002" href="$_shift_reg_g_p_i_o_xpander___e_s_p32_8cpp.html#adf0d545cc36cd2a40d130fbf32a7ffb3" title="Auxiliary function to toggle a specific bit in a byte." alt="" coords="207,29,317,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,40,194,42,189,43,159,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="231,28,226,21,229,11,242,5,262,3,283,5,296,14,291,14,282,10,262,8,243,10,233,15,231,20,236,30"/>
+</map>

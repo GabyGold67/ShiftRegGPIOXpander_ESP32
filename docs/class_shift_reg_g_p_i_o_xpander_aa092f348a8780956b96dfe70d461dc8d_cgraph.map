@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::shiftArthmLeftToAux" name="ShiftRegGPIOXpander::shiftArthmLeftToAux">
+<area shape="rect" id="Node000001" title="Analog to the shiftArthmLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxilia..." alt="" coords="5,5,159,48"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#ad384c3227e4d7e180b6e593dfc6d98c3" title="Analog to the shiftStdLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxiliary..." alt="" coords="207,5,360,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,24,194,26,189,27,159,29"/>
+</map>

@@ -121,13 +121,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('class_s_r_g_x_
 Inheritance diagram for SRGXVPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port__inherit__graph.png" border="0" usemap="#a_s_r_g_x_v_port_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
-<!-- MAP 0 -->
+<map name="a_s_r_g_x_v_port_inherit__map" id="a_s_r_g_x_v_port_inherit__map">
+<area shape="rect" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object." alt="" coords="36,80,128,107"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8&#45;bits Serial In Paralell Out (SI..." alt="" coords="5,5,159,32"/>
+<area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for SRGXVPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port__coll__graph.png" border="0" usemap="#a_s_r_g_x_v_port_coll__map" loading="lazy" alt="Collaboration graph"/></div>
-<!-- MAP 1 -->
+<map name="a_s_r_g_x_v_port_coll__map" id="a_s_r_g_x_v_port_coll__map">
+<area shape="rect" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object." alt="" coords="36,80,128,107"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8&#45;bits Serial In Paralell Out (SI..." alt="" coords="5,5,159,32"/>
+<area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -230,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad4832d031e1bf996139e394a2f96d683 pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_ad4832d031e1bf996139e394a2f96d683"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#ad4832d031e1bf996139e394a2f96d683">shiftRttLeft</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:ad4832d031e1bf996139e394a2f96d683 pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.  <br /></td></tr>
 <tr class="memitem:a5f80a925d6e3c9bc29b8c5df2805c2e8 pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a5f80a925d6e3c9bc29b8c5df2805c2e8">shiftRttRight</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8 pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.  <br /></td></tr>
+<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8 pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.  <br /></td></tr>
 <tr class="memitem:a9b814bf2c2d380dfdea459e82a2c5550 pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_a9b814bf2c2d380dfdea459e82a2c5550"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#a9b814bf2c2d380dfdea459e82a2c5550">shiftArthmLeft</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:a9b814bf2c2d380dfdea459e82a2c5550 pub_methods_class_shift_reg_g_p_i_o_xpander"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.  <br /></td></tr>
 <tr class="memitem:aadb6da2d42f697e393def159ef970d5d pub_methods_class_shift_reg_g_p_i_o_xpander" id="r_aadb6da2d42f697e393def159ef970d5d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html#aadb6da2d42f697e393def159ef970d5d">shiftArthmRight</a> (const uint8_t &amp;qty)</td></tr>
@@ -330,7 +338,11 @@ The open possibility of creating virtual ports that overlap pins in the <a class
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_a0419134f57ef63fe35c3c530b7852bb4_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a0419134f57ef63fe35c3c530b7852bb4_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 2 -->
+<map name="aclass_s_r_g_x_v_port_a0419134f57ef63fe35c3c530b7852bb4_cgraph" id="aclass_s_r_g_x_v_port_a0419134f57ef63fe35c3c530b7852bb4_cgraph">
+<area shape="rect" title="Class constructor." alt="" coords="5,13,177,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number." alt="" coords="225,5,378,48"/>
+<area shape="poly" title=" " alt="" coords="177,24,212,26,207,27,177,29"/>
+</map>
 </div>
 
 </div>
@@ -397,7 +409,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 3 -->
+<map name="aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph" id="aclass_s_r_g_x_v_port_ad1021d932ce15fc5c07a02c83282d38e_cgraph">
+<area shape="rect" title="Returns the state of the requested pin of the virtual port (SRGXVPort)." alt="" coords="5,5,171,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a025a8760411de0966ee40d246bbb164c" title="Reads the state of a specific pin in the virtual port." alt="" coords="219,5,397,32"/>
+<area shape="poly" title=" " alt="" coords="171,16,206,19,200,19,171,21"/>
+</map>
 </div>
 
 </div>
@@ -430,7 +446,11 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 4 -->
+<map name="aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph" id="aclass_s_r_g_x_v_port_a025a8760411de0966ee40d246bbb164c_icgraph">
+<area shape="rect" title="Reads the state of a specific pin in the virtual port." alt="" coords="219,5,397,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#ad1021d932ce15fc5c07a02c83282d38e" title="Returns the state of the requested pin of the virtual port (SRGXVPort)." alt="" coords="5,5,171,32"/>
+<area shape="poly" title=" " alt="" coords="200,19,171,21,171,16,206,19"/>
+</map>
 </div>
 
 </div>
@@ -469,7 +489,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 5 -->
+<map name="aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph" id="aclass_s_r_g_x_v_port_ad2d8382290927b4f48c47e5056592d12_cgraph">
+<area shape="rect" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,5,170,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#a9ccf2715e1c2993bf5de9ad906115de0" title="Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset)." alt="" coords="218,5,395,32"/>
+<area shape="poly" title=" " alt="" coords="170,16,205,19,199,19,170,21"/>
+</map>
 </div>
 
 </div>
@@ -513,7 +537,11 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 6 -->
+<map name="aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph" id="aclass_s_r_g_x_v_port_a9ccf2715e1c2993bf5de9ad906115de0_icgraph">
+<area shape="rect" title="Sets the state of a specific pin in the virtual port, either HIGH (0x01/Set) or LOW (0x00/Reset)." alt="" coords="218,5,395,32"/>
+<area shape="rect" href="class_s_r_g_x_v_port.html#ad2d8382290927b4f48c47e5056592d12" title="Set a specific pin to either HIGH (0x01) or LOW (0x00)." alt="" coords="5,5,170,32"/>
+<area shape="poly" title=" " alt="" coords="199,19,170,21,170,16,205,19"/>
+</map>
 </div>
 
 </div>
@@ -573,7 +601,11 @@ Here is the caller graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_ae88950db6634ee05060a0d080d739d11_icgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_ae88950db6634ee05060a0d080d739d11_icgraph" loading="lazy" alt=""/></div>
-<!-- MAP 7 -->
+<map name="aclass_s_r_g_x_v_port_ae88950db6634ee05060a0d080d739d11_icgraph" id="aclass_s_r_g_x_v_port_ae88950db6634ee05060a0d080d739d11_icgraph">
+<area shape="rect" title="Returns a pointer to the ShiftRegGPIOXpander object that provides the resources for the virtual port." alt="" coords="207,13,380,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a10566c68d46c779eb54e407a39893cef" title="Checks if the provided SRGXVPort object is valid." alt="" coords="5,5,159,48"/>
+<area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
+</map>
 </div>
 
 </div>
@@ -642,7 +674,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph.png" border="0" usemap="#aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph" loading="lazy" alt=""/></div>
-<!-- MAP 8 -->
+<map name="aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph" id="aclass_s_r_g_x_v_port_a95da7b2c72d85ae9ffb91c906b446836_cgraph">
+<area shape="rect" title="Reads the state of the virtual port as an integer value." alt="" coords="5,13,155,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a184e452056ea5b1fb11afacb8acfc23b" title="Returns a 16&#45;bits value containing a zero&#45;based segment of the Main Buffer." alt="" coords="203,5,356,48"/>
+<area shape="poly" title=" " alt="" coords="155,24,190,26,185,27,155,29"/>
+</map>
 </div>
 
 </div>

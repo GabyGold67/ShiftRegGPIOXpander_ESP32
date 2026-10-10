@@ -159,7 +159,7 @@ public:
     * 
     * @note There is no mechanism to flush the **Auxiliary** straight to the shift registers.  
     * 
-    * @attention Every method that invokes a Main Buffer modification -see digitalWriteSr(const uint8_t, const uint8_t), digitalWriteSrAllReset(), digitalWriteSrAllSet(), digitalWriteSrMaskReset(uint8_t*), digitalWriteSrMaskSet(uint8_t*) - and/or flushing -see bool _sendAllSRCntnt() - will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a moveAuxToMain() before returning the requested pin state. See digitalReadSr(const uint8_t) for more information.
+    * @attention Every method that invokes a Main Buffer modification -see digitalWrite(const uint8_t &, const uint8_t &), digitalWriteSr(const uint8_t &, const uint8_t &), digitalWriteSrAllReset(), digitalWriteSrAllSet(), digitalWriteSrMaskReset(uint8_t*), digitalWriteSrMaskSet(uint8_t*) - and/or flushing will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a moveAuxToMain() before returning the requested pin state. See digitalRead(const uint8_t &) for more information.
     */
    ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty = 1);
    /**
@@ -216,7 +216,7 @@ public:
     * 
     * @param strtPin The first pin number from which the segment will be taken. The valid range is 0 <= strtPin <= getMaxSRGXPin().
     * @param pinsQty The number of pins that will compose the segment. The valid range is 1 <= pinsQty <= (_maxSRGXPin - strtPin + 1).
-    * @param buffSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
+    * @param bffrSgmnt A reference to a uint16_t variable where the segment will be stored. The variable must be initialized before calling the method, and it will be set to 0 before setting the segment bits.
     * 
     * @return A boolean value indicating the success of the operation.
     * @retval true The segment was successfully retrieved and stored in the buffSgmnt variable.
@@ -548,12 +548,9 @@ public:
    bool shiftRttLeft(const uint8_t &qty);
    /**
     * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.
-    *
+    * The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * 
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
-    * 
-    * @note The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
-    * 
-    * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
     */
@@ -574,8 +571,6 @@ public:
     * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting.
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
-    * 
-    * @param qty 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
     * 
