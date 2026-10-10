@@ -1,6 +1,6 @@
 # Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXpander_ESP32)
 
-For 74HC595 and compatible SIPO Shift Registers
+For 74HCx595 and compatible SIPO Shift Registers
 
 ## [Complete library documentation HERE!](https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/)
 

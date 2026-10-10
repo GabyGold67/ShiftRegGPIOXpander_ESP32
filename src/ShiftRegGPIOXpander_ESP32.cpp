@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
  * @file ShiftRegGPIOXpander_ESP32.cpp
- * @brief Code file for the ShiftRegGPIOXtender_ESP32 library 
+ * @brief Code file for the ShiftRegGPIOXpander_ESP32 library 
  * 
  * 
  * 
@@ -17,7 +17,7 @@
  * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   02/10/2026 19:50 (GMT+0200) DST  
+ *       Last update:   10/10/2026 19:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************

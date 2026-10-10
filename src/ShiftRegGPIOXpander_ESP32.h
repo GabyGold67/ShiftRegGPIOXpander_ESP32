@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
  * @file ShiftRegGPIOXpander_ESP32.h
- * @brief Header file for the ShiftRegGPIOXtender_ESP32 library 
+ * @brief Header file for the ShiftRegGPIOXpander_ESP32 library 
  * 
  * @details The library provides the means to extend the GPIO available pins -**for digital output only**- by providing a pin output manipulation API similar to the provided by Arduino, for it's own GPIO pins, for shift registers attached to the controller. The class and related definitions are provided for 74HCx595 shift registers connected to the MCU by the required three pins for the first chip, daisy-chained to other similar chips as much as needed and technically supported (please read the datasheet of the selected model for references about those limits).
  * 
@@ -17,7 +17,7 @@
  * @version 3.2.0
  * 
  * @date First release: 12/02/2025  
- *       Last update:   02/10/2026 19:50 (GMT+0200) DST  
+ *       Last update:   10/10/2026 19:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -57,11 +57,11 @@ bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos);
 //===========================>> END General use functions prototypes
 
 /**
- * @brief A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
+ * @brief A class that models a GPIO output pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
  * 
- * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the number of shift registers daisy-chain connected is needed.  
+ * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the quantity of shift registers daisy-chained connected.  
  * 
- * Being those three parameters hardware construction related, no mechanisms are provided to modify them after the object is created.
+ * Being those four parameters hardware construction related, no mechanisms are provided to modify them after the object is created.
  * 
  * @class ShiftRegGPIOXpander
  */
@@ -115,18 +115,14 @@ private:
     * 
     * The method's action is limited to filling the shift register's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party, when the contents of all the shift registers are set to the desired values. The usual calling of this method is done by the _sendAllSRCntnt() method, which will flush the contents of the Main Buffer to the shift registers array.  
     * 
-    * @param data The byte to be sent to the shift register, the bits in the byte will be sent in the order from MSB to LSB (MSB First). 
+    * @param data The byte to be sent to the shift register, the bits in the byte will be sent in the order from MSb to LSb (MSb First). 
     * 
     * @return true Allways true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
     */
    bool _sendSnglSRCntnt(const uint8_t &data);
-
    bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-
    bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-
    bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-
    bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
 
 protected:
