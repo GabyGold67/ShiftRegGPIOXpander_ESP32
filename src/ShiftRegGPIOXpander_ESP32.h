@@ -142,16 +142,16 @@ public:
    /**
     * @brief Class constructor
     * 
-    * Instantiates a ShiftRegGPIOXpander object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement.  
+    * Instantiates a ShiftRegGPIOXpander object, the parameters provide the pins used to communicate with the shift registers and the number of daisy-chain shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement.  
     * 
-    * @param ds MCU GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HCx595 to send data serially to the expander
-    * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander
-    * @param st_cp MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input- to set (latch) the output pins from the internal buffer of the expander
+    * @param ds MCU GPIO pin connected to the DS pin -a.k.a. serial data input (SER)- pin of the 74HCx595 to send data serially to the expander
+    * @param sh_cp MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input (SRCLK)- of the 74HCx595 to manage the communication's clock line to the expander
+    * @param st_cp MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input (LTCH)- to set (latch) the output pins from the internal buffer of the expander
     * @param srQty Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.
     * 
     * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or **the Main**.  
     * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
-    * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the **Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
+    * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the **Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that must occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
     * 
     * @note There is no mechanism to flush the **Auxiliary** straight to the shift registers.  
     * 
@@ -179,7 +179,7 @@ public:
    /**
     * @brief Copies the Buffer content to the Auxiliary Buffer  
     * 
-    * - If there's no existent Auxiliary the method creates it and copies the content of the Main.  
+    * - If there's no existent Auxiliary the method creates it and copies the content from the Main.  
     * - If there's an Auxiliary, the method will proceed according to the value passed in the parameter:  
     * - If the parameter passed is true the Auxiliary contents will be overwritten with the Main contents.  
     * - If the parameter passed is false the Auxiliary will not be modified and the method will return a false to flag the failure of the operation.  
@@ -192,21 +192,21 @@ public:
     */
    bool copyMainToAux(const bool &overWriteIfExists = true);
    /**
-    * @brief Instantiate a SRGXVPort object
+    * @brief Instantiates a SRGXVPort object
     * 
-    * The method will create a SRGXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port. 
+    * The method will create a SRGXVPort object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins available to the virtual port. 
     * 
-    * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. The valid range is 0 <= strtPin <= getMaxSRGXPin().
+    * @param strtPin ShiftRegGPIOXpander pin number from which the virtual port will start. That ShiftRegGPIOXpander pin will correspond to the pin 0 of the new virtual port. The valid range is 0 <= strtPin <= getMaxSRGXPin().
     * @param pinsQty Number of pins that will compose the virtual port. The valid range is 1 <= pinsQty <= (getMaxSRGXPin() - strtPin + 1).
     * @return SRGXVPort The SRGXVPort object created, or an empty SRGXVPort object if the parameters provided were not valid.
     * 
-    * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, although using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object.  
+    * @attention Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value. Using the maximum amount of pins available by providing pinsQty = 0 and pinsQty = getMaxSRGXPin() will result in a virtual port that will be coincidental with the whole GPIOXpander object.  
     */
    SRGXVPort createSRGXVPort(const uint8_t &strtPin, const uint8_t &pinsQty);
    /**
     * @brief Returns a 16-bits value containing a zero-based segment of the Main Buffer.
     * 
-    * The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter.  
+    * The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter.  
     * 
     * @note The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.
     * 
@@ -229,10 +229,10 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
     * @retval 0x00 The pin state was LOW
     * @retval 0x01 The pin state was HIGH
-    * @retval -1 ERROR, the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
+    * @retval GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a int = -1 , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
     * 
     * @note The method's name, digitalRead(), is identical to the Arduino's digitalRead() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the ShiftRegGPIOXpander object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
-    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
+    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteSrToAux(const uint8_t, const uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
    int digitalRead(const uint8_t &srPin); 
@@ -244,9 +244,10 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
     * @retval 0x00 The pin state was LOW
     * @retval 0x01 The pin state was HIGH
-    * @retval 0xFF ERROR, the pin number was beyond implemented limit
+    * @retval GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to 0xFF , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
     * 
-    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
+    * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteSrToAux(const uint8_t, const uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
+    * 
     * @warning If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind.  
     */
    uint8_t digitalReadSr(const uint8_t &srPin);   
@@ -267,9 +268,9 @@ public:
      */
    bool digitalToggleSr(const uint8_t &srPin);
    /**
-    * @brief Toggles the state of all the pins.
+    * @brief Toggles the state of all the pins in the main buffer, analog to a logical NOT operation.
     * 
-    * @details The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
+    * @details The method will set each pin in the main buffer that was set HIGH (0x01) to LOW (0x00) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.
     * 
     * @attention As the values are written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the pins to be written values are different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a discardAux() will be performed before seting the new pin states.
     * 
