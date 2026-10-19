@@ -229,7 +229,9 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
     * @retval 0x00 The pin state was LOW
     * @retval 0x01 The pin state was HIGH
-    * @retval GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a int = -1 , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
+    * @retval GPIO_NUM_NC The input parameter srPin was out of valid range.  
+    * 
+    * @note GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a int = -1 , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
     * 
     * @note The method's name, digitalRead(), is identical to the Arduino's digitalRead() method to facilitate the addition of this library with the least amount of changes to existing code, just adding the ShiftRegGPIOXpander object instantitated before existing digitalRead() calls and providing the correct pin number as parameter.
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteSrToAux(const uint8_t, const uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
@@ -244,7 +246,9 @@ public:
     * @return The state value of the requested pin, either HIGH (0x01/Set) or LOW (0x00/Reset)
     * @retval 0x00 The pin state was LOW
     * @retval 0x01 The pin state was HIGH
-    * @retval GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to 0xFF , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
+    * @retval GPIO_NUM_NC The input parameter srPin was out of valid range.  
+    * 
+    * @note GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a uint8_t = 0xFF , indicating that the pin number was beyond implemented number of pins of the ShiftRegGPIOXpander object.
     * 
     * @attention The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteSrToAux(const uint8_t, const uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency  the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state.  
     * 
@@ -300,9 +304,9 @@ public:
     * 
     * @param srPin A positive value indicating which pin to toggle. The valid range is 0 <= srPin <= getMaxSRGXPin()  
     * 
-    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).
+    * @attention The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then when all the simultaneous modifications are done, proceed with the bool moveAuxToMain(bool).
     * 
-    * @note An alternative procedure analog to the use of .print() and .println() methods is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
+    * @note An alternative procedure -analog to the use of .print() and .println() methods- is to invoke the several digitalToggleSrToAux() methods needed but the last, and then invoke a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.
     * 
     * @return A boolean value indicating the success of the operation.
     * @retval true The operation was successful, the pin was toggled in the Auxiliary Buffer.
@@ -354,41 +358,42 @@ public:
    */
    bool digitalWriteSrAllSet();
   /**
-   * @brief Modifies the Main buffer contents by resetting simultaneously certain pins.
+   * @brief Modifies the Main buffer contents by setting LOW (0x00/Reset) simultaneously certain pins.
    * 
-   * The pins to be reset are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).
+   * The pins to be reset are provided by a mask pointed by parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).
    * 
    * @param resetMask Pointer to the array containing the mask to modify the Main.
    * 
    * @note The method provides a mechanism for clearing (reseting/lowering) various Main buffer bit positions in a single operation.
    * 
-   * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
+   * @attention Any modifications made in the Auxiliary will be moved to the Main and the auxiliary will be deleted before applying the mask.  
    * 
    * @attention The Main Buffer will be flushed after the mask modifications are applied.
    * 
    * @return A boolean value indicating the success of the operation.
    * @retval true The operation was successful, the pins were reset in the Main Buffer and the change was flushed to the GPIO pins.
-   * @retval false The operation failed, either because the mask was null or because the mutexes could not be taken.
+   * @retval false The operation failed, either because the mask pointer was null or because the mutexes could not be taken.
    */
    bool digitalWriteSrMaskReset(uint8_t* resetMask);
    /**
-   * @brief Modifies the Main buffer contents by setting simultaneously certain pins.
+   * @brief Modifies the Main buffer contents by setting HIGH (0x01/Set) simultaneously certain pins.
    * 
-   * The pins to be set are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01).  
+   * The pins to be set are provided by a mask pointed by parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01).  
    * 
    * @param setMask Pointer to the array containing the mask to modify the Main.
    * 
    * @note The method provides a mechanism for seting (rising) various Main buffer bit positions in a single operation.
    * 
-   * @attention Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask.  
+   * @attention Any modifications made in the Auxiliary will be moved to the Main and the auxiliary will be deleted before applying the mask.  
    * 
    * @attention The Main Buffer will be flushed after the mask modifications are applied.
    * 
    * @return A boolean value indicating the success of the operation.
    * @retval true The operation was successful, the pins were set in the Main Buffer and the change was flushed to the GPIO pins.
-   * @retval false The operation failed, either because the mask was null or because the mutexes could not be taken.
+   * @retval false The operation failed, either because the mask pointer was null or because the mutexes could not be taken.
    */
    bool digitalWriteSrMaskSet(uint8_t* setMask);  
+   //TODO: Continue edition from here
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
