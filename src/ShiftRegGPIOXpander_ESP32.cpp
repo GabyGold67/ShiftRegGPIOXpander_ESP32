@@ -62,35 +62,47 @@ ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
       delete [] _mainBuffrArryPtr;
       _mainBuffrArryPtr = nullptr;
    }
+   if(_SRGXMnBffrMtx != nullptr){
+      vSemaphoreDelete(_SRGXMnBffrMtx);
+      _SRGXMnBffrMtx = nullptr;
+   }
+   if(_SRGXAuxBffrMtx != nullptr){
+      vSemaphoreDelete(_SRGXAuxBffrMtx);
+      _SRGXAuxBffrMtx = nullptr;
+   }
+   _begun = false;
 }
 
 bool ShiftRegGPIOXpander::begin(uint8_t* initCntnt){
    bool result{true};
 
-   ::digitalWrite(_sh_cp, HIGH);
-   ::digitalWrite(_ds, LOW);
-   ::digitalWrite(_st_cp, HIGH);
-   pinMode(_sh_cp, OUTPUT);
-   pinMode(_ds, OUTPUT);
-   pinMode(_st_cp, OUTPUT);
+   if(!_begun){
+      ::digitalWrite(_sh_cp, HIGH);
+      ::digitalWrite(_ds, LOW);
+      ::digitalWrite(_st_cp, HIGH);
+      pinMode(_sh_cp, OUTPUT);
+      pinMode(_ds, OUTPUT);
+      pinMode(_st_cp, OUTPUT);
 
-   _SRGXMnBffrMtx = xSemaphoreCreateMutex();
-   _SRGXAuxBffrMtx = xSemaphoreCreateMutex();
+      _SRGXMnBffrMtx = xSemaphoreCreateMutex();
+      _SRGXAuxBffrMtx = xSemaphoreCreateMutex();
 
-   if(_SRGXMnBffrMtx == nullptr || _SRGXAuxBffrMtx == nullptr)
-      result = false;
-
-   if(result){
-      if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
-         if(initCntnt != nullptr)
-            memcpy(_mainBuffrArryPtr, initCntnt, _srQty);
-         else
-            memset(_mainBuffrArryPtr,0x00, _srQty);
-         _sendAllSRCntnt();
-         xSemaphoreGive(_SRGXMnBffrMtx);
-      }
-      else 
+      if(_SRGXMnBffrMtx == nullptr || _SRGXAuxBffrMtx == nullptr)
          result = false;
+
+      if(result){
+         if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
+            if(initCntnt != nullptr)
+               memcpy(_mainBuffrArryPtr, initCntnt, _srQty);
+            else
+               memset(_mainBuffrArryPtr,0x00, _srQty);
+            _sendAllSRCntnt();
+            xSemaphoreGive(_SRGXMnBffrMtx);
+            _begun = true;
+         }
+         else 
+            result = false;
+      }
    }
 
    return result;
@@ -449,6 +461,8 @@ bool ShiftRegGPIOXpander::discardAux(){
 }
 
 void ShiftRegGPIOXpander::end(){
+   moveAuxToMain();
+   _sendAllSRCntnt();
 
    return;
 }

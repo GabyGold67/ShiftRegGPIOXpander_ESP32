@@ -72,6 +72,7 @@ private:
    uint8_t _sh_cp{};
    uint8_t _st_cp{};
 
+   bool _begun{false};
    bool _otpInvrtd{false};
 
    /*
@@ -393,7 +394,6 @@ public:
    * @retval false The operation failed, either because the mask pointer was null or because the mutexes could not be taken.
    */
    bool digitalWriteSrMaskSet(uint8_t* setMask);  
-   //TODO: Continue edition from here
    /**
    * @brief Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer
    * 
@@ -421,6 +421,8 @@ public:
    bool discardAux();
    /**
     * @brief Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method.  
+    * 
+    * To ensure the correct shiftRegGPIOXpander object deactivation, the method will copy any changes on the auxiliary buffer to the main buffer, and flush the main buffer to the shift registers, will free the memory allocated to the buffers and will delete the mutexes used to protect the buffers.
     * 
     * The method will be invoked as part of the class destructor.  
     */
@@ -450,7 +452,7 @@ public:
      * 
      * @return uint8_t maxPin number value.  
      * 
-     * @note The value will be used as a limit for the pin numbers to be used in the digitalWriteSr(const uint8_t, const uint8_t) and digitalReadSr(const uint8_t) methods.  
+     * @note The value will be used as a limit for the pin numbers to be used in every method that depends on the pin number as a parameter.  
      */
    uint8_t getMaxSRGXPin();
    /**
@@ -459,6 +461,8 @@ public:
      * The value is passed as a parameter in the class constructor.  
      * 
      * @return uint8_t The number of shift registers composing the physical port extender modeled by the class.  
+     * 
+     * @note The value will be used to determine the size of the buffers, the size of the masks, the size of arrays needed to hold prebuilt masks, and the maximum pin number available.
      */
    uint8_t getSrQty();
    /**
@@ -470,7 +474,7 @@ public:
     * @return true The created SRGXVPort object is valid and usable.  
     * @return false The created SRGXVPort object is not valid, and should not be used.
     * 
-    * @note If the method returns false, the SRGXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
+    * @attention If the method returns false, the SRGXVPort object should not be used. Consider destructing it and creating a new one with valid parameters.
     */
    bool isValid(SRGXVPort &VPort);
    /**
@@ -483,7 +487,7 @@ public:
     * 
     * @return The success of moving the data from the Auxiliary to the Main.  
     * @retval true There was an Auxiliary and it's value could be moved.  
-    * @retval false There was no Auxiliary present, no data have been moved.  
+    * @retval false There was no Auxiliary present, no data has been moved.  
     */
    bool moveAuxToMain();
    /**
@@ -506,6 +510,7 @@ public:
     * @note setBit(n) is a synonym for digitalWriteSr(n, HIGH), and is provided for shortening and using more meaningful name in the code.
     */
    bool setBit(const uint8_t &srPin);
+   //TODO: Conatinue code checking from here on.
    /**
     * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.
     *
