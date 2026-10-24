@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('class_shift_re
 </div><!--header-->
 <div class="contents">
 
-<p>A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers.  
+<p>A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIPO) shift registers.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_shift_reg_g_p_i_o_xpander___e_s_p32_8h_source.html">ShiftRegGPIOXpander_ESP32.h</a>&gt;</code></p>
@@ -122,7 +122,7 @@ Inheritance diagram for ShiftRegGPIOXpander:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander__inherit__graph.png" border="0" usemap="#a_shift_reg_g_p_i_o_xpander_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_shift_reg_g_p_i_o_xpander_inherit__map" id="a_shift_reg_g_p_i_o_xpander_inherit__map">
-<area shape="rect" title="A class that models a GPIO outputs pins expander through the use of 8&#45;bits Serial In Paralell Out (SI..." alt="" coords="5,5,159,32"/>
+<area shape="rect" title="A class that models a GPIO output pins expander through the use of 8&#45;bits Serial In parallel Out (SIP..." alt="" coords="5,5,159,32"/>
 <area shape="rect" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object." alt="" coords="36,80,128,107"/>
 <area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
 </map>
@@ -142,17 +142,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a58b895bd50325c063a71d2ad4da1c961" id="r_a58b895bd50325c063a71d2ad4da1c961"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a58b895bd50325c063a71d2ad4da1c961">copyMainToAux</a> (const bool &amp;overWriteIfExists=true)</td></tr>
 <tr class="memdesc:a58b895bd50325c063a71d2ad4da1c961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the Buffer content to the Auxiliary Buffer.  <br /></td></tr>
 <tr class="memitem:ac36a36a34fbcf6b9761e201599f3bacc" id="r_ac36a36a34fbcf6b9761e201599f3bacc"><td class="memItemLeft"><a class="el" href="class_s_r_g_x_v_port.html">SRGXVPort</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac36a36a34fbcf6b9761e201599f3bacc">createSRGXVPort</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
-<tr class="memdesc:ac36a36a34fbcf6b9761e201599f3bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object.  <br /></td></tr>
+<tr class="memdesc:ac36a36a34fbcf6b9761e201599f3bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiates a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object.  <br /></td></tr>
 <tr class="memitem:a184e452056ea5b1fb11afacb8acfc23b" id="r_a184e452056ea5b1fb11afacb8acfc23b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a184e452056ea5b1fb11afacb8acfc23b">digitalReadSgmntSr</a> (const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty, uint16_t &amp;bffrSgmnt)</td></tr>
 <tr class="memdesc:a184e452056ea5b1fb11afacb8acfc23b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 16-bits value containing a zero-based segment of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:a81ac29c6ff0866d2d4b4b4830fbd0cf3" id="r_a81ac29c6ff0866d2d4b4b4830fbd0cf3"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3">digitalRead</a> (const uint8_t &amp;srPin)</td></tr>
-<tr class="memdesc:a81ac29c6ff0866d2d4b4b4830fbd0cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a>.  <br /></td></tr>
+<tr class="memdesc:a81ac29c6ff0866d2d4b4b4830fbd0cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a>.  <br /></td></tr>
 <tr class="memitem:ad0a3e91286d39a4c9622b1382febf4cb" id="r_ad0a3e91286d39a4c9622b1382febf4cb"><td class="memItemLeft">uint8_t&#160;</td><td class="memItemRight"><a class="el" href="#ad0a3e91286d39a4c9622b1382febf4cb">digitalReadSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:ad0a3e91286d39a4c9622b1382febf4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the requested pin.  <br /></td></tr>
 <tr class="memitem:a4a517bdf7225c90b2cb03ee8411d89d4" id="r_a4a517bdf7225c90b2cb03ee8411d89d4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4a517bdf7225c90b2cb03ee8411d89d4">digitalToggleSr</a> (const uint8_t &amp;srPin)</td></tr>
 <tr class="memdesc:a4a517bdf7225c90b2cb03ee8411d89d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of a specific pin.  <br /></td></tr>
 <tr class="memitem:aa0f8d20d721798dd2fbf8ca6bcd9b72f" id="r_aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa0f8d20d721798dd2fbf8ca6bcd9b72f">digitalToggleSrAll</a> ()</td></tr>
-<tr class="memdesc:aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of all the pins.  <br /></td></tr>
+<tr class="memdesc:aa0f8d20d721798dd2fbf8ca6bcd9b72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of all the pins in the main buffer, analog to a logical NOT operation.  <br /></td></tr>
 <tr class="memitem:a8fa463061fbfe427c32989d1de5f223e" id="r_a8fa463061fbfe427c32989d1de5f223e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a8fa463061fbfe427c32989d1de5f223e">digitalToggleSrMask</a> (uint8_t *toggleMask)</td></tr>
 <tr class="memdesc:a8fa463061fbfe427c32989d1de5f223e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the state of the pins in the Main Buffer according to the provided mask.  <br /></td></tr>
 <tr class="memitem:ac146784b47a23b82c7b883a18c7d7d17" id="r_ac146784b47a23b82c7b883a18c7d7d17"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac146784b47a23b82c7b883a18c7d7d17">digitalToggleSrToAux</a> (const uint8_t &amp;srPin)</td></tr>
@@ -166,9 +166,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a72de570d1e6827c9f1dfb671c5d946be" id="r_a72de570d1e6827c9f1dfb671c5d946be"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be">digitalWriteSrAllSet</a> ()</td></tr>
 <tr class="memdesc:a72de570d1e6827c9f1dfb671c5d946be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all the pins to HIGH (0x01).  <br /></td></tr>
 <tr class="memitem:ae1bb2e62d05b98d61dc7656ceefc8d63" id="r_ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63">digitalWriteSrMaskReset</a> (uint8_t *resetMask)</td></tr>
-<tr class="memdesc:ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by resetting simultaneously certain pins.  <br /></td></tr>
+<tr class="memdesc:ae1bb2e62d05b98d61dc7656ceefc8d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting LOW (0x00/Reset) simultaneously certain pins.  <br /></td></tr>
 <tr class="memitem:a08f08f74efdbbff4495bb358d5c6fba4" id="r_a08f08f74efdbbff4495bb358d5c6fba4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4">digitalWriteSrMaskSet</a> (uint8_t *setMask)</td></tr>
-<tr class="memdesc:a08f08f74efdbbff4495bb358d5c6fba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting simultaneously certain pins.  <br /></td></tr>
+<tr class="memdesc:a08f08f74efdbbff4495bb358d5c6fba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the Main buffer contents by setting HIGH (0x01/Set) simultaneously certain pins.  <br /></td></tr>
 <tr class="memitem:a220f5165290249e021a0876559042824" id="r_a220f5165290249e021a0876559042824"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a220f5165290249e021a0876559042824">digitalWriteSrToAux</a> (const uint8_t srPin, const uint8_t value)</td></tr>
 <tr class="memdesc:a220f5165290249e021a0876559042824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.  <br /></td></tr>
 <tr class="memitem:add3b6fc39542cec1b278cdad9222d3aa" id="r_add3b6fc39542cec1b278cdad9222d3aa"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa">discardAux</a> ()</td></tr>
@@ -182,7 +182,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a54a0ba6144b5760e7d6ddc0051226b4f" id="r_a54a0ba6144b5760e7d6ddc0051226b4f"><td class="memItemLeft">uint8_t&#160;</td><td class="memItemRight"><a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f">getMaxSRGXPin</a> ()</td></tr>
 <tr class="memdesc:a54a0ba6144b5760e7d6ddc0051226b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the greatest valid pin number.  <br /></td></tr>
 <tr class="memitem:a1857b10f93cd3adadf73da5907891152" id="r_a1857b10f93cd3adadf73da5907891152"><td class="memItemLeft">uint8_t&#160;</td><td class="memItemRight"><a class="el" href="#a1857b10f93cd3adadf73da5907891152">getSrQty</a> ()</td></tr>
-<tr class="memdesc:a1857b10f93cd3adadf73da5907891152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the quantity of shift registers composing the GPIOXtender object.  <br /></td></tr>
+<tr class="memdesc:a1857b10f93cd3adadf73da5907891152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the quantity of shift registers composing the GPIOXpander object.  <br /></td></tr>
 <tr class="memitem:a10566c68d46c779eb54e407a39893cef" id="r_a10566c68d46c779eb54e407a39893cef"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a10566c68d46c779eb54e407a39893cef">isValid</a> (<a class="el" href="class_s_r_g_x_v_port.html">SRGXVPort</a> &amp;VPort)</td></tr>
 <tr class="memdesc:a10566c68d46c779eb54e407a39893cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the provided <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object is valid.  <br /></td></tr>
 <tr class="memitem:a5b1b5425acdf923e13c75c7ae47c4a7c" id="r_a5b1b5425acdf923e13c75c7ae47c4a7c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c">moveAuxToMain</a> ()</td></tr>
@@ -196,37 +196,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad315aacf2baf51a7c88f9cbff26d4d4c" id="r_ad315aacf2baf51a7c88f9cbff26d4d4c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c">shiftStdRight</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:ad315aacf2baf51a7c88f9cbff26d4d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.  <br /></td></tr>
 <tr class="memitem:ad4832d031e1bf996139e394a2f96d683" id="r_ad4832d031e1bf996139e394a2f96d683"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad4832d031e1bf996139e394a2f96d683">shiftRttLeft</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:ad4832d031e1bf996139e394a2f96d683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.  <br /></td></tr>
+<tr class="memdesc:ad4832d031e1bf996139e394a2f96d683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates the contents of the Main Buffer to the left by a specified quantity of bits. The method will flush the buffer after shifting.  <br /></td></tr>
 <tr class="memitem:a5f80a925d6e3c9bc29b8c5df2805c2e8" id="r_a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8">shiftRttRight</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.  <br /></td></tr>
+<tr class="memdesc:a5f80a925d6e3c9bc29b8c5df2805c2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates the contents of the Main Buffer to the right by a specified quantity of bits. The method will flush the buffer after shifting.  <br /></td></tr>
 <tr class="memitem:a9b814bf2c2d380dfdea459e82a2c5550" id="r_a9b814bf2c2d380dfdea459e82a2c5550"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550">shiftArthmLeft</a> (const uint8_t &amp;qty)</td></tr>
 <tr class="memdesc:a9b814bf2c2d380dfdea459e82a2c5550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.  <br /></td></tr>
 <tr class="memitem:aadb6da2d42f697e393def159ef970d5d" id="r_aadb6da2d42f697e393def159ef970d5d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aadb6da2d42f697e393def159ef970d5d">shiftArthmRight</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:aadb6da2d42f697e393def159ef970d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting.  <br /></td></tr>
+<tr class="memdesc:aadb6da2d42f697e393def159ef970d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The method will flush the buffer after the complete shifting process is concluded.  <br /></td></tr>
 <tr class="memitem:ad384c3227e4d7e180b6e593dfc6d98c3" id="r_ad384c3227e4d7e180b6e593dfc6d98c3"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad384c3227e4d7e180b6e593dfc6d98c3">shiftStdLeftToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:ad384c3227e4d7e180b6e593dfc6d98c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftStdLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:ad384c3227e4d7e180b6e593dfc6d98c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftStdLeft(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:aca7526f0376b2a352906f742c87c8757" id="r_aca7526f0376b2a352906f742c87c8757"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aca7526f0376b2a352906f742c87c8757">shiftStdRightToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:aca7526f0376b2a352906f742c87c8757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftStdRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:aca7526f0376b2a352906f742c87c8757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftStdRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:af68265d16c855e32ebaf03944a507ffc" id="r_af68265d16c855e32ebaf03944a507ffc"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af68265d16c855e32ebaf03944a507ffc">shiftRttLeftToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:af68265d16c855e32ebaf03944a507ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#ad4832d031e1bf996139e394a2f96d683" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftRttLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:af68265d16c855e32ebaf03944a507ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#ad4832d031e1bf996139e394a2f96d683" title="Rotates the contents of the Main Buffer to the left by a specified quantity of bits....">shiftRttLeft(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:ab7c1c4f82b5e580581920ee69b76017e" id="r_ab7c1c4f82b5e580581920ee69b76017e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab7c1c4f82b5e580581920ee69b76017e">shiftRttRightToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:ab7c1c4f82b5e580581920ee69b76017e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftRttRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:ab7c1c4f82b5e580581920ee69b76017e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8" title="Rotates the contents of the Main Buffer to the right by a specified quantity of bits....">shiftRttRight(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:aa092f348a8780956b96dfe70d461dc8d" id="r_aa092f348a8780956b96dfe70d461dc8d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa092f348a8780956b96dfe70d461dc8d">shiftArthmLeftToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:aa092f348a8780956b96dfe70d461dc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftArthmLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:aa092f348a8780956b96dfe70d461dc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftArthmLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:a4859861fc1f19cb58d3d530766ae058f" id="r_a4859861fc1f19cb58d3d530766ae058f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4859861fc1f19cb58d3d530766ae058f">shiftArthmRightToAux</a> (const uint8_t &amp;qty)</td></tr>
-<tr class="memdesc:a4859861fc1f19cb58d3d530766ae058f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#aadb6da2d42f697e393def159ef970d5d" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftArthmRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.  <br /></td></tr>
+<tr class="memdesc:a4859861fc1f19cb58d3d530766ae058f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Analog to the <a class="el" href="#aadb6da2d42f697e393def159ef970d5d" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftArthmRight(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.  <br /></td></tr>
 <tr class="memitem:a80480ab756fbeaa76658aadb7e9d9dee" id="r_a80480ab756fbeaa76658aadb7e9d9dee"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a80480ab756fbeaa76658aadb7e9d9dee">stampMaskOverMain</a> (uint8_t *maskPtr, uint8_t *valsPtr)</td></tr>
-<tr class="memdesc:a80480ab756fbeaa76658aadb7e9d9dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.  <br /></td></tr>
+<tr class="memdesc:a80480ab756fbeaa76658aadb7e9d9dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of several scattered pins in the Main Buffer, according to the provided mask and values.  <br /></td></tr>
 <tr class="memitem:a07e5c7279e11044eec16e9d9020a77cf" id="r_a07e5c7279e11044eec16e9d9020a77cf"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a07e5c7279e11044eec16e9d9020a77cf">stampOverMain</a> (uint8_t *newCntntPtr)</td></tr>
 <tr class="memdesc:a07e5c7279e11044eec16e9d9020a77cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all of the output pins of the shift register to new provided values at once.  <br /></td></tr>
 <tr class="memitem:a6c1c01fb3d0195358ca0c9868f9ac122" id="r_a6c1c01fb3d0195358ca0c9868f9ac122"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6c1c01fb3d0195358ca0c9868f9ac122">stampSgmntOverMain</a> (uint8_t *newSgmntPtr, const uint8_t &amp;strtPin, const uint8_t &amp;pinsQty)</td></tr>
 <tr class="memdesc:a6c1c01fb3d0195358ca0c9868f9ac122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a set of consecutive pins (the segment) in the Main Buffer.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers. </p>
-<p>The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the number of shift registers daisy-chain connected is needed. <br  />
+<div class="textblock"><p>A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIPO) shift registers. </p>
+<p>The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the quantity of shift registers daisy-chained connected. <br  />
 </p>
-<p>Being those three parameters hardware construction related, no mechanisms are provided to modify them after the object is created. </p>
+<p>Being those four parameters hardware construction related, no mechanisms are provided to modify them after the object is created. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5bec8b90536ec0a1a1d1766fc68c7ce1" name="a5bec8b90536ec0a1a1d1766fc68c7ce1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bec8b90536ec0a1a1d1766fc68c7ce1">&#9670;&#160;</a></span>ShiftRegGPIOXpander()</h2>
@@ -258,25 +258,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Class constructor. </p>
-<p>Instantiates a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object, the parameters provide the pins used to communicate with the shift registers and the number of shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement. <br  />
+<p>Instantiates a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object, the parameters provide the pins used to communicate with the shift registers and the number of daisy-chain shift registers composing the expander. 8-bits will be added with every shift register connected in a daisy-chain arrangement. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ds</td><td>MCU GPIO pin connected to the DS pin -a.k.a. serial data input (DIO)- pin of the 74HCx595 to send data serially to the expander </td></tr>
-    <tr><td class="paramname">sh_cp</td><td>MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input- of the 74HCx595 to manage the communication's clock line to the expander </td></tr>
-    <tr><td class="paramname">st_cp</td><td>MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input- to set (latch) the output pins from the internal buffer of the expander </td></tr>
+    <tr><td class="paramname">ds</td><td>MCU GPIO pin connected to the DS pin -a.k.a. serial data input (SER)- pin of the 74HCx595 to send data serially to the expander </td></tr>
+    <tr><td class="paramname">sh_cp</td><td>MCU GPIO pin connected to the SH_CP pin -a.k.a. shift register clock input (SRCLK)- of the 74HCx595 to manage the communication's clock line to the expander </td></tr>
+    <tr><td class="paramname">st_cp</td><td>MCU GPIO pin connected to the ST_CP pin -a.k.a. storage register clock input (LTCH)- to set (latch) the output pins from the internal buffer of the expander </td></tr>
     <tr><td class="paramname">srQty</td><td>Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the <b>Main Buffer</b>, <b>the Buffer</b> or <b>the Main</b>. <br  />
- The action of sending the Buffer contents to the shift registers array will be reffered as <b>Flushing</b>. Every time the Buffer is <b>flushed</b> to the shift registers array the whole contents of that array will be sent. <br  />
- A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the <b>Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
+ The action of sending the Buffer contents to the shift registers array will be referred as <b>Flushing</b>. Every time the Buffer is <b>flushed</b> to the shift registers array the whole contents of that array will be sent. <br  />
+ A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the <b>Auxiliary Buffer</b> or <b>the Auxiliary</b>. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that must occur simultaneously to the Auxiliary Buffer and then <b>moving</b> the Auxiliary Buffer to the Main Buffer and flushing the Buffer. <br  />
 </dd>
 <dd>
 There is no mechanism to flush the <b>Auxiliary</b> straight to the shift registers. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWriteSr(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63" title="Modifies the Main buffer contents by resetting simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4" title="Modifies the Main buffer contents by setting simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead(const uint8_t &amp;)</a> for more information. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Every method that invokes a Main Buffer modification -see <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#a650d0f6589b37aefb2f7fb009619da2f" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWriteSr(const uint8_t &amp;, const uint8_t &amp;)</a>, <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a>, <a class="el" href="#a72de570d1e6827c9f1dfb671c5d946be" title="Sets all the pins to HIGH (0x01).">digitalWriteSrAllSet()</a>, <a class="el" href="#ae1bb2e62d05b98d61dc7656ceefc8d63" title="Modifies the Main buffer contents by setting LOW (0x00/Reset) simultaneously certain pins.">digitalWriteSrMaskReset(uint8_t*)</a>, <a class="el" href="#a08f08f74efdbbff4495bb358d5c6fba4" title="Modifies the Main buffer contents by setting HIGH (0x01/Set) simultaneously certain pins.">digitalWriteSrMaskSet(uint8_t*)</a> - and/or flushing will force first the Auxiliary to be moved over the Main Buffer, destroy the Auxiliary, perform the intended operation over the Main Buffer and then finally flush the resulting Main Buffer contents to the shift registers. This procedure is enforced to guarantee buffer contents consistency and avoid any loss of modifications done to the Auxiliary. The digitalReadSr(const uint8_t) method will also invoke a <a class="el" href="#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main.">moveAuxToMain()</a> before returning the requested pin state. See <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead(const uint8_t &amp;)</a> for more information. </dd></dl>
 
 </div>
 </div>
@@ -305,6 +305,8 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Class destructor." alt="" coords="5,5,175,48"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="223,13,405,40"/>
 <area shape="poly" title=" " alt="" coords="175,24,210,26,204,27,175,29"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="453,5,606,48"/>
+<area shape="poly" title=" " alt="" coords="406,24,440,27,435,27,406,29"/>
 </map>
 </div>
 
@@ -381,7 +383,7 @@ Here is the call graph for this function:</div>
 
 <p>Copies the Buffer content to the Auxiliary Buffer. </p>
 <ul>
-<li>If there's no existent Auxiliary the method creates it and copies the content of the Main. <br  />
+<li>If there's no existent Auxiliary the method creates it and copies the content from the Main. <br  />
 </li>
 <li>If there's an Auxiliary, the method will proceed according to the value passed in the parameter: <br  />
 </li>
@@ -429,23 +431,23 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Instantiate a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object. </p>
-<p>The method will create a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins that compose the virtual port.</p>
+<p>Instantiates a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object. </p>
+<p>The method will create a <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object, a virtual port that will allow the user to manipulate a set of pins as a single entity, with it's pins numbered from 0 to pinsQty - 1, where pinsQty is the number of pins available to the virtual port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">strtPin</td><td><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> pin number from which the virtual port will start. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
+    <tr><td class="paramname">strtPin</td><td><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> pin number from which the virtual port will start. That <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> pin will correspond to the pin 0 of the new virtual port. The valid range is 0 &lt;= strtPin &lt;= <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>. </td></tr>
     <tr><td class="paramname">pinsQty</td><td>Number of pins that will compose the virtual port. The valid range is 1 &lt;= pinsQty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> - strtPin + 1). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> The <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object created, or an empty <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object if the parameters provided were not valid.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value, although using the maximum amount of pins available make no sense as the virtual port will be the same as the whole GPIOXpander object. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Note that as described, the minimum amount of pins that can be set in a virtual port is 1, and the maximum amount of pins that can be set in a virtual port is equal to the number of shift registers multiplied by 8 minus the strtPin value. Using the maximum amount of pins available by providing pinsQty = 0 and pinsQty = <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> will result in a virtual port that will be coincidental with the whole GPIOXpander object. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph" loading="lazy" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ac36a36a34fbcf6b9761e201599f3bacc_cgraph">
-<area shape="rect" title="Instantiate a SRGXVPort object." alt="" coords="5,5,159,48"/>
+<area shape="rect" title="Instantiates a SRGXVPort object." alt="" coords="5,5,159,48"/>
 <area shape="rect" href="class_s_r_g_x_v_port.html#aaabc03e2f99a9cc58767cc4a09044600" title="Default constructor." alt="" coords="207,13,378,40"/>
 <area shape="poly" title=" " alt="" coords="159,24,194,26,188,27,159,29"/>
 </map>
@@ -468,7 +470,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the state of the requested pin of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a>. </p>
+<p>Returns the state of the requested pin of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">srPin</td><td>Pin whose current value is required.</td></tr>
@@ -480,12 +482,15 @@ Here is the call graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">0x00</td><td>The pin state was LOW </td></tr>
     <tr><td class="paramname">0x01</td><td>The pin state was HIGH </td></tr>
-    <tr><td class="paramname">-1</td><td>ERROR, the pin number was beyond implemented number of pins of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object.</td></tr>
+    <tr><td class="paramname">GPIO_NUM_NC</td><td>The input parameter srPin was out of valid range. <br  />
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The method's name, <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a>, is identical to the Arduino's <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object instantitated before existing <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state. <br  />
+<dl class="section note"><dt>Note</dt><dd>GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a int = -1 , indicating that the pin number was beyond implemented number of pins of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object.</dd>
+<dd>
+The method's name, <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a>, is identical to the Arduino's <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object instantitated before existing <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the <a class="el" href="#a220f5165290249e021a0876559042824" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.">digitalWriteSrToAux(const uint8_t, const uint8_t)</a> method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state. <br  />
  </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
 <div class="dynheader">
@@ -526,7 +531,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Returns a 16-bits value containing a zero-based segment of the Main Buffer. </p>
-<p>The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (or right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter. <br  />
+<p>The method will return a 16-bits value containing the bits from the Main Buffer delimited by the parameters provided, formatted as a zero-based segment (right aligned value), meaning that the first bit of the segment will hold the value of the strtPin parameter, and subsequent bits will hold the values of the following pins, up to the pinsQty parameter. <br  />
 </p>
 <dl class="section note"><dt>Note</dt><dd>The retuning value will be a 16-bits value, even if the segment requested is smaller than 16 bits. The bits in the returned value will be right aligned, and zero padded, meaning that if the segment requested is smaller than 16 bits, the leftmost bits of the returned value will be set to 0x00.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -586,12 +591,14 @@ Here is the caller graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">0x00</td><td>The pin state was LOW </td></tr>
     <tr><td class="paramname">0x01</td><td>The pin state was HIGH </td></tr>
-    <tr><td class="paramname">0xFF</td><td>ERROR, the pin number was beyond implemented limit</td></tr>
+    <tr><td class="paramname">GPIO_NUM_NC</td><td>The input parameter srPin was out of valid range. <br  />
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the digitalWriteAux(const uint8_t, uint8_t) method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state. <br  />
- </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>GPIO_NUM_NC The value assigned to flag an out of range pin number ERROR, equivalent to a uint8_t = 0xFF , indicating that the pin number was beyond implemented number of pins of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The value is retrieved from the object's Buffer, not the real chip. If a change to the Auxiliary was made by using the <a class="el" href="#a220f5165290249e021a0876559042824" title="Set a specific pin to either HIGH (0x01) or LOW (0x00) in the Auxiliary Buffer.">digitalWriteSrToAux(const uint8_t, const uint8_t)</a> method (deferred update digital output pin value setting), without updating the Main Buffer an inconsistency might appear if the srPin to be read value is different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a moveAuxToMain(true) will be performed before returning the pin state. <br  />
+</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If a moveAuxToMain(true) had to be executed, the Auxiliary will be destroyed. This will have no major consequences as every new need of the Auxiliary will automatically create a new instance of that buffer, but keep this concept in mind. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -678,8 +685,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Toggles the state of all the pins. </p>
-<p>The method will set all the pins to LOW (0x00) if they were HIGH (0x01) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.</p>
+<p>Toggles the state of all the pins in the main buffer, analog to a logical NOT operation. </p>
+<p>The method will set each pin in the main buffer that was set HIGH (0x01) to LOW (0x00) and vice versa. The method will flush the buffer, so the change will be reflected on all the GPIO pins.</p>
 <dl class="section attention"><dt>Attention</dt><dd>As the values are written to the object's Buffer, the existence of the Auxiliary (by a deferred update digital output pin value setting), an inconsistency might appear if the pins to be written values are different in the Main from the Auxiliary. For ensuring data consistency the method checks for the Auxiliary existence, if the Auxiliary exists a <a class="el" href="#add3b6fc39542cec1b278cdad9222d3aa" title="Deletes the Auxiliary Buffer.">discardAux()</a> will be performed before seting the new pin states.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
@@ -751,8 +758,8 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then proceed with the bool moveAuxToMain(bool).</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>An alternative procedure analog to the use of .print() and .println() methods is to invoke the several <a class="el" href="#ac146784b47a23b82c7b883a18c7d7d17" title="Toggles the state of a specific pin in the Auxiliary Buffer.">digitalToggleSrToAux()</a> methods needed but the last, and then invoking a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The pin modified in the Auxiliary will not be reflected on the pins of the GPIOXpander until the Auxiliary Buffer is copied into the Main Buffer and the latter one is flushed. This method main purpose is to modify more than one pin that must be modified at once and then when all the simultaneous modifications are done, proceed with the bool moveAuxToMain(bool).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>An alternative procedure -analog to the use of .print() and .println() methods- is to invoke the several <a class="el" href="#ac146784b47a23b82c7b883a18c7d7d17" title="Toggles the state of a specific pin in the Auxiliary Buffer.">digitalToggleSrToAux()</a> methods needed but the last, and then invoke a digitalToggleSr(const uint8_t) for the last pin writing. This last method will take care of moving the Auxiliary to the Main, set that last pin value and flush the Main Buffer.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A boolean value indicating the success of the operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -793,7 +800,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The method's name, <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a>, is identical to the Arduino's <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object instantitated before existing <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The method's name, <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a>, is identical to the Arduino's <a class="el" href="#a109f90a7a8e05093e3911d5402dfdabe" title="Set a specific pin to either HIGH (0x01) or LOW (0x00).">digitalWrite()</a> method to facilitate the addition of this library with the least amount of changes to existing code, just adding the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object instantitated before existing <a class="el" href="#a81ac29c6ff0866d2d4b4b4830fbd0cf3" title="Returns the state of the requested pin of the ShiftRegGPIOXpander.">digitalRead()</a> calls and providing the correct pin number as parameter. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -974,8 +981,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the Main buffer contents by resetting simultaneously certain pins. </p>
-<p>The pins to be reset are provided as a pointer to a mask parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).</p>
+<p>Modifies the Main buffer contents by setting LOW (0x00/Reset) simultaneously certain pins. </p>
+<p>The pins to be reset are provided by a mask pointed by parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to LOW (0x00).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">resetMask</td><td>Pointer to the array containing the mask to modify the Main.</td></tr>
@@ -983,7 +990,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The method provides a mechanism for clearing (reseting/lowering) various Main buffer bit positions in a single operation.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and the auxiliary will be deleted before applying the mask. <br  />
 </dd>
 <dd>
 The Main Buffer will be flushed after the mask modifications are applied.</dd></dl>
@@ -991,7 +998,7 @@ The Main Buffer will be flushed after the mask modifications are applied.</dd></
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The operation was successful, the pins were reset in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
-    <tr><td class="paramname">false</td><td>The operation failed, either because the mask was null or because the mutexes could not be taken. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the mask pointer was null or because the mutexes could not be taken. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1013,8 +1020,8 @@ The Main Buffer will be flushed after the mask modifications are applied.</dd></
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the Main buffer contents by setting simultaneously certain pins. </p>
-<p>The pins to be set are provided as a parameter pointer to a mask. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01). <br  />
+<p>Modifies the Main buffer contents by setting HIGH (0x01/Set) simultaneously certain pins. </p>
+<p>The pins to be set are provided by a mask pointed by parameter. Every bit position set (HIGH, 0x01) on the mask will be modified in the Main Buffer, reset pins (LOW, 0x00) positions of the mask will remain unmodified in the Main Buffer. The modification performed will be setting the bit position to HIGH (0x01). <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1023,7 +1030,7 @@ The Main Buffer will be flushed after the mask modifications are applied.</dd></
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The method provides a mechanism for seting (rising) various Main buffer bit positions in a single operation.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and will be deleted before applying the mask. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>Any modifications made in the Auxiliary will be moved to the Main and the auxiliary will be deleted before applying the mask. <br  />
 </dd>
 <dd>
 The Main Buffer will be flushed after the mask modifications are applied.</dd></dl>
@@ -1031,7 +1038,7 @@ The Main Buffer will be flushed after the mask modifications are applied.</dd></
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The operation was successful, the pins were set in the Main Buffer and the change was flushed to the GPIO pins. </td></tr>
-    <tr><td class="paramname">false</td><td>The operation failed, either because the mask was null or because the mutexes could not be taken. </td></tr>
+    <tr><td class="paramname">false</td><td>The operation failed, either because the mask pointer was null or because the mutexes could not be taken. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1140,7 +1147,18 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Method provided for ending any relevant activation procedures made by the <a class="el" href="#a05bc7963b4c95d6b04afc44aa4a9a572" title="GPIOXpander object setup and activation.">begin(uint8_t*)</a> method. </p>
+<p>To ensure the correct shiftRegGPIOXpander object deactivation, the method will copy any changes on the auxiliary buffer to the main buffer, and flush the main buffer to the shift registers, will free the memory allocated to the buffers and will delete the mutexes used to protect the buffers.</p>
 <p>The method will be invoked as part of the class destructor. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad59357b65580f123685eff4ce6c6b049_cgraph">
+<area shape="rect" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="5,13,188,40"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="236,5,389,48"/>
+<area shape="poly" title=" " alt="" coords="188,24,223,26,217,27,188,29"/>
+</map>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1219,7 +1237,7 @@ Here is the call graph for this function:</div>
 <p>Retrieves the pointer to the Main Buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the array of uint8_t holding the buffered shift registers values. <br  />
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The returned array's length is equal to the number of shift registers set in daisy-chain, see uint8_t <a class="el" href="#a1857b10f93cd3adadf73da5907891152" title="Return the quantity of shift registers composing the GPIOXtender object.">getSrQty()</a> for information. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The returned array's length is equal to the number of shift registers set in daisy-chain, see uint8_t <a class="el" href="#a1857b10f93cd3adadf73da5907891152" title="Return the quantity of shift registers composing the GPIOXpander object.">getSrQty()</a> for information. </dd></dl>
 
 </div>
 </div>
@@ -1239,11 +1257,11 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Return the greatest valid pin number. </p>
-<p>The greatest valid pin number is directly related to the quantity of shift registers connected, and is equal to the number of shift registers multiplied by 8 minus 1, (<a class="el" href="#a1857b10f93cd3adadf73da5907891152" title="Return the quantity of shift registers composing the GPIOXtender object.">getSrQty()</a> * 8) - 1. <br  />
+<p>The greatest valid pin number is directly related to the quantity of shift registers connected, and is equal to the number of shift registers multiplied by 8 minus 1, (<a class="el" href="#a1857b10f93cd3adadf73da5907891152" title="Return the quantity of shift registers composing the GPIOXpander object.">getSrQty()</a> * 8) - 1. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t maxPin number value. <br  />
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The value will be used as a limit for the pin numbers to be used in the digitalWriteSr(const uint8_t, const uint8_t) and digitalReadSr(const uint8_t) methods. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The value will be used as a limit for the pin numbers to be used in every method that depends on the pin number as a parameter. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1272,10 +1290,12 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Return the quantity of shift registers composing the GPIOXtender object. </p>
+<p>Return the quantity of shift registers composing the GPIOXpander object. </p>
 <p>The value is passed as a parameter in the class constructor. <br  />
 </p>
-<dl class="section return"><dt>Returns</dt><dd>uint8_t The number of shift registers composing the physical port extender modeled by the class. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t The number of shift registers composing the physical port extender modeled by the class. <br  />
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The value will be used to determine the size of the buffers, the size of the masks, the size of arrays needed to hold prebuilt masks, and the maximum pin number available. </dd></dl>
 
 </div>
 </div>
@@ -1295,7 +1315,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Checks if the provided <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object is valid. </p>
-<p>The method is useful to verify after a createVXVPort(uint8_t&amp;, uint8_t&amp;) invocation that the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object created is valid, i.e. that it was created with a valid <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object pointer and that the parameters provided to create the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object were valid.</p>
+<p>The method is useful to verify after a createVXVPort(uint8_t&amp;, uint8_t&amp;) invocation that the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object created is valid, i.e. that it was created with a valid <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object pointer and that the parameters provided to create the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object were valid.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">VPort</td><td><a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object to be checked for validity. </td></tr>
@@ -1306,7 +1326,7 @@ Here is the caller graph for this function:</div>
  </dd>
 <dd>
 false The created <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object is not valid, and should not be used.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>If the method returns false, the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object should not be used. Consider destructing it and creating a new one with valid parameters. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>If the method returns false, the <a class="el" href="class_s_r_g_x_v_port.html" title="A class that models Virtual Ports from the resources provided by a ShiftRegGPIOXpander object.">SRGXVPort</a> object should not be used. Consider destructing it and creating a new one with valid parameters. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1348,10 +1368,22 @@ Here is the call graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">true</td><td>There was an Auxiliary and it's value could be moved. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>There was no Auxiliary present, no data have been moved. </td></tr>
+    <tr><td class="paramname">false</td><td>There was no Auxiliary present, no data has been moved. </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_a5b1b5425acdf923e13c75c7ae47c4a7c_icgraph">
+<area shape="rect" title="Moves the data in the Auxiliary to the Main." alt="" coords="453,5,606,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad59357b65580f123685eff4ce6c6b049" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="223,13,405,40"/>
+<area shape="poly" title=" " alt="" coords="435,27,406,29,406,24,440,27"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#a68fe6cf0609e80ec31a622b8e1265a20" title="Class destructor." alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="205,27,175,29,175,24,210,26"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -1476,8 +1508,14 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the shift operation was successful and the Main Buffer was flushed.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>The arithmetic left shift operation moves the bits in the Main Buffer to the left, and the LSb of the buffer is filled with 0x00, effectively discarding the leftmost bit (MSb) of the buffer. This operation does not preserve the sign of the number represented by the bits in the buffer, is identical to the standard left shift operation, and is provided for completeness and to comlement the arithmetic right shift operation, which does preserve the sign of the number represented by the bits in the buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a> </dd>
+<dd>
+This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:<ul>
+<li>qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.</li>
+<li>qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.</li>
+</ul>
+</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The arithmetic left shift operation moves the bits in the Main Buffer to the left, and the LSb of the buffer is filled with 0x00, effectively discarding the leftmost bit (MSb) of the buffer. This operation does not preserve the sign of the number represented by the bits in the buffer, is identical to the standard left shift operation, and is provided for completeness and to complement the arithmetic right shift operation, which does preserve the sign of the number represented by the bits in the buffer. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1506,15 +1544,16 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftArthmLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftArthmLeft(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftArthmLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#a9b814bf2c2d380dfdea459e82a2c5550" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftArthmLeft(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph" loading="lazy" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph" id="aclass_shift_reg_g_p_i_o_xpander_aa092f348a8780956b96dfe70d461dc8d_cgraph">
 <area shape="rect" title="Analog to the shiftArthmLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxilia..." alt="" coords="5,5,159,48"/>
-<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad384c3227e4d7e180b6e593dfc6d98c3" title="Analog to the shiftStdLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxiliary..." alt="" coords="207,5,360,48"/>
+<area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#ad384c3227e4d7e180b6e593dfc6d98c3" title="Analog to the shiftStdLeft(const uint8_t &amp;) method, but the shifting is performed on the Auxiliary Bu..." alt="" coords="207,5,360,48"/>
 <area shape="poly" title=" " alt="" coords="159,24,194,26,189,27,159,29"/>
 </map>
 </div>
@@ -1536,7 +1575,8 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting. </p>
+<p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The method will flush the buffer after the complete shifting process is concluded. </p>
+<p>The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1). </td></tr>
@@ -1546,11 +1586,10 @@ Here is the call graph for this function:</div>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>if the operation was successful and the Main Buffer was flushed. </td></tr>
-    <tr><td class="paramname">false</td><td>Otherwise.</td></tr>
+    <tr><td class="paramname">false</td><td>Otherwise. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The arithmetic right shift operation moves the bits in the Main Buffer to the right, and the MSb of the buffer is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded. </dd></dl>
 
 </div>
 </div>
@@ -1569,8 +1608,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#aadb6da2d42f697e393def159ef970d5d" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftArthmRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftArthmRight(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#aadb6da2d42f697e393def159ef970d5d" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftArthmRight(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#aadb6da2d42f697e393def159ef970d5d" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftArthmRight(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 
 </div>
 </div>
@@ -1589,11 +1629,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. </p>
-<p>The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back ("pushed") into the right side of the buffer (LSb), that is the righttmost bit position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.</p>
+<p>Rotates the contents of the Main Buffer to the left by a specified quantity of bits. The method will flush the buffer after shifting. </p>
+<p>The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back ("pushed") into the right side of the buffer, that is the LSb position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their respective positions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the left. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1). </td></tr>
+    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the left. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1622,8 +1662,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#ad4832d031e1bf996139e394a2f96d683" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftRttLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftRttLeft(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#ad4832d031e1bf996139e394a2f96d683" title="Rotates the contents of the Main Buffer to the left by a specified quantity of bits....">shiftRttLeft(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#ad4832d031e1bf996139e394a2f96d683" title="Rotates the contents of the Main Buffer to the left by a specified quantity of bits....">shiftRttLeft(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 
 </div>
 </div>
@@ -1642,10 +1683,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting. The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions. </p>
+<p>Rotates the contents of the Main Buffer to the right by a specified quantity of bits. The method will flush the buffer after shifting. </p>
+<p>The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back ("pushed") into the left side of the buffer, that is the MSb position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their respective positions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1). </td></tr>
+    <tr><td class="paramname">qty</td><td>Defines the number of bits to shift to the right. The valid range is 1 &lt;= qty &lt;= (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1674,8 +1716,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftRttRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftRttRight(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8" title="Rotates the contents of the Main Buffer to the right by a specified quantity of bits....">shiftRttRight(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#a5f80a925d6e3c9bc29b8c5df2805c2e8" title="Rotates the contents of the Main Buffer to the right by a specified quantity of bits....">shiftRttRight(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 
 </div>
 </div>
@@ -1702,11 +1745,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the shift operation was successful and the Main Buffer was flushed.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).</dd>
+<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a></dd>
 <dd>
-This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:<ul>
+This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:<ul>
 <li>qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.</li>
-<li>qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.</li>
+<li>qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.</li>
 </ul>
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1) limit cases must be tested before the method invocation. </dd></dl>
@@ -1738,14 +1781,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftStdLeft(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftStdLeft(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftStdLeft(const uint8_t &amp;)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#a972cf259a7577a85be83bae349a25053" title="Shifts the contents of the Main Buffer to the left by a specified quantity of bits,...">shiftStdLeft(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph.png" border="0" usemap="#aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph" id="aclass_shift_reg_g_p_i_o_xpander_ad384c3227e4d7e180b6e593dfc6d98c3_icgraph">
-<area shape="rect" title="Analog to the shiftStdLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxiliary..." alt="" coords="207,5,360,48"/>
+<area shape="rect" title="Analog to the shiftStdLeft(const uint8_t &amp;) method, but the shifting is performed on the Auxiliary Bu..." alt="" coords="207,5,360,48"/>
 <area shape="rect" href="class_shift_reg_g_p_i_o_xpander.html#aa092f348a8780956b96dfe70d461dc8d" title="Analog to the shiftArthmLeft(const uint8_t &amp;qty) method, but the shifting is performed on the Auxilia..." alt="" coords="5,5,159,48"/>
 <area shape="poly" title=" " alt="" coords="189,27,159,29,159,24,194,26"/>
 </map>
@@ -1775,11 +1819,11 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).</dd>
+<dl class="section note"><dt>Note</dt><dd>If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object, data available using <a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a>), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See <a class="el" href="#aa62e8f2011a07ecddd83d5f72df4c291" title="Sets all the pins to LOW (0x00/Reset).">digitalWriteSrAllReset()</a></dd>
 <dd>
-This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:<ul>
+This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:<ul>
 <li>qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.</li>
-<li>qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.</li>
+<li>qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.</li>
 </ul>
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty &gt; (<a class="el" href="#a54a0ba6144b5760e7d6ddc0051226b4f" title="Return the greatest valid pin number.">getMaxSRGXPin()</a> + 1) limit cases must be tested before the method invocation. </dd></dl>
@@ -1801,8 +1845,9 @@ This method will avoid flagging the operation as unsuccessful when the failure m
       </table>
 </div><div class="memdoc">
 
-<p>Analog to the <a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftStdRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins. </p>
-<p>See shiftStdRight(const uint8_t) for more details on the shifting operation. </p>
+<p>Analog to the <a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftStdRight(const uint8_t &amp;qty)</a> method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. </p>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="#ad315aacf2baf51a7c88f9cbff26d4d4c" title="Shifts the contents of the Main Buffer to the right by a specified quantity of bits,...">shiftStdRight(const uint8_t &amp;)</a> for more details on the shifting operation.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>The method will not move the Auxiliary over the Main buffer after shifting. </dd></dl>
 
 </div>
 </div>
@@ -1825,10 +1870,10 @@ This method will avoid flagging the operation as unsuccessful when the failure m
       </table>
 </div><div class="memdoc">
 
-<p>Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values. </p>
+<p>Sets the value of several scattered pins in the Main Buffer, according to the provided mask and values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">maskPtr</td><td>Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the newValsPtr parameter. </td></tr>
+    <tr><td class="paramname">maskPtr</td><td>Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the area of memory pointed by the newValsPtr pointer parameter.</td></tr>
     <tr><td class="paramname">valsPtr</td><td>Pointer to the memory area containing the values to be set in the Main Buffer. The values are provided as a bit array, where each bit position corresponds to the pin in the Main Buffer that will be modified according to the mask provided in the newMaskPtr parameter: for the array positions set in the mask, the value of the bit in the newValsPtr will be set in the corresponding pin in the Main Buffer, for the array positions not set in the mask, the value in the Main Buffer will remain unchanged.</td></tr>
   </table>
   </dd>

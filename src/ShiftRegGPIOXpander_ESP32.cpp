@@ -47,20 +47,20 @@ ShiftRegGPIOXpander::ShiftRegGPIOXpander()
 }
 
 ShiftRegGPIOXpander::ShiftRegGPIOXpander(uint8_t ds, uint8_t sh_cp, uint8_t st_cp, uint8_t srQty)
-:_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _mainBuffrArryPtr {new uint8_t [srQty]()}
+:_ds{ds}, _sh_cp{sh_cp}, _st_cp{st_cp}, _srQty{srQty}, _mainBffrArryPtr {new uint8_t [srQty]()}
 {
    _maxSRGXPin = (_srQty * 8) - 1;
 }
 
 ShiftRegGPIOXpander::~ShiftRegGPIOXpander(){
    end();
-   if(_auxBuffrArryPtr !=nullptr){
-      delete [] _auxBuffrArryPtr;
-      _auxBuffrArryPtr = nullptr;
+   if(_auxBffrArryPtr !=nullptr){
+      delete [] _auxBffrArryPtr;
+      _auxBffrArryPtr = nullptr;
    }
-   if(_mainBuffrArryPtr !=nullptr){
-      delete [] _mainBuffrArryPtr;
-      _mainBuffrArryPtr = nullptr;
+   if(_mainBffrArryPtr !=nullptr){
+      delete [] _mainBffrArryPtr;
+      _mainBffrArryPtr = nullptr;
    }
    if(_SRGXMnBffrMtx != nullptr){
       vSemaphoreDelete(_SRGXMnBffrMtx);
@@ -93,9 +93,9 @@ bool ShiftRegGPIOXpander::begin(uint8_t* initCntnt){
       if(result){
          if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
             if(initCntnt != nullptr)
-               memcpy(_mainBuffrArryPtr, initCntnt, _srQty);
+               memcpy(_mainBffrArryPtr, initCntnt, _srQty);
             else
-               memset(_mainBuffrArryPtr,0x00, _srQty);
+               memset(_mainBffrArryPtr,0x00, _srQty);
             _sendAllSRCntnt();
             xSemaphoreGive(_SRGXMnBffrMtx);
             _begun = true;
@@ -111,10 +111,10 @@ bool ShiftRegGPIOXpander::begin(uint8_t* initCntnt){
 bool ShiftRegGPIOXpander::_copyMainToAux(const bool &overWriteIfExists){
    bool result {false};
    
-   if((_auxBuffrArryPtr == nullptr) || overWriteIfExists){
-      if(_auxBuffrArryPtr == nullptr)
-         _auxBuffrArryPtr = new uint8_t [_srQty];
-      memcpy(_auxBuffrArryPtr, _mainBuffrArryPtr, _srQty);
+   if((_auxBffrArryPtr == nullptr) || overWriteIfExists){
+      if(_auxBffrArryPtr == nullptr)
+         _auxBffrArryPtr = new uint8_t [_srQty];
+      memcpy(_auxBffrArryPtr, _mainBffrArryPtr, _srQty);
       result = true;
    }
 
@@ -126,10 +126,10 @@ bool ShiftRegGPIOXpander::copyMainToAux(const bool &overWriteIfExists){
    
    if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
       if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-         if((_auxBuffrArryPtr == nullptr) || overWriteIfExists){
-            if(_auxBuffrArryPtr == nullptr)
-               _auxBuffrArryPtr = new uint8_t [_srQty];
-            memcpy(_auxBuffrArryPtr, _mainBuffrArryPtr, _srQty);
+         if((_auxBffrArryPtr == nullptr) || overWriteIfExists){
+            if(_auxBffrArryPtr == nullptr)
+               _auxBffrArryPtr = new uint8_t [_srQty];
+            memcpy(_auxBffrArryPtr, _mainBffrArryPtr, _srQty);
             result = true;
          }
          xSemaphoreGive(_SRGXAuxBffrMtx);
@@ -167,13 +167,13 @@ bool ShiftRegGPIOXpander::digitalReadSgmntSr(const uint8_t &strtPin, const uint8
    if((pinsQty > 0) && (pinsQty <= 16 ) && ((strtPin + pinsQty - 1) <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          bffrSgmnt = 0; // Initialize the result segment to zero
          for (int ptrInc{0}; ptrInc < pinsQty; ptrInc++){
-            if(*(_mainBuffrArryPtr + ((strtPin + ptrInc) / 8)) & (static_cast<uint8_t>(0x01) << ((strtPin + ptrInc) % 8)))  // If the bit is set in Main then it needs to be set in the result segment
+            if(*(_mainBffrArryPtr + ((strtPin + ptrInc) / 8)) & (static_cast<uint8_t>(0x01) << ((strtPin + ptrInc) % 8)))  // If the bit is set in Main then it needs to be set in the result segment
                bffrSgmnt |= (static_cast<uint16_t>(0x01) << ptrInc); // Set the bit in the result segment
          }
          xSemaphoreGive(_SRGXMnBffrMtx);
@@ -190,11 +190,11 @@ uint8_t ShiftRegGPIOXpander::digitalReadSr(const uint8_t &srPin){
    if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         result = (*(_mainBuffrArryPtr + (srPin / 8)) >> (srPin % 8)) & 0x01;
+         result = (*(_mainBffrArryPtr + (srPin / 8)) >> (srPin % 8)) & 0x01;
          xSemaphoreGive(_SRGXMnBffrMtx);
       }
    }
@@ -208,12 +208,12 @@ bool ShiftRegGPIOXpander::digitalToggleSr(const uint8_t &srPin){
    if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         // *(_mainBuffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
-         toggleBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
+         // *(_mainBffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+         toggleBitInByte(_mainBffrArryPtr + (srPin / 8), srPin % 8);
          _sendAllSRCntnt();
          xSemaphoreGive(_SRGXMnBffrMtx);
          result = true;  //!< The operation was successful, the pin was toggled in the Main Buffer
@@ -228,12 +228,12 @@ bool ShiftRegGPIOXpander::digitalToggleSrAll(){
 
    if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
       if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-         if(_auxBuffrArryPtr != nullptr)
+         if(_auxBffrArryPtr != nullptr)
             _moveAuxToMain();
          xSemaphoreGive(_SRGXAuxBffrMtx);
       }
       for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-         *(_mainBuffrArryPtr + ptrInc) ^= 0xFF;
+         *(_mainBffrArryPtr + ptrInc) ^= 0xFF;
       _sendAllSRCntnt();
       xSemaphoreGive(_SRGXMnBffrMtx);
       result = true;  
@@ -254,12 +254,12 @@ bool ShiftRegGPIOXpander::digitalToggleSrMask(uint8_t *toggleMask){
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-            *(_mainBuffrArryPtr + ptrInc) ^= *(localToggleMask + ptrInc);
+            *(_mainBffrArryPtr + ptrInc) ^= *(localToggleMask + ptrInc);
          _sendAllSRCntnt();
          xSemaphoreGive(_SRGXMnBffrMtx);
          result = true;  //!< The operation was successful, the pins were toggled in the Main Buffer
@@ -276,9 +276,9 @@ bool ShiftRegGPIOXpander::digitalToggleSrToAux(const uint8_t &srPin){
    if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr == nullptr)
+            if(_auxBffrArryPtr == nullptr)
                _copyMainToAux();
-            *(_auxBuffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
+            *(_auxBffrArryPtr + (srPin / 8)) ^= (0x01 << (srPin % 8));
             result = true;  
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
@@ -301,16 +301,16 @@ bool ShiftRegGPIOXpander::digitalWriteSr(const uint8_t &srPin, const uint8_t &va
    if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          if(value)
-            // *(_mainBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
-            setBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
+            // *(_mainBffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+            setBitInByte(_mainBffrArryPtr + (srPin / 8), srPin % 8);
          else
-            // *(_mainBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
-            resetBitInByte(_mainBuffrArryPtr + (srPin / 8), srPin % 8);
+            // *(_mainBffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+            resetBitInByte(_mainBffrArryPtr + (srPin / 8), srPin % 8);
          _sendAllSRCntnt();
          result = true;  
          xSemaphoreGive(_SRGXMnBffrMtx);
@@ -325,11 +325,11 @@ bool ShiftRegGPIOXpander::digitalWriteSrAllReset(){
 
    if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
       if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-         if(_auxBuffrArryPtr != nullptr)   //!< Although the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
+         if(_auxBffrArryPtr != nullptr)   //!< Although the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
             _discardAux();
          xSemaphoreGive(_SRGXAuxBffrMtx);
       }
-      memset(_mainBuffrArryPtr,0x00, _srQty);
+      memset(_mainBffrArryPtr,0x00, _srQty);
       _sendAllSRCntnt();
       xSemaphoreGive(_SRGXMnBffrMtx);
       result = true;  
@@ -343,11 +343,11 @@ bool ShiftRegGPIOXpander::digitalWriteSrAllSet(){
 
    if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
       if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-         if(_auxBuffrArryPtr != nullptr)   //!< Although the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
+         if(_auxBffrArryPtr != nullptr)   //!< Although the discardAux() method makes this check, it is better to do it here to avoid unnecessary calls to the method
             _discardAux();
          xSemaphoreGive(_SRGXAuxBffrMtx);
       }
-      memset(_mainBuffrArryPtr,0xFF, _srQty);
+      memset(_mainBffrArryPtr,0xFF, _srQty);
       _sendAllSRCntnt();
       xSemaphoreGive(_SRGXMnBffrMtx);
       result = true;
@@ -368,12 +368,12 @@ bool ShiftRegGPIOXpander::digitalWriteSrMaskReset(uint8_t* resetMask){
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-            *(_mainBuffrArryPtr + ptrInc) &= ~(*(localResetMask + ptrInc));
+            *(_mainBffrArryPtr + ptrInc) &= ~(*(localResetMask + ptrInc));
          _sendAllSRCntnt();
          delete [] localResetMask;
          xSemaphoreGive(_SRGXMnBffrMtx);
@@ -396,12 +396,12 @@ bool ShiftRegGPIOXpander::digitalWriteSrMaskSet(uint8_t* setMask){
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          for (int ptrInc{0}; ptrInc < _srQty; ptrInc++)
-            *(_mainBuffrArryPtr + ptrInc) |= *(localSetMask + ptrInc);
+            *(_mainBffrArryPtr + ptrInc) |= *(localSetMask + ptrInc);
          _sendAllSRCntnt();
          delete [] localSetMask;
          xSemaphoreGive(_SRGXMnBffrMtx);
@@ -418,14 +418,14 @@ bool ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t
    if(srPin <= _maxSRGXPin){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr == nullptr)
+            if(_auxBffrArryPtr == nullptr)
                _copyMainToAux();
             if(value)
-               // *(_auxBuffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
-               setBitInByte(_auxBuffrArryPtr + (srPin / 8), srPin % 8);
+               // *(_auxBffrArryPtr + (srPin / 8)) |= (0x01 << (srPin % 8));
+               setBitInByte(_auxBffrArryPtr + (srPin / 8), srPin % 8);
             else
-               // *(_auxBuffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
-               resetBitInByte(_auxBuffrArryPtr + (srPin / 8), srPin % 8);
+               // *(_auxBffrArryPtr + (srPin / 8)) &= ~(0x01 << (srPin % 8));
+               resetBitInByte(_auxBffrArryPtr + (srPin / 8), srPin % 8);
             xSemaphoreGive(_SRGXAuxBffrMtx);
             result = true;
          }
@@ -437,9 +437,9 @@ bool ShiftRegGPIOXpander::digitalWriteSrToAux(const uint8_t srPin, const uint8_t
 }
 
 void ShiftRegGPIOXpander::_discardAux(){
-   if(_auxBuffrArryPtr != nullptr){
-      delete [] _auxBuffrArryPtr;
-      _auxBuffrArryPtr = nullptr;
+   if(_auxBffrArryPtr != nullptr){
+      delete [] _auxBffrArryPtr;
+      _auxBffrArryPtr = nullptr;
    }
    
    return;
@@ -449,9 +449,9 @@ bool ShiftRegGPIOXpander::discardAux(){
    bool result{false};
 
    if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-      if(_auxBuffrArryPtr != nullptr){
-         delete [] _auxBuffrArryPtr;
-         _auxBuffrArryPtr = nullptr;
+      if(_auxBffrArryPtr != nullptr){
+         delete [] _auxBffrArryPtr;
+         _auxBffrArryPtr = nullptr;
       }
       xSemaphoreGive(_SRGXAuxBffrMtx);
       result = true;  
@@ -480,7 +480,7 @@ bool ShiftRegGPIOXpander::flipBit(const uint8_t &srPin){
 
 uint8_t* ShiftRegGPIOXpander::getMainBuffPtr(){
 
-   return _mainBuffrArryPtr;
+   return _mainBffrArryPtr;
 }
 
 uint8_t ShiftRegGPIOXpander::getMaxSRGXPin(){
@@ -502,9 +502,9 @@ bool ShiftRegGPIOXpander::_moveAuxToMain(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
 
-   if(_auxBuffrArryPtr != nullptr){
+   if(_auxBffrArryPtr != nullptr){
       portENTER_CRITICAL(&mux);  // Enter critical section to avoid any interrupt, including task switching
-      memcpy( _mainBuffrArryPtr, _auxBuffrArryPtr, _srQty);
+      memcpy( _mainBffrArryPtr, _auxBffrArryPtr, _srQty);
       _discardAux();
       portEXIT_CRITICAL(&mux);   // Exit critical section
       _sendAllSRCntnt();
@@ -516,7 +516,7 @@ bool ShiftRegGPIOXpander::_moveAuxToMain(){
 bool ShiftRegGPIOXpander::moveAuxToMain(){
    bool result {false};
 
-   if(_auxBuffrArryPtr != nullptr){
+   if(_auxBffrArryPtr != nullptr){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
             result = _moveAuxToMain(); 
@@ -544,10 +544,10 @@ bool ShiftRegGPIOXpander::_sendAllSRCntnt(){
    uint8_t curSRcntnt{0};
    bool result{false};
 
-   if((_srQty > 0) && (_mainBuffrArryPtr != nullptr)){
+   if((_srQty > 0) && (_mainBffrArryPtr != nullptr)){
       ::digitalWrite(_st_cp, LOW); // Start of access to the shift register internal buffer to write -> Lower the latch pin
-      for(int srBuffDsplcPtr{_srQty - 1}; srBuffDsplcPtr >= 0; srBuffDsplcPtr--){
-         curSRcntnt = *(_mainBuffrArryPtr + srBuffDsplcPtr);
+      for(int srBffrDsplcPtr{_srQty - 1}; srBffrDsplcPtr >= 0; srBffrDsplcPtr--){
+         curSRcntnt = *(_mainBffrArryPtr + srBffrDsplcPtr);
          result = _sendSnglSRCntnt(curSRcntnt);
       }
       ::digitalWrite(_st_cp, HIGH);   // End of access to the shift register internal buffer, copy the buffer values to the output pins -> Lower the latch pin
@@ -593,7 +593,7 @@ bool ShiftRegGPIOXpander::setBit(const uint8_t &srPin){
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
+bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBffr){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
@@ -602,20 +602,20 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(toMainBuffr){
-               if(_auxBuffrArryPtr != nullptr)
+            if(toMainBffr){
+               if(_auxBffrArryPtr != nullptr)
                   _moveAuxToMain();
-               targetBufferPtr = _mainBuffrArryPtr;
+               targetBufferPtr = _mainBffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr)
+               if(_auxBffrArryPtr == nullptr)
                   _copyMainToAux();
-               targetBufferPtr = _auxBuffrArryPtr;
+               targetBufferPtr = _auxBffrArryPtr;
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          if(qty > _maxSRGXPin){
-            if(toMainBuffr){
+            if(toMainBffr){
                if(fillVal)
                   digitalWriteSrAllSet(); 
                else
@@ -644,13 +644,13 @@ bool ShiftRegGPIOXpander::_shiftGenFullLeft(const uint8_t &qty, const uint8_t &f
       }
    }
    else{
-      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succed, as making no shift is a successful shift.
+      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succeed, as making no shift is a successful shift.
    }
 
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBuffr){
+bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal, const bool &toMainBffr){
    bool carryPrv{false};
    bool carryCrrnt{false};
    bool result{false};
@@ -659,20 +659,20 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
    if(qty > 0){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(toMainBuffr){
-               if(_auxBuffrArryPtr != nullptr)
+            if(toMainBffr){
+               if(_auxBffrArryPtr != nullptr)
                   _moveAuxToMain();
-               targetBufferPtr = _mainBuffrArryPtr;
+               targetBufferPtr = _mainBffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr)
+               if(_auxBffrArryPtr == nullptr)
                   _copyMainToAux();
-               targetBufferPtr = _auxBuffrArryPtr;
+               targetBufferPtr = _auxBffrArryPtr;
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          if(qty > _maxSRGXPin){
-            if(toMainBuffr){
+            if(toMainBffr){
                if(fillVal)
                   digitalWriteSrAllSet(); 
                else
@@ -701,13 +701,13 @@ bool ShiftRegGPIOXpander::_shiftGenFullRight(const uint8_t &qty, const uint8_t &
       }      
    }
    else{
-      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succed, as making no shift is a successful shift.
+      result = true; // If the qty = 0, the method will make no actions over the buffer, but will flag succeed, as making no shift is a successful shift.
    }
 
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBuffr){
+bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBffr){
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
    bool result{false};
@@ -717,22 +717,22 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
    if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(toMainBuffr){
-               if(_auxBuffrArryPtr != nullptr)
+            if(toMainBffr){
+               if(_auxBffrArryPtr != nullptr)
                   _moveAuxToMain();
-               targetBufferPtr = _mainBuffrArryPtr;
+               targetBufferPtr = _mainBffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr){
+               if(_auxBffrArryPtr == nullptr){
                   _copyMainToAux();
-                  targetBufferPtr = _auxBuffrArryPtr;
+                  targetBufferPtr = _auxBffrArryPtr;
                }
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         // Once defined the target buffer, different cases based on the segment lenght and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
+         // Once defined the target buffer, different cases based on the segment length and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
          if(strtPin == 0 && endPin == _maxSRGXPin){   //* case: the segment to be shifted matches the whole target buffer, so the operation is equivalent to a full shift of the target buffer
-            result = _shiftGenFullLeft(qty, fillVal, (targetBufferPtr == _mainBuffrArryPtr));
+            result = _shiftGenFullLeft(qty, fillVal, (targetBufferPtr == _mainBffrArryPtr));
          }
          else if(qty > segmentSize){   //* case: the shift quantity is greater than the segment size, so all bits in the segment will be set to fillVal
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
@@ -773,7 +773,7 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtP
    return result;
 }
 
-bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBuffr){
+bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal, const bool &toMainBffr){
    bool bitValPrvSet{false};
    bool bitValCrrntSet{false};
    bool result{false};
@@ -783,22 +783,22 @@ bool ShiftRegGPIOXpander::_shiftGenSegmentRight(const uint8_t &qty, uint8_t strt
    if ((qty > 0) && (strtPin <= endPin) && (endPin <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){         
-            if(toMainBuffr){
-               if(_auxBuffrArryPtr != nullptr)
+            if(toMainBffr){
+               if(_auxBffrArryPtr != nullptr)
                   _moveAuxToMain();
-               targetBufferPtr = _mainBuffrArryPtr;
+               targetBufferPtr = _mainBffrArryPtr;
             }
             else{
-               if(_auxBuffrArryPtr == nullptr){
+               if(_auxBffrArryPtr == nullptr){
                   _copyMainToAux();
-                  targetBufferPtr = _auxBuffrArryPtr;
+                  targetBufferPtr = _auxBffrArryPtr;
                }
             }
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         // Once defined the target buffer, different cases based on the segment lenght and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
+         // Once defined the target buffer, different cases based on the segment length and position will be defined to use most simple, the ones reusing existing code to proceed or reject the shift.
          if(strtPin == 0 && endPin == _maxSRGXPin){   //* case: the segment to be shifted matches the whole target buffer, so the operation is equivalent to a full shift of the target buffer
-            result = _shiftGenFullRight(qty, fillVal, (targetBufferPtr == _mainBuffrArryPtr));
+            result = _shiftGenFullRight(qty, fillVal, (targetBufferPtr == _mainBffrArryPtr));
          }
          else if(qty > segmentSize){   //* case: the shift quantity is greater than the segment size, so all bits in the segment will be set to fillVal
             for(int shftCnt{0}; shftCnt < qty; shftCnt++){
@@ -860,7 +860,7 @@ bool ShiftRegGPIOXpander::shiftRttLeft(const uint8_t &qty){
    bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-      fillVal = (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
+      fillVal = (*(_mainBffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
       result = _shiftGenFullLeft(1, fillVal, true); // Shift left and fill with the MSb of the last byte
    }
 
@@ -872,7 +872,7 @@ bool ShiftRegGPIOXpander::shiftRttRight(const uint8_t &qty){
    bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-      fillVal = (*(_mainBuffrArryPtr) & 0x01)?0x01:0x00;
+      fillVal = (*(_mainBffrArryPtr) & 0x01)?0x01:0x00;
       result = _shiftGenFullRight(1, fillVal, true); // Shift right and fill with the LSb of the first byte
    }
 
@@ -887,7 +887,7 @@ bool ShiftRegGPIOXpander::shiftArthmLeft(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftArthmRight(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, true); // Shift right and fill with the MSb of the last byte
+   result = _shiftGenFullRight(qty, (*(_mainBffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, true); // Shift right and fill with the MSb of the last byte
 
    return result;
 }
@@ -913,7 +913,7 @@ bool ShiftRegGPIOXpander::shiftRttLeftToAux(const uint8_t &qty){
    bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-      fillVal = (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
+      fillVal = (*(_mainBffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00;
       result = _shiftGenFullLeft(1, fillVal, false); // Shift left and fill with the MSb of the last byte
    }
 
@@ -925,7 +925,7 @@ bool ShiftRegGPIOXpander::shiftRttRightToAux(const uint8_t &qty){
    bool result{false};
 
    for(int shftCnt{0}; shftCnt < qty; shftCnt++){
-      fillVal = (*(_mainBuffrArryPtr) & 0x01)?0x01:0x00;
+      fillVal = (*(_mainBffrArryPtr) & 0x01)?0x01:0x00;
       result = _shiftGenFullRight(1, fillVal, false); // Shift right and fill with the LSb of the first byte
    }
 
@@ -940,7 +940,7 @@ bool ShiftRegGPIOXpander::shiftArthmLeftToAux(const uint8_t &qty){
 bool ShiftRegGPIOXpander::shiftArthmRightToAux(const uint8_t &qty){
    bool result{false};
 
-   result = _shiftGenFullRight(qty, (*(_mainBuffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, false); // Shift right and fill with the MSb of the last byte
+   result = _shiftGenFullRight(qty, (*(_mainBffrArryPtr + _srQty - 1) & 0x80)?0x01:0x00, false); // Shift right and fill with the MSb of the last byte
 
    return result;
 }
@@ -959,14 +959,14 @@ bool ShiftRegGPIOXpander::stampMaskOverMain(uint8_t* maskPtr, uint8_t* valsPtr){
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain(); // Move the Auxiliary Buffer to the Main Buffer, if it exists      
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          for (int ptrInc{0}; ptrInc < _maxSRGXPin; ptrInc++){
             if(*(localMaskPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))){  // If the bit is set in the mask check if the bit state in the Main needs to be changed
-               if((*(_mainBuffrArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))) != (*(localValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8))))
-                  *(_mainBuffrArryPtr + (ptrInc / 8)) ^= (static_cast<uint8_t>(0x01) << (ptrInc % 8));
+               if((*(_mainBffrArryPtr + (ptrInc / 8)) & (static_cast<uint8_t>(0x01) << (ptrInc % 8))) != (*(localValsPtr + (ptrInc / 8)) & (0x01 << (static_cast<uint8_t>(0x01) % 8))))
+                  *(_mainBffrArryPtr + (ptrInc / 8)) ^= (static_cast<uint8_t>(0x01) << (ptrInc % 8));
             } // If the bit is set in the mask, then check if the bit state in the Main Buffer needs to be changed
          }      
          _sendAllSRCntnt(); // Flush the Main Buffer to the shift registers
@@ -992,11 +992,11 @@ bool ShiftRegGPIOXpander::stampOverMain(uint8_t* newCntntPtr){
 
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){            
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _discardAux();
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
-         memcpy(_mainBuffrArryPtr, newCntntPtr, _srQty);
+         memcpy(_mainBffrArryPtr, newCntntPtr, _srQty);
          _sendAllSRCntnt();
          xSemaphoreGive(_SRGXMnBffrMtx);
          result = true;         
@@ -1013,13 +1013,13 @@ bool ShiftRegGPIOXpander::stampSgmntOverMain(uint8_t *newSgmntPtr, const uint8_t
    if((newSgmntPtr != nullptr) && (pinsQty > 0) && ((strtPin + pinsQty - 1) <= _maxSRGXPin)){
       if(xSemaphoreTake(_SRGXMnBffrMtx, portMAX_DELAY) == pdTRUE){            
          if(xSemaphoreTake(_SRGXAuxBffrMtx, portMAX_DELAY) == pdTRUE){
-            if(_auxBuffrArryPtr != nullptr)
+            if(_auxBffrArryPtr != nullptr)
                _moveAuxToMain(); // Move the Auxiliary Buffer to the Main Buffer, if it exists
             xSemaphoreGive(_SRGXAuxBffrMtx);
          }
          for (int ptrInc{0}; ptrInc < pinsQty; ptrInc++){
-            if((*(_mainBuffrArryPtr + ((strtPin + ptrInc) / 8)) & (0x01 << ((strtPin + ptrInc) % 8))) != (*(newSgmntPtr + (ptrInc / 8)) & (0x01 << (ptrInc % 8)))) // If the bit state in the segment is different from the bit state in the Main Buffer
-               *(_mainBuffrArryPtr + ((strtPin + ptrInc) / 8)) ^= (0x1 << ((strtPin + ptrInc) % 8));
+            if((*(_mainBffrArryPtr + ((strtPin + ptrInc) / 8)) & (0x01 << ((strtPin + ptrInc) % 8))) != (*(newSgmntPtr + (ptrInc / 8)) & (0x01 << (ptrInc % 8)))) // If the bit state in the segment is different from the bit state in the Main Buffer
+               *(_mainBffrArryPtr + ((strtPin + ptrInc) / 8)) ^= (0x1 << ((strtPin + ptrInc) % 8));
          }
          _sendAllSRCntnt();
          xSemaphoreGive(_SRGXMnBffrMtx);

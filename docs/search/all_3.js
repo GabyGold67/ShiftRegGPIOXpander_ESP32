@@ -1,7 +1,7 @@
 var searchData=
 [
   ['development_20are_3a_0',['The main concepts driving this development are:',['../index.html#the-main-concepts-driving-this-development-are',1,'']]],
-  ['digital_20outputs_20expander_20library_20shiftreggpioxpander_5fesp32_1',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]],
+  ['digital_20outputs_20expander_20library_20for_20esp32_20arduino_20shiftreggpioxpander_5fesp32_1',['Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]],
   ['digitalread_2',['digitalRead',['../class_shift_reg_g_p_i_o_xpander.html#a81ac29c6ff0866d2d4b4b4830fbd0cf3',1,'ShiftRegGPIOXpander::digitalRead()'],['../class_s_r_g_x_v_port.html#ad1021d932ce15fc5c07a02c83282d38e',1,'SRGXVPort::digitalRead()']]],
   ['digitalreadsgmntsr_3',['digitalReadSgmntSr',['../class_shift_reg_g_p_i_o_xpander.html#a184e452056ea5b1fb11afacb8acfc23b',1,'ShiftRegGPIOXpander']]],
   ['digitalreadsr_4',['digitalReadSr',['../class_shift_reg_g_p_i_o_xpander.html#ad0a3e91286d39a4c9622b1382febf4cb',1,'ShiftRegGPIOXpander::digitalReadSr()'],['../class_s_r_g_x_v_port.html#a025a8760411de0966ee40d246bbb164c',1,'SRGXVPort::digitalReadSr()']]],

@@ -1,0 +1,5 @@
+<map id="ShiftRegGPIOXpander::end" name="ShiftRegGPIOXpander::end">
+<area shape="rect" id="Node000001" title="Method provided for ending any relevant activation procedures made by the begin(uint8_t*) method." alt="" coords="5,13,188,40"/>
+<area shape="rect" id="Node000002" href="$class_shift_reg_g_p_i_o_xpander.html#a5b1b5425acdf923e13c75c7ae47c4a7c" title="Moves the data in the Auxiliary to the Main." alt="" coords="236,5,389,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,24,223,26,217,27,188,29"/>
+</map>

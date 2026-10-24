@@ -7,5 +7,5 @@ var searchData=
   ['getsrqty_4',['getSrQty',['../class_shift_reg_g_p_i_o_xpander.html#a1857b10f93cd3adadf73da5907891152',1,'ShiftRegGPIOXpander']]],
   ['getstampmask_5',['getStampMask',['../class_s_r_g_x_v_port.html#a3eb859560bca35facffa96fa69fbfdef',1,'SRGXVPort']]],
   ['getvportmaxval_6',['getVPortMaxVal',['../class_s_r_g_x_v_port.html#a23b5759e872a78b7526914a0c0c89c13',1,'SRGXVPort']]],
-  ['gpio_20digital_20outputs_20expander_20library_20shiftreggpioxpander_5fesp32_7',['GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]]
+  ['gpio_20digital_20outputs_20expander_20library_20for_20esp32_20arduino_20shiftreggpioxpander_5fesp32_7',['Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXpander_ESP32)',['../index.html',1,'']]]
 ];

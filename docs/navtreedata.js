@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "ShiftRegGPIOXpander Library for ESP32 (Arduino)", "index.html", [
-    [ "GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)", "index.html", "index" ],
+    [ "Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXpander_ESP32)", "index.html", "index" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

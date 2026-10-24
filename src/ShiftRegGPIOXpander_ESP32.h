@@ -57,7 +57,7 @@ bool toggleBitInByte(uint8_t* dataByte, const uint8_t bitPos);
 //===========================>> END General use functions prototypes
 
 /**
- * @brief A class that models a GPIO output pins expander through the use of 8-bits Serial In Paralell Out (SIPO) shift registers
+ * @brief A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIPO) shift registers
  * 
  * The GPIO pins expansion modeled adds digital output pins managed by the use of an API similar to the built in Arduino platform tools. As the hardware is built using daisy-chained 74HCx595 shift registers, the connection pins to the hardware are needed as parameters to build the object, as is the quantity of shift registers daisy-chained connected.  
  * 
@@ -78,7 +78,7 @@ private:
    /*
     * @brief A private version of the copyMainToAux() method
     * 
-    * This method is used internally to copy the contents of the Main Buffer to the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    * This method is used internally to copy the contents of the Main Buffer to the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlocking due to nested mutexes.
     * 
     * @note The method is used by the copyMainToAux() method, which takes care of the mutexes before calling this method.
     */
@@ -86,13 +86,13 @@ private:
    /*
     * @brief A private version of the discardAux() method
     * 
-    * This method is used internally to discard the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    * This method is used internally to discard the Auxiliary Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlocking due to nested mutexes.
     */
    void _discardAux();
    /*
     * @brief A private version of the moveAuxToMain() method
     * 
-    * This method is used internally to move the contents of the Auxiliary Buffer to the Main Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlockings due to nested mutexes.
+    * This method is used internally to move the contents of the Auxiliary Buffer to the Main Buffer, without taking care of the mutexes, it is used by calling parties that already have the mutexes taken, and thus are not in danger of concurrent access to the Auxiliary Buffer, and deadlocking due to nested mutexes.
     * 
     * @return A boolean value indicating the success of the operation.
     * @retval true The Auxiliary Buffer was successfully moved to the Main Buffer, and the Auxiliary Buffer was discarded.
@@ -114,24 +114,24 @@ private:
    /*
     * @brief Sends the content of a single byte to a Shift Register. 
     * 
-    * The method's action is limited to filling the shift register's internal buffer, but it does not latch it (it does not set the output pins of the shfit register to the buffered value). The latching must be done by the calling party, when the contents of all the shift registers are set to the desired values. The usual calling of this method is done by the _sendAllSRCntnt() method, which will flush the contents of the Main Buffer to the shift registers array.  
+    * The method's action is limited to filling the shift register's internal buffer, but it does not latch it (it does not set the output pins of the shift register to the buffered value). The latching must be done by the calling party, when the contents of all the shift registers are set to the desired values. The usual calling of this method is done by the _sendAllSRCntnt() method, which will flush the contents of the Main Buffer to the shift registers array.  
     * 
     * @param data The byte to be sent to the shift register, the bits in the byte will be sent in the order from MSb to LSb (MSb First). 
     * 
-    * @return true Allways true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
+    * @return true always true, as the method does not have any condition that would produce a failure in the operation. The boolean type return value is a consideration for backward compatibility with previous versions.
     */
    bool _sendSnglSRCntnt(const uint8_t &data);
-   bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-   bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-   bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
-   bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBuffr = true);
+   bool _shiftGenFullLeft(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBffr = true);
+   bool _shiftGenFullRight(const uint8_t &qty, const uint8_t &fillVal = 0x00, const bool &toMainBffr = true);
+   bool _shiftGenSegmentLeft(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBffr = true);
+   bool _shiftGenSegmentRight(const uint8_t &qty, uint8_t strtPin, uint8_t endPin, const uint8_t &fillVal = 0x00, const bool &toMainBffr = true);
 
 protected:
    SemaphoreHandle_t _SRGXAuxBffrMtx; // Mutex to protect the Auxiliary Buffer from concurrent access
    SemaphoreHandle_t _SRGXMnBffrMtx; // Mutex to protect the Main Buffer from concurrent access
 
-   uint8_t* _mainBuffrArryPtr{};
-   uint8_t* _auxBuffrArryPtr{nullptr};
+   uint8_t* _mainBffrArryPtr{};
+   uint8_t* _auxBffrArryPtr{nullptr};
    uint8_t _maxSRGXPin{};
    uint8_t _srQty{};
 
@@ -151,7 +151,7 @@ public:
     * @param srQty Optional parameter. Quantity of shift registers set in daisy-chain configuration composing the expander.
     * 
     * @note The object will create a dynamic array to buffer the information written to the shift registers, it will be referred to as the **Main Buffer**, **the Buffer** or **the Main**.  
-    * The action of sending the Buffer contents to the shift registers array will be reffered as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
+    * The action of sending the Buffer contents to the shift registers array will be referred as **Flushing**. Every time the Buffer is **flushed** to the shift registers array the whole contents of that array will be sent.  
     * A secondary dynamic array will be created for delayed operations purposes, that buffer will be referred to as the **Auxiliary Buffer** or **the Auxiliary**. The Auxiliary will be created every time it's needed and destroyed after it's temporary use becomes unnecessary. The Auxiliary will be used to allow several bit changing operations without the need of flushing the whole buffer for each bit change. The usual propper use of the mechanism will make all the bits changes that must occur simultaneously to the Auxiliary Buffer and then **moving** the Auxiliary Buffer to the Main Buffer and flushing the Buffer.  
     * 
     * @note There is no mechanism to flush the **Auxiliary** straight to the shift registers.  
@@ -456,7 +456,7 @@ public:
      */
    uint8_t getMaxSRGXPin();
    /**
-     * @brief Return the quantity of shift registers composing the GPIOXtender object.  
+     * @brief Return the quantity of shift registers composing the GPIOXpander object.  
      * 
      * The value is passed as a parameter in the class constructor.  
      * 
@@ -510,20 +510,18 @@ public:
     * @note setBit(n) is a synonym for digitalWriteSr(n, HIGH), and is provided for shortening and using more meaningful name in the code.
     */
    bool setBit(const uint8_t &srPin);
-   //TODO: Conatinue code checking from here on.
    /**
     * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, filling the vacated positions with zeros. The method will flush the buffer after the complete shifting process is concluded.
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * 
     * @return true if the shift operation was successful and the Main Buffer was flushed.
     * 
-    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See digitalWriteSrAllReset()
     * 
-    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:
+    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:
     * - qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.
-    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.
+    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.
     * 
     * @attention To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty > (getMaxSRGXPin() + 1) limit cases must be tested before the method invocation.
     */
@@ -533,31 +531,34 @@ public:
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See digitalWriteSrAllReset()
     * 
-    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the marked range:
+    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:
     * - qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.
-    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which results in a valid option, altough not the prevented one.
+    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.
     * 
     * @attention To avoid misinterpretation of the value returned by the method, if the qty = 0 and/or the qty > (getMaxSRGXPin() + 1) limit cases must be tested before the method invocation.
     */
    bool shiftStdRight(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the left by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.
+    * @brief Rotates the contents of the Main Buffer to the left by a specified quantity of bits. The method will flush the buffer after shifting.
     * 
-    * The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back ("pushed") into the right side of the buffer (LSb), that is the righttmost bit position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * The shift rotate operation moves the bits in the Main Buffer to the left, and the bits that are shifted out on the left side (MSb) are wrapped around and placed back ("pushed") into the right side of the buffer, that is the LSb position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their respective positions.
     * 
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
+    * 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
     * 
     */
    bool shiftRttLeft(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, rotating the bits. The method will flush the buffer after shifting.
-    * The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back into the left side of the buffer (MSb), that is the leftmost bit of the ShiftRegGPIOXpander object. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their positions.
+    * @brief Rotates the contents of the Main Buffer to the right by a specified quantity of bits. The method will flush the buffer after shifting.
+    * 
+    * The shift rotate operation moves the bits in the Main Buffer to the right, and the bits that are shifted out on the right side (LSb) are wrapped around and placed back ("pushed") into the left side of the buffer, that is the MSb position. This operation effectively rotates the bits in the buffer, preserving all original bits but changing their respective positions.
     * 
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
+    * 
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
     */
@@ -567,63 +568,79 @@ public:
     *
     * @param qty Defines the number of bits to shift to the left. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * 
-    * 
     * @return true if the shift operation was successful and the Main Buffer was flushed.
     * 
-    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset).
-    * @attention The arithmetic left shift operation moves the bits in the Main Buffer to the left, and the LSb of the buffer is filled with 0x00, effectively discarding the leftmost bit (MSb) of the buffer. This operation does not preserve the sign of the number represented by the bits in the buffer, is identical to the standard left shift operation, and is provided for completeness and to comlement the arithmetic right shift operation, which does preserve the sign of the number represented by the bits in the buffer.
+    * @note If the qty parameter is greater than the number of bits in the Main Buffer (the number of pins available through the ShiftRegGPIOXpander object, data available using getMaxSRGXPin()), the method will shift all bits out and fill the buffer with zeros, effectively resetting all pins to LOW (0x00/Reset). See digitalWriteSrAllReset()
+    * @note This method will avoid flagging the operation as unsuccessful when the failure might be logically represented. This is specially relevant when a qty parameter is out of the indicated valid range:
+    * - qty = 0 is out of the expected range, but leaving the buffer unmodified is a logical result of a shift of 0 spaces.
+    * - qty > (getMaxSRGXPin() + 1): executing above the maximum width of the buffer will overwrite the buffer with the filling value -in this case 0- which might not be immediately appreciated as a classic shift behavior, but would be the correct result of applying the shift definition.
+    * 
+    * @attention The arithmetic left shift operation moves the bits in the Main Buffer to the left, and the LSb of the buffer is filled with 0x00, effectively discarding the leftmost bit (MSb) of the buffer. This operation does not preserve the sign of the number represented by the bits in the buffer, is identical to the standard left shift operation, and is provided for completeness and to complement the arithmetic right shift operation, which does preserve the sign of the number represented by the bits in the buffer.
     */
    bool shiftArthmLeft(const uint8_t &qty);
    /**
-    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift. The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The method will flush the Main buffer after shifting.
+    * @brief Shifts the contents of the Main Buffer to the right by a specified quantity of bits, performing an arithmetic right shift.  The method will flush the buffer after the complete shifting process is concluded.
+    * 
+    * The arithmetic shift indicates that the vacated bit, the MSb, is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded.
     *
     * @param qty Defines the number of bits to shift to the right. The valid range is 1 <= qty <= (getMaxSRGXPin() + 1).
     * @retval true if the operation was successful and the Main Buffer was flushed.
     * @retval false Otherwise.
-    * 
-    * @note The arithmetic right shift operation moves the bits in the Main Buffer to the right, and the MSb of the buffer is a copy of the previous MSb of the buffer, effectively preserving the sign of the number represented by the bits in the buffer. The LSb of the buffer is discarded.
     */
    bool shiftArthmRight(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftStdLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftStdLeft(const uint8_t &) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.
     * 
-    * See shiftStdLeft(const uint8_t) for more details on the shifting operation.
+    * @note See shiftStdLeft(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftStdLeftToAux(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftStdRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftStdRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. 
     * 
-    * See shiftStdRight(const uint8_t) for more details on the shifting operation.
+    * @note See shiftStdRight(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftStdRightToAux(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftRttLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftRttLeft(const uint8_t &) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.
     * 
-    * See shiftRttLeft(const uint8_t) for more details on the shifting operation.
+    * @note See shiftRttLeft(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftRttLeftToAux(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftRttRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftRttRight(const uint8_t &) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. 
     * 
-    * See shiftRttRight(const uint8_t) for more details on the shifting operation.
+    * @note See shiftRttRight(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftRttRightToAux(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftArthmLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftArthmLeft(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.
     * 
-    * See shiftArthmLeft(const uint8_t) for more details on the shifting operation.
+    * @note See shiftArthmLeft(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftArthmLeftToAux(const uint8_t &qty);
    /**
-    * @brief Analog to the shiftArthmRight(const uint8_t &qty) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer. The method will not flush the Main buffer after shifting, as the Auxiliary Buffer is not directly connected to the GPIO pins.
+    * @brief Analog to the shiftArthmRight(const uint8_t &) method, but the shifting is performed on the Auxiliary Buffer instead of the Main Buffer.
     * 
-    * See shiftArthmRight(const uint8_t) for more details on the shifting operation.
+    * @note See shiftArthmRight(const uint8_t &) for more details on the shifting operation.
+    * 
+    * @attention The method will not move the Auxiliary over the Main buffer after shifting.
     */
    bool shiftArthmRightToAux(const uint8_t &qty);
    /**
-    * @brief Sets the value of several scattered (or not) pins in the Main Buffer, according to the provided mask and values.
+    * @brief Sets the value of several scattered pins in the Main Buffer, according to the provided mask and values.
     * 
-    * @param maskPtr Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the newValsPtr parameter. 
+    * @param maskPtr Pointer to the memory area containing the mask to be applied to the Main Buffer. The mask is a bit array where each bit position set (HIGH, 0x01) indicates that the corresponding pin in the Main Buffer will be modified with the value provided in the area of memory pointed by the newValsPtr pointer parameter. 
+    * 
     * @param valsPtr Pointer to the memory area containing the values to be set in the Main Buffer. The values are provided as a bit array, where each bit position corresponds to the pin in the Main Buffer that will be modified according to the mask provided in the newMaskPtr parameter: for the array positions set in the mask, the value of the bit in the newValsPtr will be set in the corresponding pin in the Main Buffer, for the array positions not set in the mask, the value in the Main Buffer will remain unchanged.
     * 
     * @retval true Main Buffer was modified with the new values and flushed to the shift registers.
@@ -728,7 +745,7 @@ protected:
     * @param strtPin The pin number from the ShiftRegGPIOXpander to be used as the first pin (pin 0) of the virtual port. 
     * @param pinsQty The number of pins that will compose the virtual port. 
     * 
-    * @attention This constructor is not accesible but through the ShiftRegGPIOXpander class, as it is a protected constructor. The user should use the createSRGXVPort(uint8_t&, uint8_t&) method to create a SRGXVPort object.
+    * @attention This constructor is not accessible but through the ShiftRegGPIOXpander class, as it is a protected constructor. The user should use the createSRGXVPort(uint8_t&, uint8_t&) method to create a SRGXVPort object.
     */
    SRGXVPort(ShiftRegGPIOXpander* SRGXPtr, uint8_t strtPin, uint8_t pinsQty);
 

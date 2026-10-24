@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ShiftRegGPIOXpander Library for ESP32 (Arduino): GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32)</title>
+<title>ShiftRegGPIOXpander Library for ESP32 (Arduino): Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXp...</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="codefolding.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -109,26 +109,27 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">GPIO Digital Outputs Expander Library (ShiftRegGPIOXpander_ESP32) </div></div>
+  <div class="headertitle"><div class="title">Shift Registers Manager for GPIO Digital Outputs Expander library for ESP32 (Arduino) (ShiftRegGPIOXpander_ESP32) </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_d_1_2_my___projects___r_6_d___repos_2_my_libs___e_s_p32_2_shift_reg_g_p_i_o_xpander___e_s_p32_2_r_e_a_d_m_e"></a></p>
+<p>For 74HCx595 and compatible SIPO Shift Registers</p>
 <h1 class="doxsection"><a class="anchor" id="complete-library-documentation-herehttpsgabygold67githubioshiftreggpioxpander_esp32"></a>
 <a href="https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/">Complete library documentation HERE!</a></h1>
 <h1 class="doxsection"><a class="anchor" id="the-main-concepts-driving-this-development-are"></a>
 The main concepts driving this development are:</h1>
 <ul>
-<li>Easy output pins addition to a project without making substantial changes to the standard programming practices referring to output pin values writes and reads. <br  />
+<li>Easy output pins addition to a project without making substantial changes to the standard programming practices referring to output pins values writes and reads. <br  />
 </li>
-<li>Methods and resources are provided to minimize full outputs updating, usually associated with the nature of the GPIO expanders based on SIPO shift registers without preset size limits (changes buffering).</li>
+<li>Methods and resources are provided to minimize full outputs updating, usually associated with the nature of the GPIO expanders based on SIPO shift registers without preset size limits (change buffering).</li>
 <li>Pin state reading consistency, even for buffered changes.</li>
-<li>Easily extend the number of output pins by adding Shift Registers modules, and just changing an instantiation parameter. <br  />
+<li>Easily extend the number of output pins by adding Shift Register modules and just change an instantiation parameter value. <br  />
 </li>
 <li>A number of services added to manage the new extra pins:<ul>
 <li>Pin state toggling</li>
-<li>Setting, resetting and toggling several pins indicated by providing a mask.</li>
-<li>Virtual Ports construction and management as independent units for easy devices management, with the required API to provide usual internal ports management. <br  />
-</li>
+<li>Setting, resetting and toggling several pins simultaneously by providing a mask.</li>
+<li>Pins values shifting.</li>
+<li>Virtual Ports construction and management as independent units for easy devices management, with the required API to provide usual internal ports management.</li>
 </ul>
 </li>
 </ul>
@@ -136,20 +137,29 @@ The main concepts driving this development are:</h1>
  <h1 class="doxsection"><a class="anchor" id="fast-setup"></a>
 Fast Setup:</h1>
 <ul>
-<li>Connect as many shift registers as you'll need in daisy chain configuration. Consider you'll be connecting the first shift register to the MCU, that will take 3 available output pins, and give you 8, making that a net addition of 5 output pins to your resources. For each following shift register connected to the daisy chain you'll get 8 extra pins. <br  />
+<li>Connect as many shift registers as you'll need in daisy chain configuration.<ul>
+<li>Consider you'll be connecting the first shift register to the MCU, that will take 3 available output pins, and give you 8, making that a net addition of 5 output pins to your resources.</li>
+<li>For each following shift register connected to the daisy chain you'll get 8 extra pins. <br  />
 </li>
-<li>Create a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object using the pin numbers connected to the first shift register of the chain and the quantity of shift registers connected in that daisy chain (the minimum value admitted is <b>1</b>). <span class="tt"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> mySrgx(ds, sh_cp, st_cp, srQty);</span></li>
-<li>Initiate the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object by using the <span class="tt">.begin()</span> method, as simple as: <span class="tt">mySrgx.begin();</span></li>
-<li>Start using the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> object as normal MCU pins, setting pins value with the <span class="tt">mySrgx.digitalWrite(pinToModify, LOW);</span> and <span class="tt">mySrgx.digitalWrite(pinToModify, HIGH);</span>.</li>
-<li>The current pin setting might be checked by using <span class="tt">mySrgx.digitalRead(pinToRead);</span>, but remember: all the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a> pins are set to <b>Outputs</b>.</li>
+</ul>
+</li>
+<li>Create a <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object using the pin numbers connected to the first shift register of the chain and the quantity of shift registers connected in that daisy chain (the minimum value admitted is 1): <span class="tt"><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> mySrgx(ds, sh_cp, st_cp, srQty);</span></li>
+<li>Initiate the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object: <span class="tt">mySrgx.begin();</span></li>
+<li>Use the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> object pins as normal MCU pins: <span class="tt">mySrgx.digitalWrite(pinToModify, LOW);</span> or <span class="tt">mySrgx.digitalWrite(pinToModify, HIGH);</span></li>
+<li>The current pin setting might be checked by using <span class="tt">mySrgx.digitalRead(pinToRead);</span> (remember: all the <a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a> pins are set to <b>Output</b>)</li>
 </ul>
 <p>In short: </p><div class="fragment"><div class="line">ShiftRegGPIOXpander mySrgx(ds, sh_cp, st_cp, srQty);</div>
 <div class="line">mySrgx.begin();</div>
 <div class="line">mySrgx.digitalWrite(pinToModify, HIGH);</div>
-</div><!-- fragment --><p> You then have a plethora of methods to use for managing the <b><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO outputs pins expander through the use of 8-bits Serial In Paralell Out (SI...">ShiftRegGPIOXpander</a></b> pins.</p>
+</div><!-- fragment --><p>You then have a plethora of methods to use for managing the <b><a class="el" href="class_shift_reg_g_p_i_o_xpander.html" title="A class that models a GPIO output pins expander through the use of 8-bits Serial In parallel Out (SIP...">ShiftRegGPIOXpander</a></b> pins. <a href="https://gabygold67.github.io/ShiftRegGPIOXpander_ESP32/">Check the complete library documentation CLICKING HERE!</a></p>
 <hr  />
-<p> <b>Note:</b> <br  />
- I will agree with anybody who catalogs this as a <b>YAUSRL</b> (Yet Another Unneeded Shift Register Library). The thing is I tried to find an adequate library for my project but I failed to find something I felt comfortable working with. As a matter of fact I forked a repository, and after starting to modify it I ended up scrapping the old base concept and started a new structure, using the old code scraps where it was consistent with the new concept, rewriting the rest. As a matter of fact this repository will still be a fork of the original library for it was a source: of <b>code</b> when it fitted my vision, of <b>inspiration</b> when I considered it was outside my vision of the solution concept. The original library repository is at <a href="https://github.com/Simsso/ShiftRegister74HC595">ShiftRegister74HC595</a>. </p>
+<p>The library provides tools to generate "animations", coordinated pin changes, buffered changes, etc. For those actions the following tools are provided:</p>
+<ul>
+<li>Auxiliary buffer</li>
+<li>Mask setup for set, reset and flip operations.</li>
+<li>Pinshifting methods: Standard shifting, Rottate shifting, Arithmetic shifting for the whole set of pins, and for a segment of the pins</li>
+<li>Instant buffer output invertion </li>
+</ul>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
